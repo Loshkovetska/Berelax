@@ -1,0 +1,46 @@
+.input {
+  background: #ffffff;
+  padding: 24px;
+
+  border: 1px solid rgba(46, 99, 135, 0.17);
+  border-radius: 32px;
+
+  font-family: 'Gotham Pro';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 115%;
+  /* or 18px */
+  color: rgba(7, 34, 74, 1);
+
+  &::placeholder {
+    color: rgba(7, 34, 74, 0.5);
+  }
+  width: 100%;
+
+  &:hover,
+  &:focus {
+    outline: none;
+  }
+
+  @media (max-width: 768px) {
+    font-size: 14px;
+    padding: 16px 24px;
+
+    &:focus,
+    &:hover {
+      font-size: 16px;
+    }
+  }
+
+  &:-webkit-autofill,
+  &:-webkit-autofill:hover,
+  &:-webkit-autofill:focus,
+  &:-webkit-autofill:active {
+    -webkit-background-clip: text;
+    -webkit-box-shadow: 0 0 0px 1000px #fff inset;
+  }
+  &:-webkit-autofill {
+    -webkit-text-fill-color: rgba(7, 34, 74, 1) !important;
+  }
+}

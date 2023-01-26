@@ -1,0 +1,16 @@
+.text {
+  font-family: 'Gotham Pro';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 145%;
+
+  text-align: center;
+  color: #3a4458;
+  max-width: 710px;
+
+  @media (max-width: 768px) {
+    font-size: 16px;
+  }
+
+}

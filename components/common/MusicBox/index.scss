@@ -1,0 +1,99 @@
+.musicbox {
+  border-radius: 32px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: fixed;
+  z-index: 19;
+  right: 16px;
+  transform: translateY(-50%) rotate(180deg);
+  transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+  height: 131px;
+  top: calc(50% - 65px);
+  img,
+  svg {
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+    transform: rotate(180deg);
+  }
+  padding: 12px;
+
+  &__btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    border: 1px solid rgba(0, 88, 124, 0.15);
+    box-shadow: 0px 4px 4px rgba(209, 214, 218, 0.11);
+
+    padding: 12px;
+    margin-left: -12px;
+    margin-right: -12px;
+    background: #ffffff;
+    position: relative;
+    z-index: 1;
+    transition: 0.5s ease-in-out box-shadow;
+  }
+
+  &__bg {
+    background: #ffffff;
+
+    display: block;
+    z-index: 1;
+    position: absolute;
+    border: 1px solid rgba(0, 88, 124, 0.15);
+    box-shadow: 0px 4px 4px rgba(209, 214, 218, 0.11);
+    width: 100%;
+    border-radius: 32px;
+    height: 100%;
+    opacity: 0;
+    transform: scale(0.7);
+    transform-origin: center;
+    transition: transform 0.5s cubic-bezier(0.19, 1, 0.22, 1),
+      opacity 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+    will-change: transform;
+  }
+
+  span {
+    user-select: none;
+    writing-mode: vertical-rl;
+    transform: translateY(-10px);
+    font-family: 'Gotham Pro';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 120%;
+    white-space: nowrap;
+
+    color: #13233b;
+
+    display: flex;
+    opacity: 0;
+    transition: transform 0.5s cubic-bezier(0.19, 1, 0.22, 1),
+      opacity 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+    will-change: transform;
+    margin-top: -4px;
+    z-index: 1;
+  }
+  &:hover {
+    .musicbox__bg {
+      transform: scale(1);
+      opacity: 1;
+    }
+    .musicbox__btn {
+      border: 1px solid rgba(0, 88, 124, 0);
+      box-shadow: 0px 4px 4px rgba(209, 214, 218, 0);
+      background: transparent;
+    }
+    span {
+      position: relative;
+      opacity: 1;
+      transform: translateY(0%);
+    }
+  }
+
+  @media (max-width: 1023px) {
+    display: none;
+  }
+}

@@ -1,0 +1,149 @@
+.explore-block {
+  padding: 120px 100px 0;
+  width: 100%;
+
+  &__container {
+    width: 100%;
+    margin: 0 auto;
+    width: 100%;
+    max-width: 80vw;
+    @media (max-width: 1280px) {
+      max-width: none;
+    }
+  }
+  &__title {
+    font-family: 'Antic Didone';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 54px;
+    line-height: 120%;
+    text-align: center;
+    letter-spacing: 0.02em;
+    color: #13233b;
+    margin-bottom: 40px;
+  }
+
+  &__slider {
+    display: none;
+  }
+
+  &__list {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    column-gap: 32px;
+    row-gap: 32px;
+    &::-webkit-scrollbar {
+      display: none;
+    }
+
+    &::-webkit-scrollbar-track {
+      display: none;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      display: none;
+    }
+
+    .in-view {
+      display: flex;
+    }
+  }
+
+  @media (max-width: 1280px) {
+    padding: 120px 32px 0;
+    &__title {
+      font-size: 48px;
+    }
+  }
+
+  @media (max-width: 900px) {
+    padding: 80px 16px 0;
+    &__title {
+      font-size: 34px;
+    }
+
+    &__list {
+      column-gap: 24px;
+      display: flex;
+      overflow: auto;
+      margin-right: -16px;
+      margin-left: -16px;
+      padding: 0 16px;
+      overflow-y: hidden;
+      padding-bottom: 4px;
+      display: none;
+    }
+
+    &__slider {
+      display: flex;
+
+      .product-item {
+        max-width: 392px;
+      }
+
+      .slick-list {
+        max-width: calc(100vw);
+        padding: 0 6px;
+      }
+
+      .slick-slide {
+        padding: 0 10px;
+      }
+      .slick-dots {
+        margin-left: 0;
+        width: 100%;
+        padding: 0 16px;
+      }
+    }
+  }
+  @media (max-width: 768px) {
+    &__title {
+      font-size: 30px;
+      line-height: 120%;
+      margin-bottom: 32px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    &__slider {
+      .product-item {
+        min-width: 150px;
+        max-width: 43vw;
+      }
+    }
+  
+  }
+}
+
+body.old-device {
+  .explore-block {
+    @media (max-width: 900px) {
+      &__list {
+        column-gap: 0;
+        .in-view {
+          &:not(:last-child) {
+            margin-right: 24px;
+          }
+        }
+      }
+    }
+
+    @media (max-width: 480px) {
+      &__list {
+        column-gap: 0;
+        .in-view {
+          &:not(:last-child) {
+            margin-right: 0;
+            margin-bottom: 24px;
+          }
+        }
+
+        .product-item {
+          min-width: 100%;
+          width: 100%;
+          max-width: 100%;
+        }
+      }
+    }
+  }
+}

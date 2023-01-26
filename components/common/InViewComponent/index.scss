@@ -1,0 +1,29 @@
+.in-view {
+  transition: 1s ease-in-out all;
+  transform-origin: center;
+
+  &.zoomin {
+    opacity: 0;
+    transform: scale(0.5) translateY(20px);
+    &.animated {
+      opacity: 1;
+      transform: scale(1) translateY(0px);
+    }
+  }
+
+  &.apear {
+    opacity: 0;
+    &.animated {
+      opacity: 1;
+    }
+  }
+
+  &.fadein {
+    opacity: 0;
+    transform: translateY(100px);
+    &.animated {
+      opacity: 1;
+      transform: translateY(0px);
+    }
+  }
+}

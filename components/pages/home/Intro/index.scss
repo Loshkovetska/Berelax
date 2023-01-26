@@ -1,0 +1,229 @@
+.intro {
+  width: 100%;
+  padding-top: 115px;
+  overflow: hidden;
+
+  &__title {
+    max-width: 800px;
+    margin-bottom: 40px;
+  }
+
+  &__scroll {
+    padding-bottom: 1000px;
+  }
+
+  &__img-mobile {
+    display: none;
+  }
+
+  &__top {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  &__gallery {
+    margin: -48px -16vw 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr 2fr 1fr 1fr;
+    grid-column-gap: 32px;
+    -moz-column-gap: 32px;
+    grid-column-gap: 32px;
+    column-gap: 32px;
+    justify-content: center;
+    align-items: center;
+    will-change: transform;
+    height: 44.5vw;
+
+    & > .in-view {
+      &:nth-child(1),
+      &:nth-child(2) {
+        .intro__gallery-img {
+          transform: translate(calc(16vw + 32px), 0);
+        }
+      }
+
+      &:nth-child(4),
+      &:nth-child(5) {
+        .intro__gallery-img {
+          transform: translate(calc(-16vw - 32px), 0px);
+        }
+      }
+    }
+
+    &-col {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      row-gap: 32px;
+      height: 100%;
+
+      &.center {
+        justify-content: flex-start;
+        align-items: center;
+      }
+      &.big {
+        min-width: 80vw;
+        justify-content: center;
+        margin-top: -32px;
+        clip-path: inset(18% 23% round 72px);
+      }
+      &.small {
+        min-width: 19.5vw;
+        
+        margin-top: -192px;
+
+        @media (max-width: 1024px) {
+          margin-top: -140px;
+        }
+      }
+      &.middle {
+        min-width: 20vw;
+        margin-top: -170px;
+        justify-content: center;
+      }
+    }
+    &-img {
+      display: flex;
+      width: 100%;
+      overflow: hidden;
+
+      position: relative;
+
+      video,
+      img {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        object-fit: cover;
+        z-index: 1;
+        &.hidden {
+          z-index: 0;
+          opacity: 0;
+          visibility: hidden;
+
+          @media (max-width: 1023px) {
+            z-index: 1;
+            opacity: 1;
+            visibility: visible;
+          }
+        }
+      }
+
+      &.video {
+        height: 44.5vw;
+      }
+
+      &.b48 {
+        border-radius: 48px;
+      }
+      &.b104 {
+        border-radius: 104px;
+      }
+      &.b72 {
+    
+      }
+      &.h339 {
+        height: 23.6vw;
+      }
+
+      &.h300 {
+        height: 20.9vw;
+      }
+      &.h200 {
+        height: 13.9vw;
+      }
+    }
+  }
+
+  @media (max-width: 1023px) {
+    &__scroll {
+      display: none;
+    }
+
+    &__top {
+      margin-bottom: 18px;
+    }
+    &__gallery {
+      margin: 0 -16px;
+      grid-template-columns: repeat(1, 1fr);
+      height: auto;
+      .in-view {
+        .intro__gallery-col.middle,
+        .intro__gallery-col.small {
+          display: none;
+        }
+      }
+
+      &-col.big {
+        min-width: 100vw;
+        width: 100vw;
+        margin: 0 auto;
+        clip-path: inset(32px round 48px);
+      }
+      &-img.video {
+        height: 100vh;
+      }
+      &-img.b72 {
+      }
+    }
+
+    &-img {
+      display: none;
+    }
+
+    &__img-mobile {
+      display: flex;
+      width: calc(100% - 64px);
+      border-radius: 40px;
+      overflow: hidden;
+
+      height: 52vw;
+      margin: 40px 32px 0;
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+    }
+  }
+
+  @media (max-width: 900px) {
+    padding: 96px 16px 0;
+    &__title {
+      max-width: 500px;
+      margin-bottom: 24px;
+    }
+
+    &__scroll {
+      margin-left: -16px;
+      margin-right: -16px;
+    }
+    &__top {
+      margin-bottom: 48px;
+    }
+    &__gallery {
+      &-col.big {
+        clip-path: inset(16px round 48px);
+      }
+    }
+    &__img-mobile {
+      width: 100%;
+      margin: 40px 0 0;
+    }
+  }
+
+  @media (max-width: 480px) {
+    &__img-mobile {
+      height: 42.7vw;
+    }
+
+    &__title {
+      max-width: 346px;
+    }
+  }
+}

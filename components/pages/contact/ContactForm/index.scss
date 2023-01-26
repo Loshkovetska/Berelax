@@ -1,0 +1,132 @@
+.contact {
+  width: 100%;
+  padding: 152px 100px 0;
+  &__container {
+    width: 100%;
+    max-width: 80vw;
+    margin: 0 auto;
+    @media (max-width: 1280px) {
+      max-width: none;
+    }
+  }
+
+  &__title {
+    margin-bottom: 16px;
+  }
+
+  &__text {
+    margin: 0 auto;
+  }
+
+  &__form {
+    background: #f4f8fb;
+    border-radius: 48px;
+    margin-top: 40px;
+    padding: 56px 56px 64px;
+    &-title {
+      margin: 0 auto 32px;
+      text-align: center;
+    }
+    &-container {
+      max-width: 540px;
+      margin: 0 auto;
+    }
+    &-row {
+      display: flex;
+
+      & > .input {
+        height: 66px;
+      }
+      & > .input.mr {
+        margin-right: 16px;
+      }
+      &:not(:last-child) {
+        margin-bottom: 16px;
+      }
+    }
+
+    .button[type='submit'] {
+      outline: none;
+      border: none;
+      margin: 32px auto 0;
+      &:hover,
+      &:focus {
+        outline: none;
+        border: none;
+      }
+    }
+
+    .loc-select {
+      max-width: none;
+      &.open {
+        .loc-select__top {
+          z-index: 5;
+        }
+        .loc-select__list {
+          z-index: 4;
+        }
+      }
+    }
+
+    textarea.input {
+      height: 119px;
+      resize: none;
+    }
+  }
+
+  @media (max-width: 1280px) {
+    padding: 152px 32px 0;
+  }
+
+  @media (max-width: 1024px) {
+    &__form {
+      &-title {
+        max-width: 400px;
+        margin: 0 auto 24px;
+      }
+    }
+  }
+
+  @media (max-width: 900px) {
+    padding: 80px 16px 0;
+
+    &__form {
+      padding: 64px 48px;
+      &-container {
+        max-width: none;
+      }
+    }
+  }
+
+  @media (max-width: 768px) {
+    &__form {
+      padding: 48px 32px;
+      border-radius: 32px;
+      &-row {
+        & > .input {
+          height: auto;
+        }
+      }
+    }
+  }
+
+  @media (max-width: 480px) {
+    &__form {
+      padding: 32px 16px 48px;
+      border-radius: 0;
+      margin: 40px -16px 0;
+      &-row {
+        flex-direction: column;
+        .input.mr {
+          margin-right: 0;
+          margin-bottom: 16px;
+        }
+      }
+    }
+
+    .button[type='submit'] {
+      min-width: 210px;
+      margin: 24px auto 0;
+    }
+  }
+}

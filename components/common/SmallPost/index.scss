@@ -1,0 +1,72 @@
+.small-post {
+  background: #f3f6f6;
+  border-radius: 32px;
+  cursor: pointer;
+  &__img {
+    width: 100%;
+    overflow: hidden;
+    isolation: isolate;
+    height: 16.3vw;
+    border-radius: 32px;
+    max-height: 330px;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transform: scale(1.1);
+      transition: 1s ease-in-out all;
+    }
+  }
+  &__title {
+    font-family: 'Antic Didone';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 28px;
+    line-height: 125%;
+
+    color: #13233b;
+    margin-bottom: 16px;
+
+    background: linear-gradient(
+        to right,
+        rgba(100, 200, 200, 0),
+        rgba(100, 200, 200, 0)
+      ),
+      linear-gradient(to right, #13233b, #13233b, #13233b);
+    background-size: 100% 1px, 0 1px;
+    background-position: 100% 100%, 0 100%;
+    background-repeat: no-repeat;
+    transition: background-size 1000ms;
+  }
+
+  &__content {
+    padding: 24px 32px 32px;
+  }
+  
+
+  @media (min-width: 1024px) {
+    &:hover {
+      .small-post__img {
+        img {
+          transform: scale(1);
+        }
+      }
+      .small-post__title {
+        background-size: 0 1px, 100% 1px;
+      }
+    }
+  }
+
+  @media (max-width: 1024px) {
+    &__img {
+      height: 235px;
+    }
+  }
+
+  @media (max-width: 900px) {
+    &__content {
+      padding: 24px 16px 16px;
+    }
+  }
+}

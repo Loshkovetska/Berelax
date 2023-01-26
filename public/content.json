@@ -1,0 +1,91 @@
+{
+  "title": "Get updated & Stay connected",
+  "cols": [
+    {
+      "title": "Explore",
+      "list": [
+        {
+          "title": "Contact Us",
+          "link": ""
+        },
+        {
+          "title": "FAQ",
+          "link": ""
+        },
+        {
+          "title": "Career",
+          "link": ""
+        }
+      ]
+    },
+    {
+      "title": "Treatments",
+      "list": [
+        {
+          "title": "Massages",
+          "link": ""
+        },
+        {
+          "title": "Nail care",
+          "link": ""
+        },
+        {
+          "title": "Beauty",
+          "link": ""
+        },
+        {
+          "title": "Wellness",
+          "link": ""
+        }
+      ]
+    },
+    {
+      "title": "Products",
+      "list": [
+        {
+          "title": "Pillows",
+          "link": ""
+        },
+        {
+          "title": "Travel Accessories",
+          "link": ""
+        },
+        {
+          "title": "Massage devices",
+          "link": ""
+        },
+        {
+          "title": "Beauty devices",
+          "link": ""
+        }
+      ]
+    }
+  ],
+  "placeholder": "Your Email",
+  "copyText": "Copywriting BeRelax",
+  "socials": [
+    {
+      "icon": "",
+      "link": ""
+    },
+    {
+      "icon": "",
+      "link": ""
+    },
+    {
+      "icon": "",
+      "link": ""
+    }
+  ],
+  "docs": [
+    {
+      "title": "Terms & Conditions",
+      "link": ""
+    }
+  ],
+  "last": {
+    "title": "See Our Services",
+    "link": "/services",
+    "buttonTitle": "Open Page"
+  }
+}

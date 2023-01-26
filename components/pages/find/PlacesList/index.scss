@@ -1,0 +1,71 @@
+.places {
+  padding: 64px 100px 100px;
+  &.none {
+    display: none;
+  }
+
+  &__title {
+    font-family: 'Antic Didone';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 40px;
+    line-height: 125%;
+    color: #000000;
+    margin-bottom: 24px;
+  }
+
+  &__list {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    column-gap: 32px;
+    row-gap: 32px;
+  }
+
+  &__row {
+    width: 100%;
+    max-width: 95vw;
+    margin: 0 auto;
+    .in-view {
+      display: flex;
+      .place-card {
+        width: 100%;
+      }
+    }
+    &:not(:last-child) {
+      margin-bottom: 56px;
+    }
+
+    @media (min-width: 1800px) {
+      max-width: 1440px;
+    }
+  }
+
+  @media (max-width: 1330px) {
+    &__list {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 1280px) {
+    padding: 64px 32px 100px;
+  }
+
+  @media (max-width: 900px) {
+    padding: 48px 16px 0;
+
+    &__list {
+      column-gap: 24px;
+      row-gap: 24px;
+    }
+
+    &__title {
+      font-size: 32px;
+    }
+  }
+
+  @media (max-width: 680px) {
+    &__list {
+      grid-template-columns: repeat(1, 1fr);
+    }
+  }
+}

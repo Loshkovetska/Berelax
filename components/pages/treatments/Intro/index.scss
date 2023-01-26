@@ -1,0 +1,56 @@
+.treat-intro {
+  width: 100%;
+  padding: 115px 100px 0;
+  margin-bottom: -80px;
+
+  &__title {
+    margin-bottom: 26px;
+    text-align: left;
+    max-width: 800px;
+    width: 100%;
+  }
+
+  &__container {
+    width: 100%;
+    max-width: 80vw;
+    margin: 0 auto;
+
+    @media (max-width: 1280px) {
+      max-width: none;
+    }
+  }
+
+  &__text {
+    font-family: 'Gotham Pro';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 145%;
+    /* or 26px */
+
+    /* Text/Main */
+
+    color: #3a4458;
+    max-width: 800px;
+    width: 100%;
+  }
+
+  @media (max-width: 1280px) {
+    padding: 115px 32px 0;
+  }
+
+  @media (max-width: 900px) {
+    padding: 96px 16px 0;
+    margin-bottom: -40px;
+
+    &__title {
+      max-width: 500px;
+      margin-bottom: 16px;
+    }
+
+    &__text {
+      font-size: 16px;
+      max-width: 550px;
+    }
+  }
+}

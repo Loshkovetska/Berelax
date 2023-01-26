@@ -1,0 +1,230 @@
+.menu {
+  opacity: 0;
+  top: var(--header-height);
+  left: 0;
+  position: fixed;
+  height: calc(var(--vh, 1vh) * 100);
+  transform: translateY(calc(-100% - var(--header-height)));
+  width: 100vw;
+  transition: 0.8s cubic-bezier(0.075, 0.82, 0.165, 1);
+  background: #fff;
+  z-index: 20;
+  display: flex;
+  padding-bottom: 60px;
+
+  &__container {
+    overflow: hidden;
+
+    display: flex;
+  }
+
+  &.open {
+    transform: translateY(calc(0%));
+    opacity: 1;
+  }
+  &__item {
+    padding: 16px;
+    &-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      svg {
+        transform: rotate(-90deg);
+        width: 20px;
+        height: 20px;
+      }
+    }
+    &-content {
+      display: none;
+      flex-direction: column;
+      height: 100%;
+      margin-top: 32px;
+      &.display {
+        display: flex;
+      }
+    }
+    &-bottom {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      row-gap: 32px;
+      column-gap: 32px;
+
+      align-items: flex-start;
+
+      &.column {
+        display: grid;
+        grid-template-columns: repeat(1, 1fr);
+        row-gap: 0;
+        column-gap: 0;
+      }
+    }
+  }
+
+  &__link {
+    font-family: 'Gotham Pro';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 100%;
+    text-transform: uppercase;
+
+    /* Text/Title */
+
+    color: #13233b;
+  }
+
+  &__subitem {
+    padding: 0 16px;
+    display: flex;
+    flex-direction: column;
+
+    &-list {
+      display: flex;
+      flex-direction: column;
+      .button {
+        width: 100%;
+        padding: 0;
+        background: transparent;
+        &:hover {
+          background: transparent;
+        }
+      }
+    }
+    &-title {
+      font-family: 'Craftwork Grotesk';
+      font-style: normal;
+      font-weight: 500;
+      font-size: 14px;
+      line-height: 14px;
+      text-transform: uppercase;
+
+      color: rgba(32, 42, 65, 0.7);
+      margin-bottom: 24px;
+    }
+    &-text {
+      font-family: 'Gotham Pro';
+      font-style: normal;
+      font-weight: 400;
+      font-size: 18px;
+      line-height: 145%;
+      /* or 23px */
+
+      /* Text/Title */
+
+      color: #13233b;
+      &:not(:last-child) {
+        margin-bottom: 13px;
+      }
+    }
+    &:not(:last-child) {
+      margin-bottom: 16px;
+    }
+  }
+
+  &__screen {
+    width: 100vw;
+    height: auto;
+    min-width: 100vw;
+    transition: transform 0.8s cubic-bezier(0.075, 0.82, 0.165, 1);
+
+    opacity: 0;
+    transform: translateX(100vw);
+    padding-top: 24px;
+
+    overflow: auto;
+    &-bottom {
+      margin-top: 24px;
+      display: flex;
+      align-items: center;
+      padding: 16px;
+      border-top: 1px solid rgba(46, 99, 135, 0.17);
+    }
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+
+    &::-webkit-scrollbar-track {
+      display: none;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      display: none;
+    }
+
+    &-title {
+      font-family: 'Gotham Pro';
+      font-style: normal;
+      font-weight: 400;
+      font-size: 48px;
+      line-height: 145%;
+      color: #13233b;
+      padding-left: 16px;
+    }
+
+    &:first-child {
+      transition: none;
+      opacity: 1;
+      transform: translateX(0%);
+      transition: all 0.8s cubic-bezier(0.075, 0.82, 0.165, 1);
+      &.show {
+        transform: translateX(0%);
+        opacity: 1;
+      }
+      &.off {
+        transform: translate(-20%);
+        opacity: 0;
+      }
+    }
+    &.show {
+      transform: translateX(-100%);
+      opacity: 1;
+    }
+  }
+
+  &__bottom {
+    margin-top: 45px;
+    display: flex;
+    padding: 16px 0;
+    border-top: 1px solid rgba(46, 99, 135, 0.17);
+
+    .button {
+      width: 100%;
+    }
+  }
+
+  @media (max-width: 768px) {
+    &__subitem-list .button {
+      font-size: 18px;
+    }
+  }
+
+  @media (max-width: 576px) {
+    &__link {
+      font-size: 16px;
+    }
+    &__item {
+      &-content {
+        margin-top: 24px;
+      }
+      &-bottom {
+        grid-template-columns: repeat(1, 1fr);
+        column-gap: 0;
+        row-gap: 24px;
+      }
+    }
+    &__screen {
+      padding-top: 16px;
+      &-title {
+        font-size: 32px;
+      }
+    }
+
+    &__subitem {
+      &-text {
+        font-size: 16px;
+      }
+    }
+  }
+}

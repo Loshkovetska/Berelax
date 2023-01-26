@@ -1,0 +1,49 @@
+.radiobutton {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  padding: 3px 0;
+  &__btn {
+    min-width: 18px;
+    max-width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    border: 2px solid #13233b;
+    margin-right: 7px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    span {
+      opacity: 0;
+      transition: 0.5s ease-in-out all;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #13233b;
+      display: flex;
+    }
+
+    svg {
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      display: flex;
+      transition: 0.5s ease-in-out all;
+    }
+    &.checked {
+      span,
+      svg {
+        opacity: 1;
+      }
+    }
+  }
+
+  &__label {
+    font-family: 'Gotham Pro';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 115%;
+    color: #3a4458;
+  }
+}

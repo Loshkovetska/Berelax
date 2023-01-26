@@ -1,0 +1,67 @@
+.intro-text {
+  display: flex;
+  justify-content: center;
+  margin-top: 120px;
+  min-height: 420px;
+
+  &__text {
+    font-family: 'Antic Didone';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 54px;
+    line-height: 120%;
+    text-align: center;
+    letter-spacing: 0.02em;
+    color: #13233b;
+    max-width: 1028px;
+    width: 100%;
+    transition: 1s ease-in-out all;
+    height: 420px;
+    img {
+      min-width: 60px;
+      max-width: 60px;
+      opacity: 0;
+      vertical-align: middle;
+      transition: 0.7s ease-in-out all;
+      transform: scale(0);
+    }
+
+    &.animated {
+      img {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+  }
+
+  @media (max-width: 1280px) {
+    &__text {
+      max-width: 896px;
+      font-size: 48px;
+    }
+    min-height: 200px;
+  }
+
+  @media (max-width: 900px) {
+    margin-top: 80px;
+    padding: 0 16px;
+    &__text {
+      font-size: 26px;
+      line-height: 140%;
+      max-width: 620px;
+      height: auto;
+      img {
+        min-width: 36px;
+        max-width: 36px;
+        transform: scale(0);
+      }
+      &.animated {
+        img {
+          min-width: 36px;
+          max-width: 36px;
+          transform: scale(1);
+        }
+      }
+    }
+  }
+}

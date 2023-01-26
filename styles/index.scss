@@ -1,0 +1,101 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  -webkit-appearance: none;
+  appearance: none;
+  backdrop-filter: none;
+  -webkit-tap-highlight-color: transparent;
+  font-display: optional;
+
+  &:hover,
+  &:focus {
+    -webkit-appearance: none;
+    appearance: none;
+    backdrop-filter: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+#__next {
+  overflow: hidden;
+
+  // @media (max-width: 1024px) {
+  //   overflow: initial;
+  // }
+}
+
+body {
+}
+.smooth {
+  -webkit-transform: translate3d(0, 0, 0);
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  -webkit-overflow-scrolling: touch;
+}
+
+html.touch-device {
+  #__next {
+    overflow: initial;
+  }
+  .smooth {
+    overflow: auto;
+    overflow-x: hidden;
+    position: relative;
+    scroll-behavior: smooth;
+  }
+}
+
+div[render='explicit'] {
+  margin-top: 24px;
+  display: flex;
+  justify-content: center;
+}
+
+.c-scrollbar {
+  @media (max-width: 900px) {
+    display: none !important;
+  }
+}
+
+input::-webkit-search-cancel-button {
+  display: none !important;
+}
+@media (max-width: 768px) {
+  input,
+  textarea {
+    &:focus,
+    &:hover {
+      font-size: 16px !important;
+    }
+  }
+}
+
+@import './common/index.scss';
+@import './fonts/index.scss';
+@import './home/index.scss';
+@import './find/index.scss';
+@import './location/index.scss';
+@import './treats/index.scss';
+@import './service/index.scss';
+@import './booking/index.scss';
+@import './products/index.scss';
+@import './search/index.scss';
+@import './story/index.scss';
+@import './news/index.scss';
+@import './faq/index.scss';
+@import './contact/index.scss';
+@import './career/index.scss';
+@import './vacancy/index.scss';
+@import './academy/index.scss';
+@import './partners/index.scss';
+@import '../components/pages/terms/TermsContent/index.scss';
+@import '../components/pages/product/Intro/index.scss';
+@import '../components/pages/retailer/RetailerContent/index.scss';

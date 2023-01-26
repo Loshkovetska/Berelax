@@ -1,0 +1,146 @@
+.near-by {
+  width: 100%;
+  padding: 120px 100px 0;
+
+  & > .in-view > .button {
+    display: none;
+  }
+
+  &__title {
+    font-family: 'Antic Didone';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 54px;
+    line-height: 120%;
+    letter-spacing: 0.02em;
+
+    color: #00202f;
+  }
+
+  &__top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+    max-width: 80vw;
+
+    @media (max-width: 1280px) {
+      max-width: none;
+    }
+  }
+
+  &__slider {
+    display: none;
+    margin-top: 32px;
+    position: relative;
+
+    &::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: -16px;
+      display: block;
+      width: 74px;
+      height: 100%;
+      background: linear-gradient(
+        90deg,
+        rgba(255, 255, 255, 0) 16.1%,
+        #ffffff 100%
+      );
+    }
+    .slick-slide > div {
+      padding: 0 12px;
+    }
+
+    .slick-slide {
+      width: calc(100vw - 32px - 24px);
+    }
+
+    .slider__list {
+      width: 100%;
+    }
+    .slick-slider {
+      width: 100%;
+    }
+    .slick-list {
+      max-width: none;
+      width: calc(100vw + 24px);
+      margin: 0px -12px 0;
+    }
+  }
+  &__list {
+    display: grid;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+    max-width: 80vw;
+    grid-template-columns: repeat(2, 1fr);
+    column-gap: 32px;
+    margin-top: 40px;
+    @media (max-width: 1280px) {
+      max-width: none;
+    }
+
+    .in-view {
+      display: flex;
+      .near-item {
+        width: 100%;
+      }
+    }
+  }
+
+  @media (max-width: 1280px) {
+    padding: 120px 32px 0;
+
+    &__title {
+      font-size: 48px;
+    }
+  }
+
+  @media (max-width: 900px) {
+    padding: 80px 16px 0;
+
+    & > .in-view > .button {
+      display: flex;
+      margin: 32px auto 0;
+      min-width: 200px;
+    }
+
+    &__title {
+      font-size: 34px;
+    }
+
+    &__list {
+      margin-top: 32px;
+    }
+    &__top {
+      .button {
+        display: none;
+      }
+    }
+  }
+
+  @media (max-width: 768px) {
+    &__title {
+      font-size: 30px;
+    }
+  }
+
+  @media (max-width: 767px) {
+    &__title {
+      margin-right: 24px;
+    }
+  }
+
+  @media (max-width: 576px) {
+    &__list {
+      display: none;
+    }
+
+    &__slider {
+      display: flex;
+    }
+  }
+}

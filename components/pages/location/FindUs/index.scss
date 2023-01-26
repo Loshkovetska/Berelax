@@ -1,0 +1,137 @@
+.find-us {
+  width: 100%;
+  padding: 120px 100px 0;
+
+  &__container {
+    display: flex;
+    width: 100%;
+    max-width: 80vw;
+    margin: 0 auto;
+
+    @media (max-width: 1280px) {
+      max-width: none;
+    }
+  }
+
+  &__col {
+    flex-grow: 1;
+    margin-right: 138px;
+
+    .button {
+      padding: 24px;
+      border: 1px solid rgba(46, 99, 135, 0.17);
+      width: 472px;
+    }
+  }
+
+  &__title {
+    font-family: 'Antic Didone';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 54px;
+    line-height: 120%;
+    letter-spacing: 0.02em;
+    color: #13233b;
+    margin-bottom: 16px;
+  }
+
+  &__text {
+    font-family: 'Gotham Pro';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 145%;
+
+    color: #3a4458;
+    margin-bottom: 32px;
+    max-width: 710px;
+  }
+
+  &__contacts {
+    min-width: 306px;
+    max-width: 306px;
+
+    &-item {
+      display: flex;
+      align-items: center;
+      a,
+      div {
+        font-family: 'Gotham Pro';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 18px;
+        line-height: 145%;
+
+        color: #3a4458;
+      }
+
+      &:not(:last-child) {
+        margin-bottom: 16px;
+      }
+    }
+  }
+  @media (max-width: 1280px) {
+    padding: 120px 32px 0;
+
+    &__title {
+      font-size: 48px;
+    }
+  }
+  @media (max-width: 1140px) {
+    &__container {
+      flex-direction: column;
+    }
+    &__contacts {
+      margin-top: 48px;
+    }
+  }
+
+  @media (max-width: 900px) {
+    padding: 80px 16px 0;
+
+    &__title {
+      font-size: 34px;
+      margin-bottom: 16px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    &__title {
+      font-size: 30px;
+    }
+    &__text {
+      font-size: 16px;
+    }
+
+    &__col {
+      .button {
+        padding: 16px 20px;
+      }
+    }
+
+    &__contacts-item {
+      a,
+      div {
+        font-size: 16px;
+      }
+    }
+  }
+
+  @media (max-width: 650px) {
+    &__col {
+      margin-right: 48px;
+      .button {
+        width: 100%;
+      }
+    }
+    &__contacts {
+      margin-top: 32px;
+    }
+  }
+
+  @media (max-width: 375px) {
+    &__col {
+      margin-right: 16px;
+    }
+  }
+}

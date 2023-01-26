@@ -1,0 +1,248 @@
+import im1 from '../assets/news/1.png'
+import im2 from '../assets/news/2.png'
+import im3 from '../assets/news/3.png'
+
+const newsList = [
+  {
+    id: 1,
+    link: '/news/integer',
+    title: 'Facial1 massage with a jade <br/> stone. Techniques and tips.',
+    text:
+      'Aliquet amet nec justo, sit auctor nisl, nunc. Maecenas felis nunc id ut nisi, condimentum sit vulputate. Sit est suspendisse bibendum rutrum eget. Sapien mattis Maecenas felis nunc id ut nisi, condimentum sit vulputate. Sit est suspendisse bibendum rutrum eget. Sapien mattis',
+    datetime: '2022-10-11',
+    cat: 'Massage',
+    readTime: '5min',
+    img: im1.src,
+    views: 0,
+  },
+  {
+    id: 2,
+    link: '/news/integer',
+    title: 'Facial2 massage with a jade<br/> stone. Techniques and tips.',
+    text:
+      'Aliquet amet nec justo, sit auctor nisl, nunc. Maecenas felis nunc id ut nisi, condimentum sit vulputate. Sit est suspendisse bibendum rutrum eget. Sapien mattis Maecenas felis nunc id ut nisi, condimentum sit vulputate. Sit est suspendisse bibendum rutrum eget. Sapien mattis',
+    datetime: '2022-10-16',
+    cat: 'Beauty',
+    readTime: '2min',
+    img: im3.src,
+    views: 100,
+  },
+  {
+    id: 3,
+    link: '/news/integer',
+    title: 'Facial massage with a jade<br/> stone. Techniques and tips.',
+    text:
+      'Aliquet amet nec justo, sit auctor nisl, nunc. Maecenas felis nunc id ut nisi, condimentum sit vulputate. Sit est suspendisse bibendum rutrum eget. Sapien mattis Maecenas felis nunc id ut nisi, condimentum sit vulputate. Sit est suspendisse bibendum rutrum eget. Sapien mattis',
+    datetime: '2022-11-08',
+    cat: 'Travel',
+    readTime: '2min',
+    img: im2.src,
+    views: 10,
+  },
+  {
+    id: 1,
+    link: '/news/integer',
+    title: 'Integer rhoncus diam<br/> tristique odio donec.',
+    text:
+      'Aliquet amet nec justo, sit auctor nisl, nunc. Maecenas felis nunc id ut nisi, condimentum sit vulputate. Sit est suspendisse bibendum rutrum eget. Sapien mattis Maecenas felis nunc id ut nisi, condimentum sit vulputate. Sit est suspendisse bibendum rutrum eget. Sapien mattis',
+    datetime: '2022-10-11',
+    cat: 'Massage',
+    readTime: '5min',
+    img: im3.src,
+    views: 140,
+  },
+  {
+    id: 2,
+    link: '/news/integer',
+    title: 'Integer rhoncus diam<br/> tristique odio donec.',
+    text:
+      'Aliquet amet nec justo, sit auctor nisl, nunc. Maecenas felis nunc id ut nisi, condimentum sit vulputate. Sit est suspendisse bibendum rutrum eget. Sapien mattis Maecenas felis nunc id ut nisi, condimentum sit vulputate. Sit est suspendisse bibendum rutrum eget. Sapien mattis',
+    datetime: '2022-10-16',
+    cat: 'Beauty',
+    readTime: '2min',
+    img: im3.src,
+    views: 300,
+  },
+  {
+    id: 3,
+    link: '/news/integer',
+    title: 'Integer rhoncus diam<br/> tristique odio donec.',
+    text:
+      'Aliquet amet nec justo, sit auctor nisl, nunc. Maecenas felis nunc id ut nisi, condimentum sit vulputate. Sit est suspendisse bibendum rutrum eget. Sapien mattis Maecenas felis nunc id ut nisi, condimentum sit vulputate. Sit est suspendisse bibendum rutrum eget. Sapien mattis',
+    datetime: '2022-11-06',
+    cat: 'Travel',
+    readTime: '2min',
+    img: im1.src,
+    views: 300,
+  },
+  {
+    id: 3,
+    link: '/news/integer',
+    title: 'Integer rhoncus diam<br/> tristique odio donec.',
+    text:
+      'Aliquet amet nec justo, sit auctor nisl, nunc. Maecenas felis nunc id ut nisi, condimentum sit vulputate. Sit est suspendisse bibendum rutrum eget. Sapien mattis Maecenas felis nunc id ut nisi, condimentum sit vulputate. Sit est suspendisse bibendum rutrum eget. Sapien mattis',
+    datetime: '2022-11-06',
+    cat: 'Travel',
+    readTime: '2min',
+    img: im1.src,
+    views: 300,
+  },
+  {
+    id: 3,
+    link: '/news/integer',
+    title: 'Integer rhoncus diam<br/> tristique odio donec.',
+    text:
+      'Aliquet amet nec justo, sit auctor nisl, nunc. Maecenas felis nunc id ut nisi, condimentum sit vulputate. Sit est suspendisse bibendum rutrum eget. Sapien mattis Maecenas felis nunc id ut nisi, condimentum sit vulputate. Sit est suspendisse bibendum rutrum eget. Sapien mattis',
+    datetime: '2022-11-06',
+    cat: 'Travel',
+    readTime: '2min',
+    img: im1.src,
+    views: 300,
+  },
+  {
+    id: 3,
+    link: '/news/integer',
+    title: 'Integer rhoncus diam<br/> tristique odio donec.',
+    text:
+      'Aliquet amet nec justo, sit auctor nisl, nunc. Maecenas felis nunc id ut nisi, condimentum sit vulputate. Sit est suspendisse bibendum rutrum eget. Sapien mattis Maecenas felis nunc id ut nisi, condimentum sit vulputate. Sit est suspendisse bibendum rutrum eget. Sapien mattis',
+    datetime: '2022-11-06',
+    cat: 'Travel',
+    readTime: '2min',
+    img: im1.src,
+    views: 300,
+  },
+  {
+    id: 3,
+    link: '/news/integer',
+    title: 'Integer rhoncus diam<br/> tristique odio donec.',
+    text:
+      'Aliquet amet nec justo, sit auctor nisl, nunc. Maecenas felis nunc id ut nisi, condimentum sit vulputate. Sit est suspendisse bibendum rutrum eget. Sapien mattis Maecenas felis nunc id ut nisi, condimentum sit vulputate. Sit est suspendisse bibendum rutrum eget. Sapien mattis',
+    datetime: '2022-11-06',
+    cat: 'Travel',
+    readTime: '2min',
+    img: im1.src,
+    views: 300,
+  },
+  {
+    id: 1,
+    link: '/news/integer',
+    title: 'Facial1 massage with a jade <br/> stone. Techniques and tips.',
+    text:
+      'Aliquet amet nec justo, sit auctor nisl, nunc. Maecenas felis nunc id ut nisi, condimentum sit vulputate. Sit est suspendisse bibendum rutrum eget. Sapien mattis Maecenas felis nunc id ut nisi, condimentum sit vulputate. Sit est suspendisse bibendum rutrum eget. Sapien mattis',
+    datetime: '2022-10-11',
+    cat: 'Massage',
+    readTime: '5min',
+    img: im1.src,
+    views: 0,
+  },
+  {
+    id: 2,
+    link: '/news/integer',
+    title: 'Facial2 massage with a jade<br/> stone. Techniques and tips.',
+    text:
+      'Aliquet amet nec justo, sit auctor nisl, nunc. Maecenas felis nunc id ut nisi, condimentum sit vulputate. Sit est suspendisse bibendum rutrum eget. Sapien mattis Maecenas felis nunc id ut nisi, condimentum sit vulputate. Sit est suspendisse bibendum rutrum eget. Sapien mattis',
+    datetime: '2022-10-16',
+    cat: 'Beauty',
+    readTime: '2min',
+    img: im3.src,
+    views: 100,
+  },
+  {
+    id: 3,
+    link: '/news/integer',
+    title: 'Facial massage with a jade<br/> stone. Techniques and tips.',
+    text:
+      'Aliquet amet nec justo, sit auctor nisl, nunc. Maecenas felis nunc id ut nisi, condimentum sit vulputate. Sit est suspendisse bibendum rutrum eget. Sapien mattis Maecenas felis nunc id ut nisi, condimentum sit vulputate. Sit est suspendisse bibendum rutrum eget. Sapien mattis',
+    datetime: '2022-11-08',
+    cat: 'Travel',
+    readTime: '2min',
+    img: im2.src,
+    views: 10,
+  },
+  {
+    id: 1,
+    link: '/news/integer',
+    title: 'Integer rhoncus diam<br/> tristique odio donec.',
+    text:
+      'Aliquet amet nec justo, sit auctor nisl, nunc. Maecenas felis nunc id ut nisi, condimentum sit vulputate. Sit est suspendisse bibendum rutrum eget. Sapien mattis Maecenas felis nunc id ut nisi, condimentum sit vulputate. Sit est suspendisse bibendum rutrum eget. Sapien mattis',
+    datetime: '2022-10-11',
+    cat: 'Massage',
+    readTime: '5min',
+    img: im3.src,
+    views: 140,
+  },
+  {
+    id: 2,
+    link: '/news/integer',
+    title: 'Integer rhoncus diam<br/> tristique odio donec.',
+    text:
+      'Aliquet amet nec justo, sit auctor nisl, nunc. Maecenas felis nunc id ut nisi, condimentum sit vulputate. Sit est suspendisse bibendum rutrum eget. Sapien mattis Maecenas felis nunc id ut nisi, condimentum sit vulputate. Sit est suspendisse bibendum rutrum eget. Sapien mattis',
+    datetime: '2022-10-16',
+    cat: 'Beauty',
+    readTime: '2min',
+    img: im3.src,
+    views: 300,
+  },
+  {
+    id: 3,
+    link: '/news/integer',
+    title: 'Integer rhoncus diam<br/> tristique odio donec.',
+    text:
+      'Aliquet amet nec justo, sit auctor nisl, nunc. Maecenas felis nunc id ut nisi, condimentum sit vulputate. Sit est suspendisse bibendum rutrum eget. Sapien mattis Maecenas felis nunc id ut nisi, condimentum sit vulputate. Sit est suspendisse bibendum rutrum eget. Sapien mattis',
+    datetime: '2022-11-06',
+    cat: 'Travel',
+    readTime: '2min',
+    img: im1.src,
+    views: 300,
+  },
+  {
+    id: 3,
+    link: '/news/integer',
+    title: 'Integer rhoncus diam<br/> tristique odio donec.',
+    text:
+      'Aliquet amet nec justo, sit auctor nisl, nunc. Maecenas felis nunc id ut nisi, condimentum sit vulputate. Sit est suspendisse bibendum rutrum eget. Sapien mattis Maecenas felis nunc id ut nisi, condimentum sit vulputate. Sit est suspendisse bibendum rutrum eget. Sapien mattis',
+    datetime: '2022-11-06',
+    cat: 'Travel',
+    readTime: '2min',
+    img: im1.src,
+    views: 300,
+  },
+  {
+    id: 3,
+    link: '/news/integer',
+    title: 'Integer rhoncus diam<br/> tristique odio donec.',
+    text:
+      'Aliquet amet nec justo, sit auctor nisl, nunc. Maecenas felis nunc id ut nisi, condimentum sit vulputate. Sit est suspendisse bibendum rutrum eget. Sapien mattis Maecenas felis nunc id ut nisi, condimentum sit vulputate. Sit est suspendisse bibendum rutrum eget. Sapien mattis',
+    datetime: '2022-11-06',
+    cat: 'Travel',
+    readTime: '2min',
+    img: im1.src,
+    views: 300,
+  },
+  {
+    id: 3,
+    link: '/news/integer',
+    title: 'Integer rhoncus diam<br/> tristique odio donec.',
+    text:
+      'Aliquet amet nec justo, sit auctor nisl, nunc. Maecenas felis nunc id ut nisi, condimentum sit vulputate. Sit est suspendisse bibendum rutrum eget. Sapien mattis Maecenas felis nunc id ut nisi, condimentum sit vulputate. Sit est suspendisse bibendum rutrum eget. Sapien mattis',
+    datetime: '2022-11-06',
+    cat: 'Travel',
+    readTime: '2min',
+    img: im1.src,
+    views: 300,
+  },
+  {
+    id: 3,
+    link: '/news/integer',
+    title: 'Integer rhoncus diam<br/> tristique odio donec.',
+    text:
+      'Aliquet amet nec justo, sit auctor nisl, nunc. Maecenas felis nunc id ut nisi, condimentum sit vulputate. Sit est suspendisse bibendum rutrum eget. Sapien mattis Maecenas felis nunc id ut nisi, condimentum sit vulputate. Sit est suspendisse bibendum rutrum eget. Sapien mattis',
+    datetime: '2022-11-06',
+    cat: 'Travel',
+    readTime: '2min',
+    img: im1.src,
+    views: 300,
+  },
+]
+
+export default newsList

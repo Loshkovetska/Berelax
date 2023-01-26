@@ -1,0 +1,128 @@
+.follow-us.linkedin {
+  .follow-us__top {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .follow-us__text {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .follow-us__slider {
+    display: none;
+  }
+
+  .follow-us__blocks {
+    margin-top: 40px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    column-gap: 32px;
+    &-item {
+      padding: 16px;
+      height: 24.1vw;
+      width: 100%;
+      background: #ffffff;
+      border: 1px solid rgba(46, 99, 135, 0.17);
+      border-radius: 32px;
+      max-height: 460px;
+
+      iframe {
+        width: 100%;
+        height: 100%;
+        object-fit: fill;
+      }
+
+      @media (max-width: 480px) {
+        iframe {
+          object-fit: fill;
+        }
+      }
+    }
+  }
+
+  @media (max-width: 1024px) {
+    .follow-us__blocks {
+      column-gap: 24px;
+    }
+  }
+
+  @media (max-width: 900px) {
+    .follow-us__blocks {
+      overflow: auto;
+      margin-right: -16px;
+      margin-left: -16px;
+      padding: 0 16px;
+      overflow-y: hidden;
+      padding-bottom: 4px;
+      &::-webkit-scrollbar {
+        display: none;
+      }
+
+      &::-webkit-scrollbar-track {
+        display: none;
+      }
+
+      &::-webkit-scrollbar-thumb {
+        display: none;
+      }
+      grid-template-columns: repeat(3, 392px);
+
+      &-item {
+        height: 52vw;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .follow-us__blocks {
+        display: none;
+        grid-template-columns: repeat(3, calc(100% - 32px));
+
+        &-item {
+          height: 80vw;
+        }
+      }
+
+      .follow-us__slider {
+        display: flex;
+        margin-top: 32px;
+        .slick-slide > div {
+          padding: 0 12px;
+        }
+
+        .slick-slide {
+          min-width: calc(100vw - 32px);
+          max-width: calc(100vw - 32px);
+        }
+
+        .slick-list {
+          max-width: none;
+          width: calc(100vw + 24px);
+          margin: 0px -12px 0;
+        }
+
+        .slider__list,
+        .slider,
+        .slick-slider {
+          width: 100%;
+        }
+
+        position: relative;
+
+        &::after {
+          content: '';
+          position: absolute;
+          top: 0;
+          right: -16px;
+          display: block;
+          width: 74px;
+          height: 100%;
+          background: linear-gradient(
+            90deg,
+            rgba(255, 255, 255, 0) 16.1%,
+            #ffffff 100%
+          );
+        }
+      }
+    }
+  }
+}

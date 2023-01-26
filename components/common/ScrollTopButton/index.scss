@@ -1,0 +1,31 @@
+.scroll-button {
+  min-width: 40px;
+  max-width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  position: fixed;
+  bottom: 32px;
+  right: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #ffffff;
+  border: 1px solid rgba(26, 128, 197, 0.26);
+  opacity: 0;
+  transition: 0.3s ease-in-out all;
+  svg {
+    width: 16px;
+    height: 16px;
+  }
+  transform: rotate(180deg);
+  z-index: 20;
+
+  display: none;
+  &.visible {
+    display: flex;
+  }
+
+  &.show {
+    opacity: 1;
+  }
+}
