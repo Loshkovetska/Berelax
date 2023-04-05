@@ -22,20 +22,23 @@ const SelectItem = observer(
       >
         <div className="book-item__top">
           <div className="book-item__img">
-            <ImageComponent src={item?.img} />
+            <ImageComponent src={item?.img} alt={item?.alt} />
           </div>
           {withTime && isSelected && (
             <span
-              className="book-item__time"
-              onClick={(e) => e.stopPropagation()}
+              className={classNames(
+                'book-item__time',
+                ['nail-care', 'beauty'].includes(item.category) &&
+                  'book-service',
+              )}
+              onClick={(e) => {
+                e.stopPropagation()
+                changeTimeState(item)
+              }}
             >
-              {time} mins
-              <IconComponent
-                name={'treats/edit'}
-                onClick={() => {
-                  changeTimeState(item)
-                }}
-              />
+              {time}{' '}
+              {!['nail-care', 'beauty'].includes(item.category) && 'mins'}
+              <IconComponent name={'treats/edit'} onClick={() => {}} />
             </span>
           )}
           <RadioButton
@@ -47,7 +50,10 @@ const SelectItem = observer(
         </div>
         <div className="book-item__content">
           <div className="book-item__title">{item?.title}</div>
-          <div className="book-item__text">{item?.text}</div>
+          <div
+            className="book-item__text"
+            dangerouslySetInnerHTML={{ __html: item?.text }}
+          ></div>
         </div>
       </div>
     )

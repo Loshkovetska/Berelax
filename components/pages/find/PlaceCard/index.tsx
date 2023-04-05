@@ -15,16 +15,17 @@ const PlaceCard = ({ card }: { card: PlaceCard }) => {
     localStorage.setItem('location', JSON.stringify(card))
     window.location.href = '/booking'
   }
+
   return (
     <div className="place-card">
-      <div className="place-card__img">
+      <a className="place-card__img" href={`${card.link}`}>
         <ImageComponent src={card.img ? card.img : ''} />
-      </div>
+      </a>
       <div className="place-card__content">
         <div className="place-card__content-top">
           <div className="place-card__content-country">{card.country}</div>
           <div className="place-card__content-title">{card.title}</div>
-          <div className="place-card__content-text">{card.title}</div>
+          <div className="place-card__content-text">{card.text}</div>
         </div>
         <div className="place-card__content-bottom">
           <Button

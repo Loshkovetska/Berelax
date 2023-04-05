@@ -40,7 +40,7 @@ const Select = observer(
       if (!value.length && defaultValue.length) {
         setValue(defaultValue)
       }
-    }, [defaultValue])
+    }, [defaultValue, value])
 
     useEffect(() => {
       if (!open) {

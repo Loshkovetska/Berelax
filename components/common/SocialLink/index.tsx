@@ -6,8 +6,8 @@ const SocialLink = ({
   classStr = 'footer__socials-item',
   isClickable = true,
 }: {
-  link?: any
-  icon: any
+  link?: string
+  icon: string
   classStr?: string
   isClickable?: boolean
 }) => {

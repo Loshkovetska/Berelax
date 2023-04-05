@@ -1,18 +1,17 @@
-import Head from 'next/head'
 import { observer } from 'mobx-react'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import useLocoScroll from '../../hooks/useLoco'
-import GlobalState from '../../stores/GlobalState'
 import Layout from '../../components/common/Layout'
 import { getNewsPost } from '../api/getNewsPost'
 import PostContent from '../../components/pages/newsPost/PostContent'
 import Banner from '../../components/pages/location/Banner'
 import Similiar from '../../components/pages/newsPost/Similiar'
-import { getNews } from '../../stores/ContentState'
+import { getNews, updateViews } from '../../stores/ContentState'
+import SeoBlock from '../../components/common/SeoBlock'
 
 const NewsPostPage = observer(({ hydrationData: props }: any) => {
-  const [loading, setLoading] = useState(false)
-
+  const ref = useRef<any>(false)
+  const [loading, setLoading] = useState(true)
   useLocoScroll(!loading)
   useEffect(() => {
     if (!loading) {
@@ -22,11 +21,21 @@ const NewsPostPage = observer(({ hydrationData: props }: any) => {
     }
   }, [loading])
 
+  useEffect(() => {
+    if (ref.current) return
+    updateViews(props.content.id)
+    ref.current = true
+  }, [props])
+
+  useEffect(() => {
+    if (props.content) {
+      setLoading(false)
+    }
+  }, [props])
+
   return (
     <>
-      <Head>
-        <title>Be relax</title>
-      </Head>
+      <SeoBlock seo={props.seo} />
       <Layout delay={1}>
         <PostContent />
         <Banner />
@@ -44,24 +53,25 @@ export async function getStaticPaths() {
   news?.forEach((p: any) => {
     paths.push({
       params: {
-        slug: p.link.replaceAll('/news/', '').replaceAll('/', ''),
-        path: p.link.replaceAll('/news/', '').replaceAll('/', ''),
+        slug: p.slug,
+        path: p.link,
       },
     })
   })
 
   return {
     paths: paths,
-    fallback: 'blocking',
+    fallback: false,
   }
 }
 
 export async function getStaticProps({ params }: any) {
-  const response = await getNewsPost(params.slug)
+  const response = (await getNewsPost(params.slug)) || null
 
   return {
     props: {
       hydrationData: { ...response },
     },
+    revalidate: 10,
   }
 }

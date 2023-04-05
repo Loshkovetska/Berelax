@@ -4,8 +4,10 @@ import { useEffect, useRef, useState } from 'react'
 import useClickOutSide from '../../../hooks/ClickOutSide'
 import { useWindowDimensions } from '../../../hooks/getWindowDimensions'
 import { useContentState } from '../../../hooks/RootStoreProvider'
+import { retailerLocationsList } from '../../../stores/ContentState'
 import GlobalState, { changeRetailerState } from '../../../stores/GlobalState'
 import { IconComponent } from '../IconComponent'
+import RetailerSelect from '../RetailerSelect'
 
 import RetailMap from '../RetailMap'
 import Select from '../Select'
@@ -13,10 +15,10 @@ import Title54 from '../Title54'
 
 const RetailPop = observer(() => {
   const { content } = useContentState()
-  const [value, setState] = useState('')
+  const [value, setState] = useState<any>(null)
   const [results, setResults] = useState(Array())
   const [show, setShow] = useState(false)
-
+  const [showAdd, setShowAdd] = useState(false)
   const { width } = useWindowDimensions()
   const ref = useRef<any>(null)
   const outSide = useClickOutSide(ref)
@@ -28,134 +30,35 @@ const RetailPop = observer(() => {
     setTimeout(() => {
       setShow(true)
     }, 300)
-
-    setResults([
-      {
-        isAirport: true,
-
-        title: 'New York Airport',
-        text: 'McNamara Terminal Gate A18',
-        schedule: 'Every day from 7am to 8pm',
-        phone: '(1) 734 229 0042',
-        coords: {
-          lat: 10,
-          lng: 20,
-        },
-      },
-      {
-        title: 'New York Airport',
-        text: 'McNamara Terminal Gate A18',
-        schedule: 'Every day from 7am to 8pm',
-        phone: '(1) 734 229 0042',
-        isAirport: false,
-        coords: {
-          lat: -20,
-          lng: 20,
-        },
-      },
-      {
-        title: 'New York Airport',
-        text: 'McNamara Terminal Gate A18',
-        schedule: 'Every day from 7am to 8pm',
-        phone: '(1) 734 229 0042',
-        isAirport: false,
-        coords: {
-          lat: 100,
-          lng: 20,
-        },
-      },
-      {
-        title: 'New York Airport',
-        text: 'McNamara Terminal Gate A18',
-        schedule: 'Every day from 7am to 8pm',
-        phone: '(1) 734 229 0042',
-        isAirport: false,
-        coords: {
-          lat: 10,
-          lng: -20,
-        },
-      },
-      {
-        title: 'New York Airport',
-        text: 'McNamara Terminal Gate A18',
-        schedule: 'Every day from 7am to 8pm',
-        phone: '(1) 734 229 0042',
-        isAirport: false,
-        coords: {
-          lat: 10,
-          lng: -25,
-        },
-      },
-    ])
   }, [])
 
-  const search = (value: string) => {
-    const fd = new FormData()
-    fd.append('status', 'location-search')
-    fd.append('value', value)
-    // fetch('/', {
-    //   method: 'POST',
-    //   body: fd,
-    // }).then(() => {
-    // })
-    setResults([
-      {
-        isAirport: true,
+  useEffect(() => {
+    if (value?.title?.length || value) {
+      search(value)
+    } else {
+      retailerLocationsList().then((r) => {
+        setResults(r)
+        setShowAdd(false)
+      })
+    }
+  }, [value])
 
-        title: 'New York Airport',
-        text: 'McNamara Terminal Gate A18',
-        schedule: 'Every day from 7am to 8pm',
-        phone: '(1) 734 229 0042',
-        coords: {
-          lat: 10,
-          lng: 20,
-        },
-      },
-      {
-        title: 'New York Airport',
-        text: 'McNamara Terminal Gate A18',
-        schedule: 'Every day from 7am to 8pm',
-        phone: '(1) 734 229 0042',
-        isAirport: false,
-        coords: {
-          lat: -100,
-          lng: 20,
-        },
-      },
-      {
-        title: 'New York Airport',
-        text: 'McNamara Terminal Gate A18',
-        schedule: 'Every day from 7am to 8pm',
-        phone: '(1) 734 229 0042',
-        isAirport: false,
-        coords: {
-          lat: 100,
-          lng: 20,
-        },
-      },
-      {
-        title: 'New York Airport',
-        text: 'McNamara Terminal Gate A18',
-        schedule: 'Every day from 7am to 8pm',
-        phone: '(1) 734 229 0042',
-        isAirport: false,
-        coords: {
-          lat: 10,
-          lng: -20,
-        },
-      },
-      {
-        title: 'New York Airport',
-        text: 'McNamara Terminal Gate A18',
-        schedule: 'Every day from 7am to 8pm',
-        phone: '(1) 734 229 0042',
-        isAirport: false,
-        coords: {
-          lat: 10,
-          lng: -20,
-        },
-      },
-    ])
+  const search = async (value: any) => {
+    await retailerLocationsList().then((r) => {
+      const res = r.filter((c: any) => {
+        let lc = (c.title + c.text).toLowerCase()
+        let searchText = value?.title ? value?.title : value
+        if (lc.includes(searchText?.toLowerCase())) {
+          return c
+        }
+      })
+
+      if (res.length) {
+        setShowAdd(true)
+      }
+
+      setResults(res)
+    })
   }
 
   useEffect(() => {
@@ -191,19 +94,6 @@ const RetailPop = observer(() => {
     }
   }, [outSide])
 
-  useEffect(() => {
-    let vh = window.innerHeight * 0.01
-    const s = document.querySelector('.retail-pop')
-    if (!s) return
-    ;(s as any).style.setProperty('--vh', `${vh}px`)
-    window.addEventListener('resize', function (e) {
-      let vh = window.innerHeight * 0.01
-      const s = document.querySelector('.retail-pop')
-      if (!s) return
-      ;(s as any).style.setProperty('--vh', `${vh}px`)
-    })
-  }, [])
-
   return (
     <section
       className={classNames('retail-pop', GlobalState.isRetailerOpen && 'show')}
@@ -235,17 +125,13 @@ const RetailPop = observer(() => {
         </div>
         <div className="retail-pop__right">
           <Title54 text={content?.pop?.title} classStr="retail-pop__title" />
-          <Select
+          <RetailerSelect
             placeholder={content?.pop?.placeholder}
-            withSearch
-            isLocate
-            value={''}
-            isSearchIcon
-            dt={content?.pop?.locations}
+            getValue={setState}
           />
-          {value.length ? (
+          {value?.title?.length && showAdd ? (
             <div className="retail-pop__subtitle">
-              {results?.length} “{value}” locations
+              {results?.length} “{value?.title}” locations
             </div>
           ) : (
             <></>
@@ -325,8 +211,12 @@ export const LocationCard = observer(
       >
         <div className="location-card__top">
           <IconComponent
-            name={dt.isAirport ? 'retail/plane' : 'retail/location'}
-            className={!dt.isAirport && 'shop'}
+            name={'retail/plane'}
+            className={classNames('', dt.isAirport && 'visible')}
+          />
+          <IconComponent
+            name={'retail/location'}
+            className={classNames('shop', !dt.isAirport && 'visible')}
           />
           <div className="location-card__title">{dt?.title}</div>
         </div>

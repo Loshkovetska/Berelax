@@ -1,9 +1,6 @@
-import Head from 'next/head'
 import { observer } from 'mobx-react'
 import { useEffect, useRef, useState } from 'react'
 import useLocoScroll from '../hooks/useLoco'
-import GlobalState from '../stores/GlobalState'
-import { getHome } from './api/getHome'
 import Layout from '../components/common/Layout'
 import Intro from '../components/pages/story/Intro'
 import { getStory } from './api/getStory'
@@ -11,10 +8,10 @@ import CompanyValues from '../components/pages/story/CompanyValues'
 import RoadMap from '../components/pages/story/RoadMap'
 import FollowUs from '../components/pages/home/FollowUs'
 import StoryBlocks from '../components/pages/story/StoryBlocks'
+import SeoBlock from '../components/common/SeoBlock'
 
 const Story = observer(({ hydrationData: props }: any) => {
-  const [loading, setLoading] = useState(false)
-
+  const [loading, setLoading] = useState(true)
   useLocoScroll(!loading)
   useEffect(() => {
     if (!loading) {
@@ -23,13 +20,16 @@ const Story = observer(({ hydrationData: props }: any) => {
       }
     }
   }, [loading])
-
+  
+  useEffect(() => {
+    if (props.content) {
+      setLoading(false)
+    }
+  }, [props])
 
   return (
     <>
-      <Head>
-        <title>Be relax</title>
-      </Head>
+      <SeoBlock seo={props.seo} />
       <Layout delay={1}>
         <Intro />
         <CompanyValues />
@@ -50,5 +50,6 @@ export async function getStaticProps() {
     props: {
       hydrationData: { ...response },
     },
+    revalidate: 10,
   }
 }

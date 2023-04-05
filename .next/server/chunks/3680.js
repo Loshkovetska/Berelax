@@ -23,7 +23,7 @@ __webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __we
 /* harmony import */ var react_intersection_observer__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(4009);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(6689);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_7__);
-/* harmony import */ var _ImageComponent__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(4042);
+/* harmony import */ var _ImageComponent__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(9808);
 /* harmony import */ var next_link__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(1664);
 /* harmony import */ var next_link__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(next_link__WEBPACK_IMPORTED_MODULE_9__);
 /* harmony import */ var _hooks_useScrollPos__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(7767);
@@ -51,7 +51,8 @@ const ProductCat = (0,mobx_react__WEBPACK_IMPORTED_MODULE_2__.observer)(({ pr , 
             setEnd(inView);
         }
     }, [
-        inView
+        inView,
+        end
     ]);
     const { x , y  } = (0,_hooks_useScrollPos__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .Z)();
     const setPos = (x, y)=>{
@@ -68,7 +69,8 @@ const ProductCat = (0,mobx_react__WEBPACK_IMPORTED_MODULE_2__.observer)(({ pr , 
             onClick: ()=>setPos(0, y),
             children: [
                 /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_ImageComponent__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .Z, {
-                    src: pr.img
+                    src: pr.img,
+                    alt: pr.alt
                 }),
                 /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("h3", {
                     className: classnames__WEBPACK_IMPORTED_MODULE_1___default()("products__item-title", isDark && "dark"),

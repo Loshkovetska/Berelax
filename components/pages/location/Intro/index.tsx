@@ -27,7 +27,7 @@ const Intro = observer(() => {
       <InViewComponent>
         <div className="place-intro__top">
           <Title classStr="place-intro__title" text={content?.title} />
-          <div className="place-intro__text">{content?.text}</div>
+          <div className="place-intro__text">{content?.text.toLowerCase()}</div>
           <Button
             classStr="beige button-arrow button-svg p16p28 f16"
             isLink={false}
@@ -43,7 +43,7 @@ const Intro = observer(() => {
       </InViewComponent>
       <InViewComponent delay={1}>
         <div className="place-intro__img">
-          <ImageComponent src={content?.img} />
+          <ImageComponent src={content?.img} alt={content?.alt} />
         </div>
       </InViewComponent>
     </section>

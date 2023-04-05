@@ -95,6 +95,12 @@ const Follow = (0,mobx_react__WEBPACK_IMPORTED_MODULE_2__.observer)(()=>{
                                 delay: f,
                                 children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
                                     className: "follow-us__blocks-item",
+                                    onClick: ()=>{
+                                        const el = document.createElement("div");
+                                        el.insertAdjacentHTML("beforeend", f);
+                                        const frame = el.querySelector("iframe");
+                                        window.open(frame?.src.replaceAll("/embed", ""), "_blank");
+                                    },
                                     dangerouslySetInnerHTML: {
                                         __html: f
                                     }

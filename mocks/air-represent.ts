@@ -74,10 +74,3 @@ const airRepresent = {
 }
 
 export default airRepresent
-  // book: {
-  //   title: 'Be Relax Profile',
-  //   text:
-  //     'Neque tristique odio nunc amet maecenas. Id sed commodo odio nec. Sed congue mauris eu nibh pretium fringilla viverra donec ',
-  //   buttonTitle: 'Download company profile',
-  //   buttonLink: '#',
-  // },

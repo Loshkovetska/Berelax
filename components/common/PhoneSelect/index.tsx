@@ -7,26 +7,70 @@ import ImageComponent from '../ImageComponent'
 import classNames from 'classnames'
 import useClickOutSide from '../../../hooks/ClickOutSide'
 import { IconComponent } from '../IconComponent'
+import phonecodes from '../../../mocks/phonecodes'
 
 const PhoneSelect = observer(
   ({
-    dt,
     placeholder,
     isRequired,
     setPhoneNumber,
     resetField,
   }: {
-    dt: any
     placeholder: string
     isRequired: boolean
     resetField?: boolean
     setPhoneNumber?: (value: string) => void
   }) => {
+    const [dt, setDt] = useState<
+      Array<{
+        title: string
+        flag: string
+        code: string
+      }>
+    >([])
     const ref = useRef<any>(null)
     const [country, setCountry] = useState<any>(null)
     const [show, setShow] = useState(false)
     const [phone, setPhone] = useState('')
     const outside = useClickOutSide(ref)
+
+    useEffect(() => {
+      if (!dt.length) {
+        try {
+          const data: any = []
+          phonecodes
+            ?.sort((a, b) => a.country_en.localeCompare(b.country_en))
+            .forEach((p: any) => {
+              data.push({
+                title: p.country_en,
+                code: '+' + p.phone_code,
+                flag: `https://flagsapi.com/${p.country_code}/flat/32.png`,
+              })
+            })
+
+          setDt(data)
+          // fetch(`https://restcountries.com/v3.1/all`)
+          //   .then((r) => r.json())
+          //   .then((res) => {
+          //     console.log(res)
+          //     if (res.length) {
+          //       let sub = res
+          //         .map((c: any) => {
+          //           return {
+          //             title: c.name.official,
+          //             code: c.idd.root,
+          //             flag: c.flags.svg || c.flags.png,
+          //           }
+          //         })
+          //         .sort((a: any, b: any) => a.title.localeCompare(b.title))
+          //       setDt(sub)
+          //     }
+          //   })
+        } catch (e) {
+          console.log('phone api error', e)
+        }
+      }
+    }, [dt])
 
     useEffect(() => {
       if (outside) {
@@ -35,26 +79,26 @@ const PhoneSelect = observer(
     }, [outside])
 
     useEffect(() => {
-      if (!country) {
+      if (!country && dt.length) {
         setCountry({
           code: dt[0].code,
           flag: dt[0].flag,
         })
       }
-    }, [dt])
+    }, [dt, country])
 
     useEffect(() => {
-      if (resetField) {
+      if (resetField && dt.length) {
         setCountry({
           code: dt[0].code,
           flag: dt[0].flag,
         })
-          setPhone('')
+        setPhone('')
       }
     }, [resetField, dt])
 
     useEffect(() => {
-      if (!show && country) {
+      if (!show && country && phone.length) {
         runInAction(() => {
           UserData.phone = `${country.code}${phone}`
         })
@@ -68,7 +112,7 @@ const PhoneSelect = observer(
           <div className="phone-select__flag" onClick={() => setShow(!show)}>
             {country && (
               <>
-                <ImageComponent src={country.flag} />
+                <ImageComponent src={country.flag} alt={''} />
                 {country.code}
               </>
             )}
@@ -87,6 +131,8 @@ const PhoneSelect = observer(
                 e.target.value.length <= 15
               ) {
                 setPhone(e.target.value)
+                setPhoneNumber &&
+                  setPhoneNumber(`${country.code}${e.target.value}`)
               }
             }}
           />
@@ -114,7 +160,7 @@ const PhoneSelect = observer(
               }}
             >
               <div className="phone-select__flag">
-                <ImageComponent src={country.flag} />
+                <ImageComponent src={country.flag} alt="" />
                 {country.code}
               </div>
               {country.title}

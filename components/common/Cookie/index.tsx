@@ -41,7 +41,12 @@ const Cookie = observer(() => {
   }, [isShow])
 
   return (
-    <section className={classNames('cookie', isShow && 'show')}>
+    <section
+      className={classNames('cookie', isShow && 'show')}
+      style={{
+        visibility: 'hidden',
+      }}
+    >
       <div className="cookie__container">
         <div className="cookie__close" onClick={() => setShow(false)}>
           <IconComponent name={'close'} />

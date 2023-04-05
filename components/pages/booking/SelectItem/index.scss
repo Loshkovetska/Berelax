@@ -35,9 +35,19 @@
     font-size: 12px;
     line-height: 100%;
     text-transform: uppercase;
-
     color: #ffffff;
     overflow: hidden;
+
+    &.book-service {
+      margin: 0 8px;
+      max-width: 120px;
+      text-transform: capitalize;
+      border-radius: 16px;
+      @media (max-width: 768px) {
+        max-width: 180px;
+        margin: 0 8px;
+      }
+    }
 
     cursor: pointer;
     svg {
@@ -49,6 +59,7 @@
       padding: 4px 16px;
       svg {
         max-width: none;
+        min-width: 14px;
         margin-left: 8px;
 
         transform: translateX(0%);
@@ -60,6 +71,7 @@
       svg {
         max-width: none;
         margin-left: 8px;
+        min-width: 14px;
 
         transform: translateX(0%);
       }
@@ -68,6 +80,7 @@
         svg {
           max-width: none;
           margin-left: 8px;
+          min-width: 14px;
 
           transform: translateX(0%);
         }
@@ -116,6 +129,11 @@
     font-size: 12px;
     line-height: 140%;
     color: #3a4458;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    display: inline;
+    display: -webkit-box;
+    overflow: hidden;
   }
 
   &:hover {

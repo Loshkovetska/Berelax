@@ -19,12 +19,13 @@ const MusicBox = observer(() => {
   const { audio } = content
 
   useEffect(() => {
+    if (!audio) return
     document
       .querySelector('.smooth')
       ?.addEventListener('mousemove', function () {
         ref.current && ref.current.play()
       })
-  }, [])
+  }, [audio])
 
   useEffect(() => {
     if (!ref.current) return

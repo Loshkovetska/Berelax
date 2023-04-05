@@ -1,21 +1,16 @@
 import {
-  getCountryPop,
-  getFooter,
   getHeader,
- getAcademyPage
+  getAcademyPage,
 } from '../../stores/ContentState'
 
 export const getAcademy = async () => {
-  const header = await getHeader(),
-    footer = await getFooter(),
-    content = await getAcademyPage(),
-    countrypop = await getCountryPop()
-
+  const { header, countrypop, footer } = await getHeader(),
+    { content, seo } = await getAcademyPage()
   return {
     header,
     footer,
     content,
     countrypop,
- 
+    seo,
   }
 }

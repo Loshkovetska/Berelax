@@ -55,6 +55,9 @@
     & > .in-view {
       display: flex;
     }
+    .treat-item {
+      width: 100%;
+    }
   }
 
   @media (max-width: 1280px) {

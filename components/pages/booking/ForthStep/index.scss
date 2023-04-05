@@ -7,6 +7,12 @@
     row-gap: 16px;
   }
 
+  .phone-select {
+    &__top {
+      padding: 16px 24px;
+    }
+  }
+
   .input {
     padding: 16px 24px;
     background: #ffffff;

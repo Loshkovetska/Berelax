@@ -79,6 +79,9 @@
 
         &-item {
           height: 80vw;
+          iframe{
+            pointer-events: none;
+          }
         }
       }
 

@@ -1,9 +1,9 @@
 import classNames from 'classnames'
 import { observable, runInAction } from 'mobx'
 import { observer } from 'mobx-react'
-import { useState } from 'react'
+import { useRouter } from 'next/router'
+import { useEffect, useState } from 'react'
 import { useContentState } from '../../../../hooks/RootStoreProvider'
-import { IconComponent } from '../../../common/IconComponent'
 import InViewComponent from '../../../common/InViewComponent'
 import Map from '../../../common/Map'
 import Select from '../../../common/Select'
@@ -15,9 +15,25 @@ export const FindTabState = observable({
 })
 
 const Intro = observer(() => {
+  const router = useRouter()
   const ctx = useContentState()
   const { content } = ctx
   const [zoom, setZoom] = useState(1)
+  const [localeCat, setCat] = useState<any>(null)
+
+  useEffect(() => {
+    if (router.query?.airport && ctx.airports) {
+      ctx.airports?.forEach((p: any) => {
+        const loc = p.list?.find(
+          (di: any) => di.skyCat?.slug == router.query?.airport,
+        )
+        if (loc) {
+          setCat(loc)
+          return
+        }
+      })
+    }
+  }, [router.query, ctx.airports])
 
   return (
     <section className="find-intro">
@@ -32,8 +48,10 @@ const Intro = observer(() => {
           <Select
             placeholder={content?.selectPlaceholder}
             dt={ctx?.airports}
-            value=""
+            value={''}
             isLocate
+            isFindUs={true}
+            findUsValue={localeCat}
           />
         </div>
       </InViewComponent>

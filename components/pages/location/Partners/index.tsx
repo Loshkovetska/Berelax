@@ -28,7 +28,7 @@ const Partners = observer(() => {
               target="_blank"
               rel="noreferrer"
             >
-              <ImageComponent src={pi.src} />
+              <ImageComponent src={pi.src} alt={pi.alt} />
             </a>
           </InViewComponent>
         ))}

@@ -98,8 +98,13 @@
   }
 
   &__colors {
-    display: flex;
+    // display: flex;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    column-gap: 16px;
+    row-gap: 16px;
     margin-bottom: 16px;
+    width: 265px;
     &-item {
       cursor: pointer;
       min-width: 40px;
@@ -125,9 +130,9 @@
       background: #ffffff;
       border: 1px solid rgba(46, 99, 135, 0.17);
 
-      &:not(:last-child) {
-        margin-right: 16px;
-      }
+      // &:not(:last-child) {
+      //   margin-right: 16px;
+      // }
       &.active {
         border: 1px solid #00587c;
       }
@@ -220,7 +225,7 @@
     border: 1px solid rgba(46, 99, 135, 0.17);
     border-radius: 32px;
     overflow: hidden;
-
+    height: 27vw;
     max-height: 710px;
     iframe {
       width: 100%;
@@ -415,6 +420,7 @@
 
     &__video {
       border-radius: 24px;
+      height: 53vw;
     }
 
     &__bottom {
@@ -446,6 +452,9 @@
     }
 
     &__colors {
+      width: 224px;
+      column-gap: 8px;
+      row-gap: 8px;
       &-item {
         min-width: 32px;
         max-width: 32px;

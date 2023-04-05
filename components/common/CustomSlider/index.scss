@@ -18,10 +18,12 @@
   .slick-slide > div {
     width: 100%;
     height: 100%;
+    display: flex;
   }
 
   .in-view {
     width: 100%;
+    display: flex;
   }
 
   &.story-slider {

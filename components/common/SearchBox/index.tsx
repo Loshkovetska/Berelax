@@ -1,6 +1,6 @@
 import classNames from 'classnames'
 import { observer } from 'mobx-react'
-import { useEffect, useState } from 'react'
+import { FormEvent, useCallback, useEffect, useState } from 'react'
 import { useContentState } from '../../../hooks/RootStoreProvider'
 import GlobalState from '../../../stores/GlobalState'
 import Button from '../Button'
@@ -11,12 +11,16 @@ const SearchBox = observer(() => {
   const { header } = useContentState()
   const [value, setValue] = useState('')
   const [isFocus, setFocus] = useState(false)
-  const search = (e: any) => {
-    e.preventDefault()
+  const search = useCallback(
+    (e: FormEvent) => {
+      e.preventDefault()
+      if (!value.length) return
 
-    sessionStorage.setItem('search-value', value)
-    window.location.href = '/search'
-  }
+      sessionStorage.setItem('search-value', value)
+      window.location.href = '/search'
+    },
+    [value],
+  )
 
   useEffect(() => {
     if (!GlobalState.isSearchOpen) {

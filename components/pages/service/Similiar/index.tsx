@@ -23,6 +23,8 @@ const Similiar = observer(({ isProduct = false }: { isProduct?: boolean }) => {
   if (!isProduct) {
     slideToShow = width >= 900 ? 2 : 1
   }
+
+  if (!content?.similiar?.cards.length) return <></>
   return (
     <section className="similiar">
       <div className="similiar__container">

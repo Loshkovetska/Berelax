@@ -1,5 +1,4 @@
 import { observer } from 'mobx-react'
-import HomeState from '../../../../stores/ContentState'
 import Button from '../../../common/Button'
 import { IconComponent } from '../../../common/IconComponent'
 import { useInView } from 'react-intersection-observer'
@@ -7,12 +6,14 @@ import { useEffect, useState } from 'react'
 import classNames from 'classnames'
 import { useContentState } from '../../../../hooks/RootStoreProvider'
 import ImageComponent from '../../../common/ImageComponent'
-import CustomSlider from '../../../common/CustomSlider'
+import { getInstagramPhotos } from '../../../../funcs/formators'
 
 const FollowUs = observer(() => {
   const {
     content: { follow },
   } = useContentState()
+
+  const [photos, setPhotos] = useState([])
 
   const [end, setEnd] = useState(false)
   const { ref, inView, entry } = useInView({
@@ -52,6 +53,7 @@ const FollowUs = observer(() => {
             className="follow-us__text"
             dangerouslySetInnerHTML={{ __html: follow?.text }}
           ></div>
+
           <Button
             classStr="white button-arrow button-svg p24"
             isLink
@@ -66,9 +68,11 @@ const FollowUs = observer(() => {
           />
         </div>
         <div className="follow-us__list">
-          {follow?.images?.map((f: any, i: number) => (
-            <FollowUsImage f={f} key={i} />
-          ))}
+          {(photos?.length > 0 ? photos : follow?.images)?.map(
+            (f: any, i: number) => (
+              <FollowUsImage f={f} key={i} />
+            ),
+          )}
         </div>
       </div>
     </section>
@@ -89,8 +93,14 @@ const FollowUsImage = ({ f }: { f: any }) => {
   }, [inView])
 
   return (
-    <div className={classNames('follow-us__img', end && 'animated')} ref={ref}>
-      <ImageComponent src={f || ''} />
-    </div>
+    <a
+      className={classNames('follow-us__img', end && 'animated')}
+      ref={ref}
+      href={f.link}
+      target="_blank"
+      rel="noreferrer"
+    >
+      <ImageComponent src={f.img || ''} alt={f.alt} />
+    </a>
   )
 }

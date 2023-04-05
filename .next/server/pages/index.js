@@ -21,7 +21,7 @@ __webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __we
 /* harmony import */ var _hooks_RootStoreProvider__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(5975);
 /* harmony import */ var _common_Button__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(8133);
 /* harmony import */ var _common_IconComponent__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(9286);
-/* harmony import */ var _common_ImageComponent__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(4042);
+/* harmony import */ var _common_ImageComponent__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(9808);
 /* harmony import */ var _common_InViewComponent__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(2949);
 /* harmony import */ var _common_Title__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(4353);
 /* harmony import */ var _IntroVideo__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(3750);
@@ -81,7 +81,8 @@ const Intro = (0,mobx_react__WEBPACK_IMPORTED_MODULE_1__.observer)(()=>{
                                         children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
                                             className: "intro__gallery-img b48 h300",
                                             children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_common_ImageComponent__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .Z, {
-                                                src: intro.images[0]
+                                                src: intro.images[0].src,
+                                                alt: intro.images[0].alt
                                             })
                                         })
                                     })
@@ -94,13 +95,15 @@ const Intro = (0,mobx_react__WEBPACK_IMPORTED_MODULE_1__.observer)(()=>{
                                             /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
                                                 className: "intro__gallery-img b104 h339",
                                                 children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_common_ImageComponent__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .Z, {
-                                                    src: intro.images[1]
+                                                    src: intro.images[1].src,
+                                                    alt: intro.images[1].alt
                                                 })
                                             }),
                                             /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
                                                 className: "intro__gallery-img b48 h200",
                                                 children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_common_ImageComponent__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .Z, {
-                                                    src: intro.images[2]
+                                                    src: intro.images[2].src,
+                                                    alt: intro.images[2].alt
                                                 })
                                             })
                                         ]
@@ -115,13 +118,15 @@ const Intro = (0,mobx_react__WEBPACK_IMPORTED_MODULE_1__.observer)(()=>{
                                             /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
                                                 className: "intro__gallery-img b48 h200",
                                                 children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_common_ImageComponent__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .Z, {
-                                                    src: intro.images[3]
+                                                    src: intro.images[3].src,
+                                                    alt: intro.images[3].alt
                                                 })
                                             }),
                                             /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
                                                 className: "intro__gallery-img b104 h339",
                                                 children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_common_ImageComponent__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .Z, {
-                                                    src: intro.images[4]
+                                                    src: intro.images[4].src,
+                                                    alt: intro.images[4].alt
                                                 })
                                             })
                                         ]
@@ -134,7 +139,8 @@ const Intro = (0,mobx_react__WEBPACK_IMPORTED_MODULE_1__.observer)(()=>{
                                         children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
                                             className: "intro__gallery-img b48 h300 ",
                                             children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_common_ImageComponent__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .Z, {
-                                                src: intro.images[5]
+                                                src: intro.images[5].src,
+                                                alt: intro.images[5].alt
                                             })
                                         })
                                     })
@@ -148,7 +154,8 @@ const Intro = (0,mobx_react__WEBPACK_IMPORTED_MODULE_1__.observer)(()=>{
                         children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
                             className: "intro__img-mobile",
                             children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_common_ImageComponent__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .Z, {
-                                src: intro?.mainImg
+                                src: intro?.mainImg,
+                                alt: intro?.mainImgAlt
                             })
                         })
                     })
@@ -180,7 +187,7 @@ __webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __we
 /* harmony import */ var _stores_GlobalState__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(4812);
 /* harmony import */ var _common_InViewComponent__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(2949);
 /* harmony import */ var _hooks_RootStoreProvider__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(5975);
-/* harmony import */ var _common_ImageComponent__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(4042);
+/* harmony import */ var _common_ImageComponent__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(9808);
 /* harmony import */ var _hooks_getWindowDimensions__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(4219);
 var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_common_InViewComponent__WEBPACK_IMPORTED_MODULE_4__]);
 _common_InViewComponent__WEBPACK_IMPORTED_MODULE_4__ = (__webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__)[0];
@@ -373,7 +380,8 @@ const IntroVideo = (0,mobx_react__WEBPACK_IMPORTED_MODULE_1__.observer)(()=>{
                     }),
                     /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_common_ImageComponent__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .Z, {
                         src: intro?.mainImg,
-                        classStr: "hidden intro-img"
+                        classStr: "hidden intro-img",
+                        alt: intro?.mainImgAlt
                     })
                 ]
             })
@@ -453,6 +461,8 @@ const News = (0,mobx_react__WEBPACK_IMPORTED_MODULE_1__.observer)(()=>{
     }, [
         news
     ]);
+    if (!newsList) return /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.Fragment, {});
+    const newsSortedList = JSON.parse(JSON.stringify(newsList))?.sort((a, b)=>new Date(b.datetime).getTime() - new Date(a.datetime).getTime()).slice(0, 3);
     return /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("section", {
         className: "news",
         children: /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
@@ -486,7 +496,7 @@ const News = (0,mobx_react__WEBPACK_IMPORTED_MODULE_1__.observer)(()=>{
                 }),
                 /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
                     className: "news__list",
-                    children: JSON.parse(JSON.stringify(newsList))?.sort((a, b)=>new Date(b.datetime).getTime() - new Date(a.datetime).getTime()).slice(0, 3).map((ni, i)=>/*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_common_NewsPost__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .Z, {
+                    children: newsSortedList?.map((ni, i)=>/*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_common_NewsPost__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .Z, {
                             post: ni
                         }, i))
                 }),
@@ -497,7 +507,7 @@ const News = (0,mobx_react__WEBPACK_IMPORTED_MODULE_1__.observer)(()=>{
                         slidesToScroll: 1,
                         variableWidth: true,
                         infinite: false,
-                        children: JSON.parse(JSON.stringify(newsList))?.sort((a, b)=>new Date(b.datetime).getTime() - new Date(a.datetime).getTime()).slice(0, 3).map((ni, i)=>/*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_common_NewsPost__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .Z, {
+                        children: newsSortedList?.map((ni, i)=>/*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_common_NewsPost__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .Z, {
                                 post: ni
                             }, i))
                     })
@@ -687,16 +697,17 @@ __webpack_async_result__();
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "e": () => (/* binding */ getHome)
 /* harmony export */ });
-/* harmony import */ var _stores_ContentState__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(9787);
+/* harmony import */ var _stores_ContentState__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(9815);
 
 const getHome = async ()=>{
-    const header = await (0,_stores_ContentState__WEBPACK_IMPORTED_MODULE_0__/* .getHeader */ .Pg)(), footer = await (0,_stores_ContentState__WEBPACK_IMPORTED_MODULE_0__/* .getFooter */ .PX)(), content = await (0,_stores_ContentState__WEBPACK_IMPORTED_MODULE_0__/* .getHomePage */ .tn)(), countrypop = await (0,_stores_ContentState__WEBPACK_IMPORTED_MODULE_0__/* .getCountryPop */ .Pc)(), news = await (0,_stores_ContentState__WEBPACK_IMPORTED_MODULE_0__/* .getNews */ .dD)();
+    const { header , footer , countrypop  } = await (0,_stores_ContentState__WEBPACK_IMPORTED_MODULE_0__/* .getHeader */ .Pg)(), { content , seo  } = await (0,_stores_ContentState__WEBPACK_IMPORTED_MODULE_0__/* .getHomePage */ .tn)(), news = await (0,_stores_ContentState__WEBPACK_IMPORTED_MODULE_0__/* .getNews */ .dD)();
     return {
         header,
         footer,
         content,
         countrypop,
-        news
+        news,
+        seo
     };
 };
 
@@ -714,24 +725,24 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(997);
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var next_head__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(968);
-/* harmony import */ var next_head__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(next_head__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var mobx_react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(2062);
-/* harmony import */ var mobx_react__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(mobx_react__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(6689);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _hooks_useLoco__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(3355);
-/* harmony import */ var _components_pages_home_Intro__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(6655);
-/* harmony import */ var _components_pages_home_TextBlock__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(7179);
-/* harmony import */ var _components_pages_home_Services__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(8621);
-/* harmony import */ var _components_pages_home_BookBlock__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(3510);
-/* harmony import */ var _components_pages_home_Products__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(7819);
-/* harmony import */ var _components_pages_home_News__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(3664);
-/* harmony import */ var _components_pages_home_FollowUs__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(4534);
-/* harmony import */ var _api_getHome__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(7777);
-/* harmony import */ var _components_common_Layout__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(4367);
-var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_components_pages_home_Intro__WEBPACK_IMPORTED_MODULE_5__, _components_pages_home_TextBlock__WEBPACK_IMPORTED_MODULE_6__, _components_pages_home_Services__WEBPACK_IMPORTED_MODULE_7__, _components_pages_home_BookBlock__WEBPACK_IMPORTED_MODULE_8__, _components_pages_home_Products__WEBPACK_IMPORTED_MODULE_9__, _components_pages_home_News__WEBPACK_IMPORTED_MODULE_10__, _components_pages_home_FollowUs__WEBPACK_IMPORTED_MODULE_11__, _components_common_Layout__WEBPACK_IMPORTED_MODULE_13__]);
-([_components_pages_home_Intro__WEBPACK_IMPORTED_MODULE_5__, _components_pages_home_TextBlock__WEBPACK_IMPORTED_MODULE_6__, _components_pages_home_Services__WEBPACK_IMPORTED_MODULE_7__, _components_pages_home_BookBlock__WEBPACK_IMPORTED_MODULE_8__, _components_pages_home_Products__WEBPACK_IMPORTED_MODULE_9__, _components_pages_home_News__WEBPACK_IMPORTED_MODULE_10__, _components_pages_home_FollowUs__WEBPACK_IMPORTED_MODULE_11__, _components_common_Layout__WEBPACK_IMPORTED_MODULE_13__] = __webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__);
+/* harmony import */ var mobx_react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(2062);
+/* harmony import */ var mobx_react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(mobx_react__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(6689);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _hooks_useLoco__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(3355);
+/* harmony import */ var _components_pages_home_Intro__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(6655);
+/* harmony import */ var _components_pages_home_TextBlock__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(7179);
+/* harmony import */ var _components_pages_home_Services__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(8621);
+/* harmony import */ var _components_pages_home_BookBlock__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(3510);
+/* harmony import */ var _components_pages_home_Products__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(7819);
+/* harmony import */ var _components_pages_home_News__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(3664);
+/* harmony import */ var _components_pages_home_FollowUs__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(4534);
+/* harmony import */ var _api_getHome__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(7777);
+/* harmony import */ var _components_common_Layout__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(4367);
+/* harmony import */ var _components_common_SeoBlock__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(3534);
+/* harmony import */ var _stores_GlobalState__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(4812);
+var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_components_pages_home_Intro__WEBPACK_IMPORTED_MODULE_4__, _components_pages_home_TextBlock__WEBPACK_IMPORTED_MODULE_5__, _components_pages_home_Services__WEBPACK_IMPORTED_MODULE_6__, _components_pages_home_BookBlock__WEBPACK_IMPORTED_MODULE_7__, _components_pages_home_Products__WEBPACK_IMPORTED_MODULE_8__, _components_pages_home_News__WEBPACK_IMPORTED_MODULE_9__, _components_pages_home_FollowUs__WEBPACK_IMPORTED_MODULE_10__, _components_common_Layout__WEBPACK_IMPORTED_MODULE_12__]);
+([_components_pages_home_Intro__WEBPACK_IMPORTED_MODULE_4__, _components_pages_home_TextBlock__WEBPACK_IMPORTED_MODULE_5__, _components_pages_home_Services__WEBPACK_IMPORTED_MODULE_6__, _components_pages_home_BookBlock__WEBPACK_IMPORTED_MODULE_7__, _components_pages_home_Products__WEBPACK_IMPORTED_MODULE_8__, _components_pages_home_News__WEBPACK_IMPORTED_MODULE_9__, _components_pages_home_FollowUs__WEBPACK_IMPORTED_MODULE_10__, _components_common_Layout__WEBPACK_IMPORTED_MODULE_12__] = __webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__);
 
 
 
@@ -746,11 +757,12 @@ var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_com
 
 
 
-const Home = (0,mobx_react__WEBPACK_IMPORTED_MODULE_2__.observer)(({ hydrationData: props  })=>{
-    const { 0: loading , 1: setLoading  } = (0,react__WEBPACK_IMPORTED_MODULE_3__.useState)(false);
-    const ref = (0,react__WEBPACK_IMPORTED_MODULE_3__.useRef)(null);
-    (0,_hooks_useLoco__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .Z)(!loading);
-    (0,react__WEBPACK_IMPORTED_MODULE_3__.useEffect)(()=>{
+
+const Home = (0,mobx_react__WEBPACK_IMPORTED_MODULE_1__.observer)(({ hydrationData: props  })=>{
+    const { 0: loading , 1: setLoading  } = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)(true);
+    const ref = (0,react__WEBPACK_IMPORTED_MODULE_2__.useRef)(false);
+    (0,_hooks_useLoco__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .Z)(!loading);
+    (0,react__WEBPACK_IMPORTED_MODULE_2__.useEffect)(()=>{
         if (!loading) {
             if (true) {
                 return;
@@ -759,23 +771,50 @@ const Home = (0,mobx_react__WEBPACK_IMPORTED_MODULE_2__.observer)(({ hydrationDa
     }, [
         loading
     ]);
+    (0,react__WEBPACK_IMPORTED_MODULE_2__.useEffect)(()=>{
+        if (props.content) {
+            setLoading(false);
+        }
+    }, [
+        props
+    ]);
+    const getLocation = ()=>{
+        fetch("https://api.geoapify.com/v1/ipinfo?apiKey=bfd5d7c6dda54e72aa811c792e169ee6").then((resp)=>resp.json()).then((userLocationData)=>{
+            sessionStorage.setItem("locale", JSON.stringify({
+                country: userLocationData.country.name,
+                code: userLocationData.country.iso_code
+            }));
+            (0,_stores_GlobalState__WEBPACK_IMPORTED_MODULE_14__/* .changeLocale */ .wo)();
+        });
+    };
+    (0,react__WEBPACK_IMPORTED_MODULE_2__.useEffect)(()=>{
+        if (ref.current) return;
+        if (sessionStorage.getItem("locale")) {
+            const locale = JSON.parse(sessionStorage.getItem("locale"));
+            if (locale.country) {} else getLocation();
+        } else {
+            getLocation();
+            setTimeout(()=>{
+                (0,_stores_GlobalState__WEBPACK_IMPORTED_MODULE_14__/* .changeCountryState */ .wg)();
+            }, 1000);
+        }
+        ref.current = true;
+    }, []);
     return /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
         children: [
-            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx((next_head__WEBPACK_IMPORTED_MODULE_1___default()), {
-                children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("title", {
-                    children: "Be relax"
-                })
+            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_components_common_SeoBlock__WEBPACK_IMPORTED_MODULE_13__/* ["default"] */ .Z, {
+                seo: props.seo
             }),
-            /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(_components_common_Layout__WEBPACK_IMPORTED_MODULE_13__/* ["default"] */ .Z, {
+            /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(_components_common_Layout__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .Z, {
                 isMain: true,
                 children: [
-                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_components_pages_home_Intro__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .Z, {}),
-                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_components_pages_home_TextBlock__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .Z, {}),
-                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_components_pages_home_Services__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .Z, {}),
-                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_components_pages_home_BookBlock__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .Z, {}),
-                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_components_pages_home_Products__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .Z, {}),
-                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_components_pages_home_News__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .Z, {}),
-                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_components_pages_home_FollowUs__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .Z, {})
+                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_components_pages_home_Intro__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .Z, {}),
+                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_components_pages_home_TextBlock__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .Z, {}),
+                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_components_pages_home_Services__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .Z, {}),
+                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_components_pages_home_BookBlock__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .Z, {}),
+                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_components_pages_home_Products__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .Z, {}),
+                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_components_pages_home_News__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .Z, {}),
+                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_components_pages_home_FollowUs__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .Z, {})
                 ]
             })
         ]
@@ -783,13 +822,14 @@ const Home = (0,mobx_react__WEBPACK_IMPORTED_MODULE_2__.observer)(({ hydrationDa
 });
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Home);
 async function getStaticProps() {
-    const response = await (0,_api_getHome__WEBPACK_IMPORTED_MODULE_12__/* .getHome */ .e)();
+    const response = await (0,_api_getHome__WEBPACK_IMPORTED_MODULE_11__/* .getHome */ .e)();
     return {
         props: {
             hydrationData: {
                 ...response
             }
-        }
+        },
+        revalidate: 10
     };
 }
 
@@ -1008,13 +1048,6 @@ module.exports = require("next/dist/shared/lib/utils.js");
 
 /***/ }),
 
-/***/ 968:
-/***/ ((module) => {
-
-module.exports = require("next/head");
-
-/***/ }),
-
 /***/ 1853:
 /***/ ((module) => {
 
@@ -1050,6 +1083,13 @@ module.exports = require("react/jsx-runtime");
 
 /***/ }),
 
+/***/ 4956:
+/***/ ((module) => {
+
+module.exports = require("reading-time");
+
+/***/ }),
+
 /***/ 9915:
 /***/ ((module) => {
 
@@ -1071,7 +1111,7 @@ module.exports = import("react-intersection-observer");;
 var __webpack_require__ = require("../webpack-runtime.js");
 __webpack_require__.C(exports);
 var __webpack_exec__ = (moduleId) => (__webpack_require__(__webpack_require__.s = moduleId))
-var __webpack_exports__ = __webpack_require__.X(0, [676,1664,5975,7077,3438,6184,4534,3680], () => (__webpack_exec__(5075)));
+var __webpack_exports__ = __webpack_require__.X(0, [676,1664,7378,991,3438,6184,4534,3680], () => (__webpack_exec__(5075)));
 module.exports = __webpack_exports__;
 
 })();

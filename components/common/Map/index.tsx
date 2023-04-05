@@ -8,6 +8,7 @@ import {
   InfoBox,
 } from '@react-google-maps/api'
 import classNames from 'classnames'
+import { runInAction } from 'mobx'
 import { observer } from 'mobx-react'
 import Link from 'next/link'
 
@@ -21,6 +22,8 @@ import { useContentState } from '../../../hooks/RootStoreProvider'
 import map from '../../../mocks/map'
 import GlobalState from '../../../stores/GlobalState'
 import { FindTabState } from '../../pages/find/Intro'
+import { Airports } from '../../pages/find/PlacesList'
+import { PlaceCardState } from '../../pages/find/PlacesListMob'
 import { IconComponent } from '../IconComponent'
 import InViewComponent from '../InViewComponent'
 const containerStyle = {
@@ -29,6 +32,7 @@ const containerStyle = {
 }
 
 const Map = observer(({ coords }: any) => {
+  const router = useRouter()
   const { content } = useContentState()
   const [showOver, setShow] = useState(false)
   const mapRef = useRef<any>(null)
@@ -52,6 +56,7 @@ const Map = observer(({ coords }: any) => {
       list.push(li)
     })
   })
+
   const ref = useRef<any>(null)
   useEffect(() => {
     if (!ref.current) return
@@ -97,6 +102,46 @@ const Map = observer(({ coords }: any) => {
       setShow(false)
     }
   }, [FindTabState.tab, width])
+
+  const sortLocation = (el: any) => {
+    const res: any = []
+    coords.forEach((d: any) => {
+      if (d.continent == el?.continent && el?.title.length) {
+        const sublist = d.list.filter((di: any) => di.title == el?.title)
+        res.push({
+          continent: d.continent,
+          list: sublist,
+        })
+        return
+      }
+    })
+
+    runInAction(() => {
+      Airports.list = res
+      FindTabState.location = res[0].list[0].locations
+      FindTabState.tab = 0
+      PlaceCardState.selected = el
+    })
+
+    const smooth = document.querySelector('.smooth')
+    const items = document.querySelector('.places')
+    const header = document.querySelector('.header')
+    if (!smooth || !items || !header) return
+
+    if (width > 900) {
+      GlobalState.locoScroll &&
+        GlobalState.locoScroll.scrollTo(items, {
+          offset: -header.getBoundingClientRect().height,
+        })
+    }
+
+    if (width <= 900 && !FindTabState.tab) {
+      GlobalState.locoScroll &&
+        GlobalState.locoScroll.scrollTo(items, {
+          offset: -header.getBoundingClientRect().height,
+        })
+    }
+  }
 
   if (!isLoaded) return <div className="map"></div>
 
@@ -250,12 +295,19 @@ const Map = observer(({ coords }: any) => {
           >
             <div className={classNames('map__pop', showOver && 'show')}>
               <div className="map__pop-title">{currentPosition?.title}</div>
-              <div className="map__pop-text">{currentPosition?.text}</div>
-              <Link href={`${currentPosition?.link}`}>
-                <a className="map__pop-link">
-                  {content?.cardDetails} <IconComponent name={'arrow'} />
-                </a>
-              </Link>
+              <div
+                className="map__pop-link"
+                onClick={() => {
+                  //router.push('/find-us/' + currentPosition?.skyCat?.slug)
+                  sortLocation(currentPosition)
+
+                  // setTimeout(() => {
+                  //   sortLocation(currentPosition)
+                  // }, 2000)
+                }}
+              >
+                {content?.cardDetails} <IconComponent name={'arrow'} />
+              </div>
               <IconComponent name={'find/loc'} className="loc-svg" />
             </div>
           </InfoBox>

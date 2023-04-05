@@ -1,17 +1,14 @@
 import { observer } from 'mobx-react'
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { useContentState } from '../../../../hooks/RootStoreProvider'
-import GlobalState from '../../../../stores/GlobalState'
 import InViewComponent from '../../../common/InViewComponent'
 import Select from '../../../common/MainSelect'
 import OfferItem from '../../../common/OfferItem'
-import Title54 from '../../../common/Title54'
 
 const Offers = observer(() => {
-  const [results, setResults] = useState(Array())
   const [filters, setFilters] = useState<any>({
-    p1: null,
-    p2: null,
+    p1: [],
+    p2: [],
   })
   const { content, airports, cards } = useContentState()
   let list: any = []
@@ -26,28 +23,38 @@ const Offers = observer(() => {
     )
   }
 
-  useEffect(() => {
-    if (content?.offers && !filters.p1) {
-      setFilters({
-        ...filters,
-        p1: content?.offers?.select1[0],
+  // useEffect(() => {
+  //   if (content?.offers && !filters.p1?.length) {
+  //     setFilters({
+  //       ...filters,
+  //       p1: content?.offers?.select1[0],
+  //     })
+  //   }
+  // }, [content, filters])
+
+  const results = useMemo(() => {
+    let res: any = cards
+    if (!filters.p1?.length && !filters.p2?.length) {
+      return res
+    }
+    if (filters.p1) {
+      filters.p1?.forEach((p: any) => {
+        res = res.filter((r: any) => r.type == p)
       })
     }
-  }, [content])
-
-  useEffect(() => {
-    let res: any = cards
-    if (filters.p1) {
-      if (!filters.p1.includes('All')) {
-        res = res.filter((r: any) => r.type == filters.p1)
-      }
-    }
     if (filters.p2) {
-      res = res.filter((r: any) => r.location == filters.p2)
+      filters.p2?.forEach((p: any) => {
+        res = res.filter((r: any) => {
+          const s = r.location.find((l: any) => l.post_title.includes(p))
+          if (s) {
+            return r
+          }
+        })
+      })
     }
 
-    setResults(res)
-  }, [filters])
+    return res
+  }, [filters, cards])
 
   return (
     <section className="offers">
@@ -61,12 +68,11 @@ const Offers = observer(() => {
         <InViewComponent delay={0.3}>
           <div className="offers__selects">
             <Select
-              placeholder={''}
+              placeholder={content?.offers?.select1Placeholder}
               dt={JSON.parse(
                 JSON.stringify(content?.offers?.select1),
               ).sort((a: any, b: any) => a.localeCompare(b))}
-              multiple={false}
-              defaultValue={filters.p1 || ''}
+              multiple
               getValue={(value) => {
                 setFilters({
                   ...filters,
@@ -75,7 +81,7 @@ const Offers = observer(() => {
               }}
             />
             <Select
-              multiple={false}
+              multiple
               placeholder={content?.offers?.select2Placeholder}
               dt={list}
               getValue={(value) => {

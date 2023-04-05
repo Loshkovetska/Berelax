@@ -1,17 +1,14 @@
-import Head from 'next/head'
 import { observer } from 'mobx-react'
 import { useEffect, useRef, useState } from 'react'
 import useLocoScroll from '../hooks/useLoco'
-import GlobalState from '../stores/GlobalState'
 import Layout from '../components/common/Layout'
 import { getContact } from './api/getContact'
 import ContactForm from '../components/pages/contact/ContactForm'
 import SmallPop from '../components/common/SmallPop'
+import SeoBlock from '../components/common/SeoBlock'
 
 const ContactPage = observer(({ hydrationData: props }: any) => {
-  const [loading, setLoading] = useState(false)
-  const ref = useRef<any>(null)
-
+  const [loading, setLoading] = useState(true)
   useLocoScroll(!loading)
   useEffect(() => {
     if (!loading) {
@@ -21,12 +18,14 @@ const ContactPage = observer(({ hydrationData: props }: any) => {
     }
   }, [loading])
 
-
+  useEffect(() => {
+    if (props.content) {
+      setLoading(false)
+    }
+  }, [props])
   return (
     <>
-      <Head>
-        <title>Be relax</title>
-      </Head>
+      <SeoBlock seo={props.seo} />
       <Layout delay={1}>
         <ContactForm />
       </Layout>
@@ -38,11 +37,12 @@ const ContactPage = observer(({ hydrationData: props }: any) => {
 export default ContactPage
 
 export async function getStaticProps() {
-  const response = await getContact()
+  const response = (await getContact()) || null
 
   return {
     props: {
       hydrationData: { ...response },
     },
+    revalidate: 10,
   }
 }

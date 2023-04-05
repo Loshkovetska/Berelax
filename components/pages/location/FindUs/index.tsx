@@ -23,7 +23,8 @@ const FindUs = observer(() => {
             <Button
               classStr="white button-svg button-arrow"
               isLink
-              link="/find-us"
+              target
+              link={find?.buttonLink}
               inner={
                 <>
                   {find?.buttonTitle} <IconComponent name="arrow" />

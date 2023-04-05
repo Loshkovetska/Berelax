@@ -28,12 +28,12 @@ const RetailMap = ({ results, location, setPos }: any) => {
     if(!mapRef.current)return ;
     requestAnimationFrame(() => {
       mapRef.current?.panTo(
-        new window.google.maps.LatLng(+location.lat, +location.lng),
+        new window.google.maps.LatLng(+location?.lat, +location?.lng),
       )
       setTimeout(() => {
         setCenter({
-          lat: +location.lat,
-          lng: +location.lng,
+          lat: +location?.lat||0,
+          lng: +location?.lng||0,
         })
       }, 500)
     })
@@ -111,14 +111,14 @@ const RetailMap = ({ results, location, setPos }: any) => {
                 requestAnimationFrame(() => {
                   mapRef.current?.panTo(
                     new window.google.maps.LatLng(
-                      +ci.coords.lat,
-                      +ci.coords.lng,
+                      +ci.coords?.lat,
+                      +ci.coords?.lng,
                     ),
                   )
                   setTimeout(() => {
                     setCenter({
-                      lat: +ci.coords.lat,
-                      lng: +ci.coords.lng,
+                      lat: +ci.coords?.lat,
+                      lng: +ci.coords?.lng,
                     })
                   }, 500)
                 })
@@ -133,8 +133,8 @@ const RetailMap = ({ results, location, setPos }: any) => {
                 size: new window.google.maps.Size(locatorSizes, locatorSizes),
               }}
               position={{
-                lat: +ci.coords.lat,
-                lng: +ci.coords.lng,
+                lat: +ci.coords?.lat,
+                lng: +ci.coords?.lng,
               }}
             ></Marker>
           </Fragment>

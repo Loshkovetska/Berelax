@@ -71,15 +71,20 @@
     isolation: isolate;
     display: flex;
     width: 41.7vw;
-  
     min-width: 34vw;
     border-radius: 48px;
+    // max-height: 25vw;
+   // height: 100%;
     img {
       width: 100%;
       height: 100%;
       object-fit: cover;
       transform: scale(1.1);
       transition: 1s ease-in-out all;
+    }
+
+    @media (max-width: 1280px) {
+      max-height: none;
     }
   }
 
@@ -156,7 +161,6 @@
   @media (min-width: 1921px) {
     &__img {
       max-width: 700px;
-      max-height: 500px;
     }
   }
 
@@ -210,6 +214,8 @@
       min-width: auto;
       height: auto;
       border-radius: 40px;
+      max-height: 48vw;
+      height: 100%;
     }
     &__content {
       padding: 24px 16px 16px;

@@ -3,7 +3,6 @@ import { runInAction } from 'mobx'
 import { observer } from 'mobx-react'
 import { useEffect, useState } from 'react'
 import { useContentState } from '../../../../hooks/RootStoreProvider'
-import GlobalState from '../../../../stores/GlobalState'
 import SecondStep from '../SecondStep'
 import SelectItem from '../SelectItem'
 import { BookingStep, UserData } from '../Steps'
@@ -20,10 +19,24 @@ const FirstStep = observer(() => {
   tabsContinents = Array.from(new Set(tabsContinents))
 
   useEffect(() => {
-    if (airports) {
+    if (airports && !UserData.location) {
       setTabLoc(tabsContinents[0])
+      return
     }
-  }, [airports])
+    if (airports && UserData.location) {
+      let tab = ''
+      airports?.forEach((f: any) => {
+        f.list?.forEach((c: any) => {
+          if (c.title == UserData.location?.title) {
+            tab = f.continent
+            return
+          }
+        })
+      })
+      setTabLoc(tab)
+      return;
+    }
+  }, [airports, UserData.location])
 
   return (
     <section className={classNames('first-step')}>

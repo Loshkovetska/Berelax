@@ -13,12 +13,12 @@ exports.modules = {
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var mobx_react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(2062);
 /* harmony import */ var mobx_react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(mobx_react__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var next_link__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(1664);
-/* harmony import */ var next_link__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(next_link__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(6689);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _funcs_dates__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(7380);
 /* harmony import */ var _hooks_useScrollPos__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(7767);
 /* harmony import */ var _IconComponent__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(9286);
-/* harmony import */ var _ImageComponent__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(4042);
+/* harmony import */ var _ImageComponent__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(9808);
 
 
 
@@ -27,6 +27,7 @@ exports.modules = {
 
 
 const SmallPost = ({ item  })=>{
+    const { 0: colors , 1: setColors  } = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)("rgba(255, 255, 255, 0.3)");
     const { x , y  } = (0,_hooks_useScrollPos__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .Z)();
     const setPos = (x, y)=>{
         sessionStorage.setItem("position", JSON.stringify({
@@ -34,53 +35,56 @@ const SmallPost = ({ item  })=>{
             y
         }));
     };
-    return /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx((next_link__WEBPACK_IMPORTED_MODULE_2___default()), {
+    return /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("a", {
         href: item.link,
-        children: /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("a", {
-            className: "small-post",
-            onClick: ()=>setPos(0, y),
-            children: [
-                /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
-                    className: "small-post__img",
-                    children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_ImageComponent__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .Z, {
-                        src: item.img
-                    })
-                }),
-                /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-                    className: "small-post__content",
-                    children: [
-                        /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("span", {
-                            className: "small-post__title",
-                            dangerouslySetInnerHTML: {
-                                __html: item.title
-                            }
-                        }),
-                        /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-                            className: "news-post__bottom",
-                            children: [
-                                /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
-                                    className: "news-post__cat",
-                                    children: item.cat
-                                }),
-                                /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-                                    className: "news-post__item",
-                                    children: [
-                                        /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_IconComponent__WEBPACK_IMPORTED_MODULE_4__/* .IconComponent */ .o, {
-                                            name: "news/duration"
-                                        }),
-                                        item.readTime
-                                    ]
-                                }),
-                                /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
-                                    className: "news-post__item",
-                                    children: (0,_funcs_dates__WEBPACK_IMPORTED_MODULE_6__/* .getDate */ ._)(item.datetime)
-                                })
-                            ]
-                        })
-                    ]
+        className: "small-post",
+        onClick: ()=>setPos(0, y),
+        style: {
+            backgroundColor: colors
+        },
+        children: [
+            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
+                className: "small-post__img",
+                children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_ImageComponent__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .Z, {
+                    src: item.img,
+                    alt: item.alt,
+                    getColors: (colors)=>setColors(`rgba(${colors.r},${colors.g},${colors.b}, 0.3)`)
                 })
-            ]
-        })
+            }),
+            /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+                className: "small-post__content",
+                children: [
+                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("span", {
+                        className: "small-post__title",
+                        dangerouslySetInnerHTML: {
+                            __html: item.title
+                        }
+                    }),
+                    /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+                        className: "news-post__bottom",
+                        children: [
+                            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
+                                className: "news-post__cat",
+                                children: item.cat
+                            }),
+                            /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+                                className: "news-post__item",
+                                children: [
+                                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_IconComponent__WEBPACK_IMPORTED_MODULE_4__/* .IconComponent */ .o, {
+                                        name: "news/duration"
+                                    }),
+                                    item.readTime + " mins"
+                                ]
+                            }),
+                            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
+                                className: "news-post__item",
+                                children: (0,_funcs_dates__WEBPACK_IMPORTED_MODULE_6__/* .getDate */ ._)(item.datetime)
+                            })
+                        ]
+                    })
+                ]
+            })
+        ]
     });
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,mobx_react__WEBPACK_IMPORTED_MODULE_1__.observer)(SmallPost));

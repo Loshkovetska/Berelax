@@ -29,6 +29,7 @@ const PlacesList = observer(() => {
 
   const { width } = useWindowDimensions()
 
+
   return (
     <section
       className={classNames(

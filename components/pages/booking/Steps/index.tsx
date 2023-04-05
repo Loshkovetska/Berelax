@@ -16,8 +16,9 @@ export type UserDataType = {
   treatments: Array<{
     id: number | string
     time: number | string
-    section: string
+    category: string
     img: string | null
+    alt: string
     name: string
     price: number | string
   }>
@@ -52,7 +53,7 @@ export const BookingStep = observable({
 })
 
 const BookingSteps = observer(() => {
-  const { content } = useContentState()
+  const { content, airports } = useContentState()
 
   useEffect(() => {
     if (!GlobalState.isTouch) {
@@ -79,8 +80,16 @@ const BookingSteps = observer(() => {
       if (localStorage.getItem('location')) {
         const loc = JSON.parse(localStorage.getItem('location')!)
         if (loc) {
+          let item: any = null
+          airports.forEach((c: any) => {
+            const el = c?.list.find((l: any) => l.id == loc.id)
+            if (el) {
+              item = el
+              return
+            }
+          })
           runInAction(() => {
-            UserData.location = loc
+            UserData.location = item
           })
           localStorage.removeItem('location')
         }
@@ -95,7 +104,7 @@ const BookingSteps = observer(() => {
         }
       }
     }
-  }, [])
+  }, [airports])
 
   if (BookingStep.tab == 3) {
     return <BookFinal />

@@ -7,24 +7,83 @@ import Button from '../../../common/Button'
 import SelectItem from '../SelectItem'
 import { BookingStep, UserData } from '../Steps'
 import { IconComponent } from '../../../common/IconComponent'
-import GlobalState from '../../../../stores/GlobalState'
 const SecondStep = observer(() => {
-  const { content } = useContentState()
+  const { content, countrypop, header } = useContentState()
 
   const [tabTreat, setTabTreat] = useState('')
-
-  let tabsTreats = content?.block2?.cards
-    ?.map((a: any) => a.section)
-    ?.sort((a: any, b: any) => a?.localeCompare(b))
+  //content?.block2?.cards
+  // ?.map((a: any) => a.category)
+  let tabsTreats = header?.menu
+    .find((l: any) => l.link == '/treatments')
+    ?.submenu?.map((c: any) => c.title.trim())
 
   tabsTreats = Array.from(new Set(tabsTreats))
+  tabsTreats.push('Combo')
 
   useEffect(() => {
-    if (content) {
+    if (content && !UserData.treatments?.length) {
       setTabTreat(tabsTreats[0])
+      return
+    }
+    if (content && UserData.treatments?.length) {
+      setTabTreat(UserData.treatments[0].category)
+      return
     }
   }, [content])
 
+  useEffect(() => {
+    if (!UserData.location) return
+    setTabTreat(tabsTreats[0])
+    runInAction(() => {
+      UserData.treatments = []
+    })
+  }, [UserData.location])
+
+  const getTime = (a: any, treats: any) => {
+    const current = treats?.find((c: any) => c.id == a.id)
+    if (current) {
+      return UserData.treatments?.find((c: any) => c.id == a.id)?.time
+    }
+
+    let time = ''
+    a?.prices?.forEach((p: any) => {
+      const am = p.amount.find((a: any) =>
+        a.country.includes(UserData.location?.country),
+      )
+      if (am) {
+        time = p.time
+        return
+      }
+    })
+    return time
+  }
+
+  let treatsCards: any = []
+  if (UserData.location) {
+    treatsCards = content?.block2?.cards.filter((a: any) => {
+      const isCurrentTab =
+        a.category.replaceAll('-', ' ').toLowerCase() == tabTreat.toLowerCase()
+      let isInLocations = a.locations.includes(
+        UserData.location?.title.trim() + ' ' + UserData.location.text.trim(),
+      )
+      a.locations?.forEach((fo: any) => {
+        const fullName = `${UserData.location?.title} ${UserData.location.text}`
+        if (fo.includes(fullName)) {
+          isInLocations = true
+          return
+        }
+      })
+
+      if (isCurrentTab && isInLocations) {
+        return a
+      }
+    })
+  } else {
+    treatsCards = content?.block2?.cards.filter(
+      (a: any) =>
+        a.category.replaceAll('-', ' ').toLowerCase() == tabTreat.toLowerCase(),
+    )
+  }
 
   return (
     <div className="book-steps__container">
@@ -47,13 +106,13 @@ const SecondStep = observer(() => {
               key={i}
               onClick={() => setTabTreat(a)}
             >
-              {a}{' '}
+              {a}
               {UserData.treatments?.filter(
-                (t) => t.section.toLowerCase() == a.toLowerCase(),
+                (t) => t.category.toLowerCase() == a.toLowerCase(),
               )?.length
                 ? ` (${
                     UserData.treatments?.filter(
-                      (t) => t.section.toLowerCase() == a.toLowerCase(),
+                      (t) => t.category.toLowerCase() == a.toLowerCase(),
                     )?.length
                   })`
                 : ''}
@@ -62,46 +121,56 @@ const SecondStep = observer(() => {
         </div>
       </div>
       <div className="first-step__list">
-        {content?.block2?.cards
-          .filter((a: any) => a.section.toLowerCase() == tabTreat.toLowerCase())
-          ?.map((a: any, i: number) => (
-            <SelectItem
-              withTime
-              multiple={true}
-              item={a}
-              key={i}
-              time={
-                UserData.treatments?.find((c: any) => c.id == a.id)
-                  ? UserData.treatments?.find((c: any) => c.id == a.id)?.time
-                  : a.price[0].time
-              }
-              setSelected={() => {
-                if (UserData.treatments?.find((c: any) => c.id == a.id)) {
-                  runInAction(() => {
-                    UserData.treatments = UserData.treatments?.filter(
-                      (c: any) => c.id != a.id,
+        {treatsCards?.map((a: any, i: number) => (
+          <SelectItem
+            withTime
+            multiple={true}
+            item={a}
+            key={i}
+            time={getTime(a, UserData.treatments)}
+            setSelected={() => {
+              if (UserData.treatments?.find((c: any) => c.id == a.id)) {
+                runInAction(() => {
+                  UserData.treatments = UserData.treatments?.filter(
+                    (c: any) => c.id != a.id,
+                  )
+                })
+              } else {
+                // if (UserData.treatments.length == 2) return
+                let amount: any = null
+                if (UserData.location) {
+                  a?.prices?.forEach((p: any) => {
+                    const am = p.amount.find((a: any) =>
+                      a.country.includes(UserData.location?.country),
                     )
-                  })
-                } else {
-                  // if (UserData.treatments.length == 2) return
-                  runInAction(() => {
-                    UserData.treatments = [
-                      ...(UserData.treatments as any),
-                      {
-                        id: a.id,
-                        time: a.price[0].time,
-                        section: a.section,
-                        img: a.img,
-                        name: a.title,
-                        price: a.price[0].amount,
-                      },
-                    ]
+                    if (am) {
+                      amount = am
+                      return
+                    }
                   })
                 }
-              }}
-              isSelected={!!UserData.treatments.find((c: any) => c.id == a.id)}
-            />
-          ))}
+                if (!amount) {
+                  amount = a?.prices[0].amount[0]
+                }
+                runInAction(() => {
+                  UserData.treatments = [
+                    ...(UserData.treatments as any),
+                    {
+                      id: a.id,
+                      time: a.prices[0].time,
+                      category: a.category,
+                      img: a.img,
+                      alt: a.alt,
+                      name: a.title,
+                      price: amount?.currency + ' ' + amount?.value,
+                    },
+                  ]
+                })
+              }
+            }}
+            isSelected={!!UserData.treatments.find((c: any) => c.id == a.id)}
+          />
+        ))}
       </div>
       <Button
         classStr={classNames(

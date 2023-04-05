@@ -15,10 +15,16 @@ const ProductBanner = observer(() => {
       <div className="product-banner__content">
         <h2
           className="product-banner__title"
+          style={{
+            color: content?.banner?.title_color,
+          }}
           dangerouslySetInnerHTML={{ __html: content?.banner?.title }}
         ></h2>
         <h2
           className="product-banner__text"
+          style={{
+            color: content?.banner?.text_color,
+          }}
           dangerouslySetInnerHTML={{ __html: content?.banner?.text }}
         ></h2>
         <Button

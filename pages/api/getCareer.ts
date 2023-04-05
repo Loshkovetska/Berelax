@@ -1,20 +1,15 @@
 import {
-  getCountryPop,
-  getFooter,
   getHeader,
   getCareerPage,
-  getLocations,
   getVacancies,
+  getSortLocations,
 } from '../../stores/ContentState'
 
 export const getCareer = async () => {
-  const header = await getHeader(),
-    footer = await getFooter(),
-    content = await getCareerPage(),
-    countrypop = await getCountryPop(),
-    airports = await getLocations(),
+  const { header, footer, countrypop } = await getHeader(),
+    { content, seo } = await getCareerPage(),
+    airports = await getSortLocations(),
     cards = await getVacancies()
-
   return {
     header,
     footer,
@@ -22,5 +17,6 @@ export const getCareer = async () => {
     countrypop,
     airports,
     cards,
+    seo,
   }
 }

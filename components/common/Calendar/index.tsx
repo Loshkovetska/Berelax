@@ -7,6 +7,7 @@ import classNames from 'classnames'
 import GlobalState, { changeCalendarState } from '../../../stores/GlobalState'
 import { runInAction } from 'mobx'
 import { UserData } from '../../pages/booking/Steps'
+import { useRouter } from 'next/router'
 
 const CustomCalendar = observer(
   ({
@@ -15,7 +16,8 @@ const CustomCalendar = observer(
   }: {
     beforeDate?: boolean
     afterDate?: boolean
-  }) => {
+    }) => {
+    const { asPath } = useRouter();
     const [date, setDate] = useState('2022-12')
 
     const [after, setAfter] = useState('2022-12-21')
@@ -44,14 +46,13 @@ const CustomCalendar = observer(
       setAfter(`${now.getFullYear()}-${now.getMonth() + 1}-${now.getDate()}`)
     }, [])
 
-    let addOpt: any = {}
+    let addOpt = {}
 
     if (afterDate) {
       addOpt = {
         disabledAfterDate: after,
       }
     }
-
 
     return (
       <section
@@ -78,7 +79,7 @@ const CustomCalendar = observer(
               numberOfSelectableDays={1}
             />
           </div>
-          <div className="calendar__text">{content?.popCalendarText}</div>
+          <div className="calendar__text">*{asPath.includes('booking')?UserData.location?.country:'London'} Time Zone</div>
         </div>
       </section>
     )

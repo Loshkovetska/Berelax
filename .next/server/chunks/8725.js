@@ -58,8 +58,10 @@ __webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __we
 /* harmony import */ var react_google_recaptcha__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(5623);
 /* harmony import */ var react_google_recaptcha__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(react_google_recaptcha__WEBPACK_IMPORTED_MODULE_12__);
 /* harmony import */ var _common_PhoneSelect__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(6057);
+/* harmony import */ var _stores_ContentState__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(9815);
 var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_common_Select__WEBPACK_IMPORTED_MODULE_9__, _booking_Steps__WEBPACK_IMPORTED_MODULE_11__, _common_PhoneSelect__WEBPACK_IMPORTED_MODULE_13__]);
 ([_common_Select__WEBPACK_IMPORTED_MODULE_9__, _booking_Steps__WEBPACK_IMPORTED_MODULE_11__, _common_PhoneSelect__WEBPACK_IMPORTED_MODULE_13__] = __webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__);
+
 
 
 
@@ -125,20 +127,13 @@ const ResumeForm = (0,mobx_react__WEBPACK_IMPORTED_MODULE_3__.observer)(({ isCar
     };
     const submit = ()=>{
         if (!ref.current || !isVerify) return;
-        const fd = new FormData(ref.current);
         if (isCareerPage && (!state.profType.length || !state.location)) return;
-        if (isCareerPage) {
-            fd.append("profType", state.profType);
-            fd.append("location", JSON.stringify(state.location));
-        }
-        state.file && fd.append("resume", state.file);
-        state.file2 && fd.append("cover-letter", state.file2);
-        fd.append("status", "apply-job");
-        fetch("/", {
-            method: "POST",
-            body: fd
-        }).then(()=>{});
-        (0,_stores_GlobalState__WEBPACK_IMPORTED_MODULE_6__/* .changeSmallPopState */ .to)();
+        (0,_stores_ContentState__WEBPACK_IMPORTED_MODULE_14__/* .vacancyForm */ .Hl)({
+            ...state,
+            lmail: state.location?.continent.includes("North America") ? 1 : 0
+        }).then(()=>{
+            (0,_stores_GlobalState__WEBPACK_IMPORTED_MODULE_6__/* .changeSmallPopState */ .to)();
+        });
     };
     (0,react__WEBPACK_IMPORTED_MODULE_4__.useEffect)(()=>{
         if (_common_Select__WEBPACK_IMPORTED_MODULE_9__/* .SelectState.selected */ .t.selected) {
@@ -263,7 +258,6 @@ const ResumeForm = (0,mobx_react__WEBPACK_IMPORTED_MODULE_3__.observer)(({ isCar
                             /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
                                 className: "resume-form__form-row",
                                 children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_common_PhoneSelect__WEBPACK_IMPORTED_MODULE_13__/* ["default"] */ .Z, {
-                                    dt: form?.phoneCodes,
                                     isRequired: true,
                                     placeholder: form?.phoneNumberPlaceholder,
                                     resetField: resetState,
@@ -295,7 +289,7 @@ const ResumeForm = (0,mobx_react__WEBPACK_IMPORTED_MODULE_3__.observer)(({ isCar
                                             }),
                                         name: "country",
                                         isRequired: true,
-                                        placeHolder: form?.countryPlaceholder,
+                                        placeHolder: form?.countryPlaceHolder,
                                         classStr: ""
                                     })
                                 ]
@@ -310,7 +304,7 @@ const ResumeForm = (0,mobx_react__WEBPACK_IMPORTED_MODULE_3__.observer)(({ isCar
                                             withSearch: false,
                                             placeholder: form?.profPlaceholder,
                                             isTimeSelect: true,
-                                            dt: JSON.parse(JSON.stringify(content?.offers?.select1)).sort((a, b)=>a.localeCompare(b))
+                                            dt: JSON.parse(JSON.stringify(form?.profSelect)).sort((a, b)=>a.localeCompare(b))
                                         })
                                     }),
                                     /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {

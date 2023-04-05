@@ -1,15 +1,22 @@
-import Head from 'next/head'
 import { observer } from 'mobx-react'
 import { useEffect, useRef, useState } from 'react'
 import useLocoScroll from '../hooks/useLoco'
-import GlobalState from '../stores/GlobalState'
 import Layout from '../components/common/Layout'
 import { getSearch } from './api/getSearch'
 import SearchContent from '../components/pages/search/SearchContent'
+import SeoBlock from '../components/common/SeoBlock'
+import { getNews, getProducts, getServices } from '../stores/ContentState'
+import { observable, runInAction } from 'mobx'
+
+export const StateArrays: any = observable({
+  products: null,
+  services: null,
+  news: null,
+})
 
 const Search = observer(({ hydrationData: props }: any) => {
-  const [loading, setLoading] = useState(false)
-
+  const [loading, setLoading] = useState(true)
+  const ref = useRef<boolean>(false)
   useLocoScroll(!loading)
   useEffect(() => {
     if (!loading) {
@@ -19,15 +26,44 @@ const Search = observer(({ hydrationData: props }: any) => {
     }
   }, [loading])
 
+  useEffect(() => {
+    if (ref.current) return
+    getProducts().then((res) => {
+      runInAction(() => {
+        StateArrays.products = res
+      })
+    })
+    getNews().then((res) => {
+      runInAction(() => {
+        StateArrays.news = res
+      })
+    })
+    getServices().then((res) => {
+      runInAction(() => {
+        StateArrays.services = res
+      })
+    })
+    ref.current = true
+  }, [])
+
+  useEffect(() => {
+    if (StateArrays.news && StateArrays.products && StateArrays.services) {
+      setTimeout(() => {
+        setLoading(false)
+      }, 200)
+    }
+  }, [StateArrays.news, StateArrays.products, StateArrays.services])
 
   return (
     <>
-      <Head>
-        <title>Be relax</title>
-      </Head>
-      <Layout>
-        <SearchContent />
-      </Layout>
+      <SeoBlock seo={props.seo} />
+      {!loading ? (
+        <Layout>
+          <SearchContent />
+        </Layout>
+      ) : (
+        <div style={{ width: '100%', height: 500 }}></div>
+      )}
     </>
   )
 })
@@ -41,5 +77,6 @@ export async function getStaticProps() {
     props: {
       hydrationData: { ...response },
     },
+    revalidate: 10,
   }
 }

@@ -3,7 +3,10 @@ import { runInAction } from 'mobx'
 import { observer } from 'mobx-react'
 import { useEffect, useState } from 'react'
 import { useContentState } from '../../../hooks/RootStoreProvider'
-import GlobalState, { changeCountryState } from '../../../stores/GlobalState'
+import GlobalState, {
+  changeCountryState,
+  changeLocale,
+} from '../../../stores/GlobalState'
 import Button from '../Button'
 import { IconComponent } from '../IconComponent'
 import ImageComponent from '../ImageComponent'
@@ -24,33 +27,22 @@ const CountryPop = observer(() => {
     }
   }, [GlobalState.isCountryOpen])
 
-  useEffect(() => {
-    let vh = window.innerHeight * 0.01
-    const s = document.querySelector('.country-pop')
-
-    if (!s) return
-    ;(s as any).style.setProperty('--vh', `${vh}px`)
-
-    window.addEventListener('resize', function (e) {
-      let vh = window.innerHeight * 0.01
-      const s = document.querySelector('.country-pop')
-      if (!s) return
-      ;(s as any).style.setProperty('--vh', `${vh}px`)
-    })
-  }, [])
-
   return (
-    <section className={classNames('country-pop', active && 'open')}>
+    <section
+      className={classNames('country-pop', active && 'open')}
+      style={{
+        visibility: 'hidden',
+      }}
+    >
       <div className="country-pop__container">
         <div className="country-pop__col">
           <div
             className="country-pop__title"
             dangerouslySetInnerHTML={{ __html: countrypop?.title }}
           ></div>
-          <div
-            className="country-pop__text"
-            dangerouslySetInnerHTML={{ __html: countrypop?.text }}
-          ></div>
+          <div className="country-pop__text">
+            You are in {GlobalState.currentLocale.country} now.
+          </div>
           <Button
             classStr="beige button-arrow button-svg p20p28"
             isLink={false}
@@ -71,37 +63,62 @@ const CountryPop = observer(() => {
             dangerouslySetInnerHTML={{ __html: countrypop?.subText }}
           ></div>
           <div className="country-pop__list">
-            {countrypop?.list.map((li: any, i: number) => (
-              <div
-                className="country-pop__item"
-                key={i}
-                onClick={() => {
-                  if (li.title.includes('Other')) {
-                    runInAction(() => {
-                      GlobalState.currentLocale = {
-                        country: 'Germany',
-                        code: 'de',
+            {countrypop?.list
+              .filter((c: any) => !c.title.includes('Other'))
+              .map((li: { title: string; code: string }, i: number) => (
+                <div
+                  className="country-pop__item"
+                  key={i}
+                  onClick={() => {
+                    let item = {
+                      country: li.title,
+                      code: li.code,
+                    }
+                    if (li.title.includes('Other')) {
+                      item = {
+                        country: 'United States of America',
+                        code: 'usa',
                       }
-                    })
-                  } else {
-                    runInAction(() => {
-                      GlobalState.currentLocale = {
-                        country: li.title,
-                        code: li.code,
+                    }
+                    sessionStorage.setItem('locale', JSON.stringify(item))
+                    changeLocale()
+                    changeCountryState()
+                  }}
+                >
+                  <IconComponent name={'location/plane'} />
+                  {li.title}
+                </div>
+              ))}
+            {countrypop?.list
+              .filter((c: any) => c.title.includes('Other'))
+              .map((li: { title: string; code: string }, i: number) => (
+                <div
+                  className="country-pop__item"
+                  key={i}
+                  onClick={() => {
+                    let item = {
+                      country: li.title,
+                      code: li.code,
+                    }
+                    if (li.title.includes('Other')) {
+                      item = {
+                        country: 'United States of America',
+                        code: 'usa',
                       }
-                    })
-                  }
-                  changeCountryState()
-                }}
-              >
-                <IconComponent name={'location/plane'} />
-                {li.title}
-              </div>
-            ))}
+                    }
+                    sessionStorage.setItem('locale', JSON.stringify(item))
+                    changeLocale()
+                    changeCountryState()
+                  }}
+                >
+                  <IconComponent name={'location/plane'} />
+                  {li.title}
+                </div>
+              ))}
           </div>
         </div>
         <div className="country-pop__img">
-          <ImageComponent src={countrypop?.img} />
+          <ImageComponent src={countrypop?.img} alt={countrypop.alt} />
         </div>
       </div>
     </section>

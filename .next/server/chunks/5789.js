@@ -15,7 +15,7 @@ __webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __we
 /* harmony import */ var mobx_react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(2062);
 /* harmony import */ var mobx_react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(mobx_react__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _hooks_RootStoreProvider__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(5975);
-/* harmony import */ var _common_ImageComponent__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(4042);
+/* harmony import */ var _common_ImageComponent__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(9808);
 /* harmony import */ var _common_InViewComponent__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(2949);
 var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_common_InViewComponent__WEBPACK_IMPORTED_MODULE_4__]);
 _common_InViewComponent__WEBPACK_IMPORTED_MODULE_4__ = (__webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__)[0];
@@ -26,6 +26,7 @@ _common_InViewComponent__WEBPACK_IMPORTED_MODULE_4__ = (__webpack_async_dependen
 
 const Benefits = (0,mobx_react__WEBPACK_IMPORTED_MODULE_1__.observer)(()=>{
     const { content  } = (0,_hooks_RootStoreProvider__WEBPACK_IMPORTED_MODULE_2__/* .useContentState */ .b3)();
+    if (!content?.benefits?.list?.length) return /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.Fragment, {});
     return /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("section", {
         className: "benefits",
         children: [
@@ -39,7 +40,7 @@ const Benefits = (0,mobx_react__WEBPACK_IMPORTED_MODULE_1__.observer)(()=>{
             }),
             /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
                 className: "benefits__list",
-                children: content?.benefits?.list.map((b, i)=>/*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_common_InViewComponent__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .Z, {
+                children: content?.benefits?.list?.map((b, i)=>/*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_common_InViewComponent__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .Z, {
                         delay: i * 0.3,
                         children: /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
                             className: "benefits__item",
@@ -47,7 +48,8 @@ const Benefits = (0,mobx_react__WEBPACK_IMPORTED_MODULE_1__.observer)(()=>{
                                 /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
                                     className: "benefits__item-img",
                                     children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_common_ImageComponent__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .Z, {
-                                        src: b.src
+                                        src: b.src,
+                                        alt: b.alt
                                     })
                                 }),
                                 /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
@@ -118,6 +120,7 @@ const Similiar = (0,mobx_react__WEBPACK_IMPORTED_MODULE_1__.observer)(({ isProdu
     if (!isProduct) {
         slideToShow = width >= 900 ? 2 : 1;
     }
+    if (!content?.similiar?.cards.length) return /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.Fragment, {});
     return /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("section", {
         className: "similiar",
         children: /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {

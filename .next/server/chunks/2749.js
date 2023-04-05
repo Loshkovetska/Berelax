@@ -19,7 +19,7 @@ __webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __we
 /* harmony import */ var _hooks_RootStoreProvider__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(5975);
 /* harmony import */ var _common_Button__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(8133);
 /* harmony import */ var _common_IconComponent__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(9286);
-/* harmony import */ var _common_ImageComponent__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(4042);
+/* harmony import */ var _common_ImageComponent__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(9808);
 /* harmony import */ var _common_InViewComponent__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(2949);
 var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_common_InViewComponent__WEBPACK_IMPORTED_MODULE_7__]);
 _common_InViewComponent__WEBPACK_IMPORTED_MODULE_7__ = (__webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__)[0];
@@ -47,12 +47,18 @@ const Banner = (0,mobx_react__WEBPACK_IMPORTED_MODULE_2__.observer)(({ theme ="b
                                 children: [
                                     /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("h3", {
                                         className: "banner__title",
+                                        style: {
+                                            color: content?.banner?.title_color
+                                        },
                                         dangerouslySetInnerHTML: {
                                             __html: content?.banner?.title
                                         }
                                     }),
                                     content?.banner?.text && /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
                                         className: "banner__text",
+                                        style: {
+                                            color: content?.banner?.text_color
+                                        },
                                         dangerouslySetInnerHTML: {
                                             __html: content?.banner?.text
                                         }
@@ -77,7 +83,8 @@ const Banner = (0,mobx_react__WEBPACK_IMPORTED_MODULE_2__.observer)(({ theme ="b
                     /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
                         className: "banner__img",
                         children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_common_ImageComponent__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .Z, {
-                            src: content?.banner?.img
+                            src: content?.banner?.img,
+                            alt: content?.banner?.alt
                         })
                     })
                 ]

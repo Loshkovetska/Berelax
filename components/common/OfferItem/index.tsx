@@ -15,30 +15,27 @@ const OfferItem = observer(
       sessionStorage.setItem('position', JSON.stringify({ x, y }))
     }
     return (
-      <Link href={item.link} scroll={false}>
-        <a className="offer" onClick={() => setPos(0, y)}>
-          <div className="offer__top">
-            <Title40 text={item.title} classStr="offer__title" />
-            <Text text={item.text} classStr="offer__text" />
-            <div className="offer__bottom">
-              <div className="offer__bottom-locate">
-                <IconComponent name={'location-point 1'} /> {item?.location}
-              </div>
-              <div className="offer__bottom-row">
-                <Button
-                  classStr="grey p12"
-                  inner={<>{buttonTitle}</>}
-                  isLink
-                  link={item.link}
-                />
-                <div className="offer__bottom-date">
-                  {getDate(item.datetime)}
-                </div>
-              </div>
+      <a className="offer" onClick={() => setPos(0, y)} href={item.link}>
+        <div className="offer__top">
+          <Title40 text={item.title} classStr="offer__title" />
+          <Text text={item.text} classStr="offer__text" />
+          <div className="offer__bottom">
+            <div className="offer__bottom-locate">
+              <IconComponent name={'location-point 1'} />{' '}
+              {item?.location?.length > 0 && item?.location[0].post_title}
+            </div>
+            <div className="offer__bottom-row">
+              <Button
+                classStr="grey p12"
+                inner={<>{item.typeContract}</>}
+                isLink
+                link={item.link}
+              />
+              <div className="offer__bottom-date">{getDate(item.datetime)}</div>
             </div>
           </div>
-        </a>
-      </Link>
+        </div>
+      </a>
     )
   },
 )

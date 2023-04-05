@@ -69,61 +69,25 @@ const Intro = observer(() => {
           <Text text={content?.text} classStr="vacancy-intro__text" />
         </InViewComponent>
         <InViewComponent delay={1}>
-          <ImgBackground src={content?.img} />
+          <ImgBackground src={content?.img} alt={content?.alt} />
         </InViewComponent>
         <InViewComponent>
           <div className="vacancy-intro__row">
             <div className="vacancy-intro__content">
-              <div className="vacancy-intro__content-block">
-                <InViewComponent>
-                  <Title54
-                    text={content?.positionTitle}
-                    classStr="vacancy-intro__content-title"
-                  />
-                  <Text
-                    classStr="vacancy-intro__content-text"
-                    text={content?.positionText}
-                  />
-                </InViewComponent>
-              </div>
-
-              <div className="vacancy-intro__content-block">
-                <InViewComponent>
-                  <Title54
-                    text={content?.responsibilitiesTitle}
-                    classStr="vacancy-intro__content-title"
-                  />
-                  <Text
-                    classStr="vacancy-intro__content-text"
-                    text={content?.responsibilitiesText}
-                  />
-                </InViewComponent>
-              </div>
-
-              <div className="vacancy-intro__content-block">
-                <InViewComponent>
-                  <Title54
-                    text={content?.profileTitle}
-                    classStr="vacancy-intro__content-title"
-                  />
-                  <Text
-                    classStr="vacancy-intro__content-text"
-                    text={content?.profileText}
-                  />
-                </InViewComponent>
-              </div>
-              <div className="vacancy-intro__content-block">
-                <InViewComponent>
-                  <Title54
-                    text={content?.benefitsTitle}
-                    classStr="vacancy-intro__content-title"
-                  />
-                  <Text
-                    classStr="vacancy-intro__content-text"
-                    text={content?.benefitsText}
-                  />
-                </InViewComponent>
-              </div>
+              {content?.content?.map((c: any, i: number) => (
+                <div className="vacancy-intro__content-block" key={i}>
+                  <InViewComponent>
+                    <Title54
+                      text={c?.title}
+                      classStr="vacancy-intro__content-title"
+                    />
+                    <Text
+                      classStr="vacancy-intro__content-text"
+                      text={c?.text}
+                    />
+                  </InViewComponent>
+                </div>
+              ))}
             </div>
             <aside className="vacancy-intro__aside">
               <div className="vacancy-intro__aside-scroll">
@@ -141,7 +105,9 @@ const Intro = observer(() => {
                     classStr="footer__socials-item"
                     icon={loc}
                   />
-                  {content?.location}
+                  {content?.location?.length > 0
+                    ? content?.location[0]?.post_title
+                    : 'Nowhere'}
                 </div>
                 <div className="vacancy-intro__aside-row">
                   <SocialLink

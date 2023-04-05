@@ -4,9 +4,11 @@ import { useEffect, useRef, useState } from 'react'
 import useClickOutSide from '../../../../hooks/ClickOutSide'
 import { useWindowDimensions } from '../../../../hooks/getWindowDimensions'
 import { useContentState } from '../../../../hooks/RootStoreProvider'
+import { retailerLocationsList } from '../../../../stores/ContentState'
 import GlobalState from '../../../../stores/GlobalState'
 import { IconComponent } from '../../../common/IconComponent'
 import InViewComponent from '../../../common/InViewComponent'
+import RetailerSelect from '../../../common/RetailerSelect'
 import RetailMap from '../../../common/RetailMap'
 import { LocationCard } from '../../../common/RetailPop'
 import Select from '../../../common/Select'
@@ -17,11 +19,13 @@ const RetailerContent = observer(() => {
   const { content } = useContentState()
   const [results, setResults] = useState(Array())
   const [show, setShow] = useState(false)
+  const [showAdd, setShowAdd] = useState(false)
+
   const [currentLocation, setLocation] = useState({
     lat: 40.866667,
     lng: 34.566667,
   })
-  const [value, setState] = useState('')
+  const [value, setState] = useState<any>(null)
   const { width } = useWindowDimensions()
   const ref = useRef<any>(null)
   const outSide = useClickOutSide(ref)
@@ -29,249 +33,37 @@ const RetailerContent = observer(() => {
     setTimeout(() => {
       setShow(true)
     }, 300)
-
-    setResults([
-      {
-        isAirport: true,
-
-        title: 'New York Airport',
-        text: 'McNamara Terminal Gate A18',
-        schedule: 'Every day from 7am to 8pm',
-        phone: '(1) 734 229 0042',
-        coords: {
-          lat: 10,
-          lng: 20,
-        },
-      },
-      {
-        title: 'New York Airport',
-        text: 'McNamara Terminal Gate A18',
-        schedule: 'Every day from 7am to 8pm',
-        phone: '(1) 734 229 0042',
-        isAirport: false,
-        coords: {
-          lat: -100,
-          lng: 20,
-        },
-      },
-      {
-        title: 'New York Airport',
-        text: 'McNamara Terminal Gate A18',
-        schedule: 'Every day from 7am to 8pm',
-        phone: '(1) 734 229 0042',
-        isAirport: false,
-        coords: {
-          lat: 100,
-          lng: 20,
-        },
-      },
-      {
-        title: 'New York Airport',
-        text: 'McNamara Terminal Gate A18',
-        schedule: 'Every day from 7am to 8pm',
-        phone: '(1) 734 229 0042',
-        isAirport: false,
-        coords: {
-          lat: 10,
-          lng: -20,
-        },
-      },
-      {
-        title: 'New York Airport',
-        text: 'McNamara Terminal Gate A18',
-        schedule: 'Every day from 7am to 8pm',
-        phone: '(1) 734 229 0042',
-        isAirport: false,
-        coords: {
-          lat: 10,
-          lng: -40,
-        },
-      },
-      {
-        title: 'New York Airport',
-        text: 'McNamara Terminal Gate A18',
-        schedule: 'Every day from 7am to 8pm',
-        phone: '(1) 734 229 0042',
-        isAirport: false,
-        coords: {
-          lat: 20,
-          lng: -30,
-        },
-      },
-      {
-        title: 'New York Airport',
-        text: 'McNamara Terminal Gate A18',
-        schedule: 'Every day from 7am to 8pm',
-        phone: '(1) 734 229 0042',
-        isAirport: false,
-        coords: {
-          lat: 10,
-          lng: 30,
-        },
-      },
-    ])
   }, [])
-
-  const search = (value: string) => {
-    const fd = new FormData()
-    fd.append('status', 'location-search')
-    fd.append('value', value)
-    // fetch('/', {
-    //   method: 'POST',
-    //   body: fd,
-    // }).then(() => {
-    //   //   setResults([
-    //   //     {
-    //   //       isAirport: true,
-    //   //       title: 'New York Airport',
-    //   //       text: 'McNamara Terminal Gate A18',
-    //   //       schedule: 'Every day from 7am to 8pm',
-    //   //       phone: '(1) 734 229 0042',
-    //   //       coords: {
-    //   //         lat: 10,
-    //   //         lng: 20,
-    //   //       },
-    //   //     },
-    //   //     {
-    //   //       title: 'New York Airport',
-    //   //       text: 'McNamara Terminal Gate A18',
-    //   //       schedule: 'Every day from 7am to 8pm',
-    //   //       phone: '(1) 734 229 0042',
-    //   //       isAirport: false,
-    //   //       coords: {
-    //   //         lat: -100,
-    //   //         lng: 20,
-    //   //       },
-    //   //     },
-    //   //     {
-    //   //       title: 'New York Airport',
-    //   //       text: 'McNamara Terminal Gate A18',
-    //   //       schedule: 'Every day from 7am to 8pm',
-    //   //       phone: '(1) 734 229 0042',
-    //   //       isAirport: false,
-    //   //       coords: {
-    //   //         lat: 100,
-    //   //         lng: 20,
-    //   //       },
-    //   //     },
-    //   //     {
-    //   //       title: 'New York Airport',
-    //   //       text: 'McNamara Terminal Gate A18',
-    //   //       schedule: 'Every day from 7am to 8pm',
-    //   //       phone: '(1) 734 229 0042',
-    //   //       isAirport: false,
-    //   //       coords: {
-    //   //         lat: 10,
-    //   //         lng: -20,
-    //   //       },
-    //   //     },
-    //   //     {
-    //   //       title: 'New York Airport',
-    //   //       text: 'McNamara Terminal Gate A18',
-    //   //       schedule: 'Every day from 7am to 8pm',
-    //   //       phone: '(1) 734 229 0042',
-    //   //       isAirport: false,
-    //   //       coords: {
-    //   //         lat: 10,
-    //   //         lng: -20,
-    //   //       },
-    //   //     },
-    //   //   ])
-    // })
-    setResults([
-      {
-        isAirport: true,
-
-        title: 'New York Airport',
-        text: 'McNamara Terminal Gate A18',
-        schedule: 'Every day from 7am to 8pm',
-        phone: '(1) 734 229 0042',
-        coords: {
-          lat: 10,
-          lng: 20,
-        },
-      },
-      {
-        title: 'New York Airport',
-        text: 'McNamara Terminal Gate A18',
-        schedule: 'Every day from 7am to 8pm',
-        phone: '(1) 734 229 0042',
-        isAirport: false,
-        coords: {
-          lat: -100,
-          lng: 20,
-        },
-      },
-      {
-        title: 'New York Airport',
-        text: 'McNamara Terminal Gate A18',
-        schedule: 'Every day from 7am to 8pm',
-        phone: '(1) 734 229 0042',
-        isAirport: false,
-        coords: {
-          lat: 100,
-          lng: 20,
-        },
-      },
-      {
-        title: 'New York Airport',
-        text: 'McNamara Terminal Gate A18',
-        schedule: 'Every day from 7am to 8pm',
-        phone: '(1) 734 229 0042',
-        isAirport: false,
-        coords: {
-          lat: 10,
-          lng: -20,
-        },
-      },
-      {
-        title: 'New York Airport',
-        text: 'McNamara Terminal Gate A18',
-        schedule: 'Every day from 7am to 8pm',
-        phone: '(1) 734 229 0042',
-        isAirport: false,
-        coords: {
-          lat: 10,
-          lng: -40,
-        },
-      },
-      {
-        title: 'New York Airport',
-        text: 'McNamara Terminal Gate A18',
-        schedule: 'Every day from 7am to 8pm',
-        phone: '(1) 734 229 0042',
-        isAirport: false,
-        coords: {
-          lat: 20,
-          lng: -30,
-        },
-      },
-      {
-        title: 'New York Airport',
-        text: 'McNamara Terminal Gate A18',
-        schedule: 'Every day from 7am to 8pm',
-        phone: '(1) 734 229 0042',
-        isAirport: false,
-        coords: {
-          lat: 10,
-          lng: 30,
-        },
-      },
-    ])
-  }
 
   useEffect(() => {
-    let vh = window.innerHeight * 0.01
-    const s = document.querySelector('.retail-pop__container')
-    if (!s) return
-    ;(s as any).style.setProperty('--vh', `${vh}px`)
-    window.addEventListener('resize', function (e) {
-      let vh = window.innerHeight * 0.01
-      const s = document.querySelector('.retail-pop__container')
-      if (!s) return
-      ;(s as any).style.setProperty('--vh', `${vh}px`)
+    if (value?.title?.length || value) {
+      search(value)
+    } else {
+      retailerLocationsList().then((r) => {
+        setResults(r)
+        setShowAdd(false)
+      })
+    }
+  }, [value])
+
+  const search = async (value: any) => {
+    await retailerLocationsList().then((r) => {
+      const res = r.filter((c: any) => {
+        let lc = (c.title + c.text).toLowerCase()
+        let searchText = value?.title ? value?.title : value
+        if (lc.includes(searchText?.toLowerCase())) {
+          return c
+        }
+      })
+
+      if (res.length) {
+        setShowAdd(true)
+      }
+
+      setResults(res)
     })
-  }, [])
+  }
+
   useEffect(() => {
     if (outSide) {
       GlobalState.locoScroll && GlobalState.locoScroll.start()
@@ -338,17 +130,13 @@ const RetailerContent = observer(() => {
             />
           </div>
           <div className="retail-pop__right">
-            <Select
+            <RetailerSelect
               placeholder={content?.placeholder}
-              withSearch
-              isLocate
-              value={''}
-              isSearchIcon
-              dt={content?.locations}
+              getValue={setState}
             />
-            {value.length ? (
+            {value?.title?.length && showAdd ? (
               <div className="retail-pop__subtitle">
-                {results?.length} “{value}” locations
+                {results?.length} “{value?.title}” locations
               </div>
             ) : (
               <></>
@@ -373,8 +161,8 @@ const RetailerContent = observer(() => {
                     // setLocation={setLocation}
                     isActive={
                       currentLocation &&
-                      currentLocation?.lat == re.coords.lat &&
-                      currentLocation?.lng == re.coords.lng
+                      currentLocation?.lat == re.coords?.lat &&
+                      currentLocation?.lng == re.coords?.lng
                     }
                   />
                 ))}

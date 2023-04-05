@@ -1,8 +1,6 @@
-import { runInAction } from 'mobx'
 import { observer } from 'mobx-react'
 import { useWindowDimensions } from '../../../../hooks/getWindowDimensions'
 import { useContentState } from '../../../../hooks/RootStoreProvider'
-import GlobalState from '../../../../stores/GlobalState'
 import Button from '../../../common/Button'
 import CustomSlider from '../../../common/CustomSlider'
 import { IconComponent } from '../../../common/IconComponent'
@@ -13,6 +11,8 @@ const Similiar = observer(() => {
   const { content } = useContentState()
 
   const { width, height } = useWindowDimensions()
+
+  if (!content?.similiar?.cards?.length) return <></>
   return (
     <section className="similiar">
       <div className="similiar__container">
@@ -55,7 +55,10 @@ const Similiar = observer(() => {
             classSrtr="story-slider blue-slider"
           >
             {content?.similiar?.cards?.map((ca: any, i: number) => (
-              <InViewComponent key={i} delay={width > 480 ? i * 0.3 : 0.3}>
+              <InViewComponent
+                key={i}
+                delay={width > 480 ? i * 0.3 : 0.3}
+              >
                 <SmallPost item={ca} />
               </InViewComponent>
             ))}

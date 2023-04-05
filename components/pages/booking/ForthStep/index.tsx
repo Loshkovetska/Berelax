@@ -3,6 +3,7 @@ import { runInAction } from 'mobx'
 import { observer } from 'mobx-react'
 import { useRef } from 'react'
 import { useContentState } from '../../../../hooks/RootStoreProvider'
+import { bookService } from '../../../../stores/ContentState'
 import Button from '../../../common/Button'
 import CheckBox from '../../../common/CheckBox'
 import { IconComponent } from '../../../common/IconComponent'
@@ -13,22 +14,16 @@ const ForthStep = observer(() => {
   const ref = useRef<any>(null)
   const { content } = useContentState()
   const submit = () => {
-    const fd = new FormData(ref.current)
-    fd.append('status', 'confirm-booking')
-
-    UserData.check2 && fd.append('subscribe', UserData.check2.toString())
+    // UserData.check2 && fd.append('subscribe', UserData.check2.toString())
     if (UserData.check1) {
-      runInAction(() => {
-        BookingStep.tab = 3
+      bookService(UserData).then(() => {
+        runInAction(() => {
+          BookingStep.tab = 3
+        })
       })
-      //   fetch('/', {
-      //     method: 'POST',
-      //     body: fd,
-      //   }).then(() => {
-      //     console.log('res')
-      //   })
     }
   }
+
   return (
     <section className={classNames('first-step forth-step')}>
       <div className="book-steps__container">
@@ -101,27 +96,9 @@ const ForthStep = observer(() => {
             required
           />
           <PhoneSelect
-            dt={content?.phoneCodes}
             placeholder={content?.block4?.phonePlaceholder}
             isRequired
           />
-          {/* <input
-            className="input grow"
-            value={UserData.phone}
-            name="phone"
-            onChange={(e) => {
-              if (
-                !/[A-Za-zА-Яа-яїі]/g.test(e.target.value) &&
-                e.target.value.length <= 15
-              ) {
-                runInAction(() => {
-                  UserData.phone = e.target.value
-                })
-              }
-            }}
-            placeholder={content?.block4?.phonePlaceholder}
-            required
-          /> */}
           <textarea
             name="addInfo"
             className="input textarea grow"

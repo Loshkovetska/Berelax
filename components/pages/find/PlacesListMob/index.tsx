@@ -10,8 +10,15 @@ import Button from '../../../common/Button'
 import Link from 'next/link'
 import { FindTabState } from '../Intro'
 import InViewComponent from '../../../common/InViewComponent'
+import { useRouter } from 'next/router'
+import { SelectState } from '../../../common/Select'
+
+export const PlaceCardState = observable({
+  selected: null,
+})
 
 const PlaceListMob = observer(() => {
+  const { query } = useRouter()
   const [tab, setTab] = useState(0)
   const [selected, setSelected] = useState('')
   const [airport, setAirport] = useState({
@@ -29,6 +36,30 @@ const PlaceListMob = observer(() => {
       })
     }
   }, [airports])
+
+  useEffect(() => {
+    if (PlaceCardState.selected && airports) {
+      setSelected((PlaceCardState.selected as any)?.continent)
+
+      const sublist = airports.find(
+        (a: any) => a.continent == (PlaceCardState.selected as any)?.continent,
+      )
+
+      if (sublist) {
+        airp = sublist?.list?.filter(
+          (a: any) => a.title == (PlaceCardState.selected as any)?.title,
+        )
+        if (airp.length) {
+          setAirport({
+            ...airport,
+            title: (PlaceCardState.selected as any)?.title,
+            item: airp[0],
+          })
+          setTab(2)
+        }
+      }
+    }
+  }, [PlaceCardState.selected, airports])
 
   const getUnicList = (list: any) => {
     const res: any = []
@@ -73,6 +104,10 @@ const PlaceListMob = observer(() => {
                       ...airport,
                       title: '',
                       item: null,
+                    })
+
+                    runInAction(() => {
+                      SelectState.selected = null
                     })
                   }}
                 />

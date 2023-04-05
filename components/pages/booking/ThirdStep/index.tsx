@@ -41,7 +41,7 @@ const ThirdScreen = observer(() => {
         ></div>
         <div className="book-steps__selects">
           <section className={classNames('loc-select')}>
-            <div className="loc-select__top" onClick={() => {}}>
+            <div className="loc-select__top">
               <span className="loc-select__value">
                 {UserData?.date
                   ? new Date(UserData.date).toLocaleDateString()
@@ -67,7 +67,7 @@ const ThirdScreen = observer(() => {
             withSearch={false}
             placeholder={content?.block3?.timePlaceholder}
             value={UserData.time || ''}
-            dt={content?.block3?.time}
+            dt={Array.from(UserData.location?.time)||[]}
           />
         </div>
         <Button

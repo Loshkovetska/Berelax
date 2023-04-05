@@ -34,8 +34,10 @@ __webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __we
 /* harmony import */ var _booking_Steps__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(4355);
 /* harmony import */ var react_google_recaptcha__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(5623);
 /* harmony import */ var react_google_recaptcha__WEBPACK_IMPORTED_MODULE_15___default = /*#__PURE__*/__webpack_require__.n(react_google_recaptcha__WEBPACK_IMPORTED_MODULE_15__);
+/* harmony import */ var _stores_ContentState__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(9815);
 var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_common_InViewComponent__WEBPACK_IMPORTED_MODULE_11__, _common_Select__WEBPACK_IMPORTED_MODULE_12__, _booking_Steps__WEBPACK_IMPORTED_MODULE_14__]);
 ([_common_InViewComponent__WEBPACK_IMPORTED_MODULE_11__, _common_Select__WEBPACK_IMPORTED_MODULE_12__, _booking_Steps__WEBPACK_IMPORTED_MODULE_14__] = __webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__);
+
 
 
 
@@ -84,22 +86,17 @@ const ProdRegister = (0,mobx_react__WEBPACK_IMPORTED_MODULE_3__.observer)(()=>{
             file: e.target.files[0]
         });
     };
-    const submit = ()=>{
+    const submit = (0,react__WEBPACK_IMPORTED_MODULE_4__.useCallback)(()=>{
         if (!ref.current || !isVerify) return;
         if (state.check1) {
-            const fd = new FormData(ref.current);
-            fd.append("product", state.product.id?.toString() || "");
-            state.date && fd.append("date", state.date);
-            state.file && fd.append("file", state.file);
-            state.check2 && fd.append("sign-up", state.check2.toString());
-            fd.append("status", "product-register");
-            //   fetch('/', {
-            //     method: 'POST',
-            //     body: fd,
-            //   }).then(() => {})
-            (0,_stores_GlobalState__WEBPACK_IMPORTED_MODULE_6__/* .changeSmallPopState */ .to)();
+            (0,_stores_ContentState__WEBPACK_IMPORTED_MODULE_16__/* .productRegisterForm */ .wj)(state).then(()=>{
+                (0,_stores_GlobalState__WEBPACK_IMPORTED_MODULE_6__/* .changeSmallPopState */ .to)();
+            });
         }
-    };
+    }, [
+        isVerify,
+        state
+    ]);
     (0,react__WEBPACK_IMPORTED_MODULE_4__.useEffect)(()=>{
         setState({
             ...state,
@@ -226,7 +223,10 @@ const ProdRegister = (0,mobx_react__WEBPACK_IMPORTED_MODULE_3__.observer)(()=>{
                                         withSearch: false,
                                         placeholder: content?.productPlaceholder,
                                         value: state.product?.title,
-                                        dt: JSON.parse(JSON.stringify(content?.products.map((p)=>p.title))).sort((a, b)=>a.localeCompare(b))
+                                        dt: content?.products.map((p)=>{
+                                            const title = p.title.replaceAll("&#8211;", "-").replaceAll("&#038;", "&").replaceAll("&#8217;", "’").replaceAll("&#180;", "\xb4");
+                                            return title;
+                                        }).sort((a, b)=>a.localeCompare(b))
                                     })
                                 }),
                                 /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
@@ -268,6 +268,10 @@ const ProdRegister = (0,mobx_react__WEBPACK_IMPORTED_MODULE_3__.observer)(()=>{
                                                 serialNumber: value
                                             })
                                     })
+                                }),
+                                /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("span", {
+                                    className: "product-reg__tooltip",
+                                    children: content?.serialTool
                                 }),
                                 /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
                                     className: "product-reg__form-row",
@@ -363,15 +367,16 @@ __webpack_async_result__();
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "X": () => (/* binding */ getProdReg)
 /* harmony export */ });
-/* harmony import */ var _stores_ContentState__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(9787);
+/* harmony import */ var _stores_ContentState__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(9815);
 
 const getProdReg = async ()=>{
-    const header = await (0,_stores_ContentState__WEBPACK_IMPORTED_MODULE_0__/* .getHeader */ .Pg)(), footer = await (0,_stores_ContentState__WEBPACK_IMPORTED_MODULE_0__/* .getFooter */ .PX)(), content = await (0,_stores_ContentState__WEBPACK_IMPORTED_MODULE_0__/* .getProductRegister */ .d1)(), countrypop = await (0,_stores_ContentState__WEBPACK_IMPORTED_MODULE_0__/* .getCountryPop */ .Pc)();
+    const { header , footer , countrypop  } = await (0,_stores_ContentState__WEBPACK_IMPORTED_MODULE_0__/* .getHeader */ .Pg)(), { content , seo  } = await (0,_stores_ContentState__WEBPACK_IMPORTED_MODULE_0__/* .getProductRegister */ .d1)();
     return {
         header,
         footer,
         content,
-        countrypop
+        countrypop,
+        seo
     };
 };
 
@@ -389,20 +394,19 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(997);
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var next_head__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(968);
-/* harmony import */ var next_head__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(next_head__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var mobx_react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(2062);
-/* harmony import */ var mobx_react__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(mobx_react__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(6689);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _hooks_useLoco__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(3355);
-/* harmony import */ var _components_common_Layout__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(4367);
-/* harmony import */ var _api_getProdReg__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(3126);
-/* harmony import */ var _components_pages_products_ProdRegister__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(5499);
-/* harmony import */ var _components_common_Calendar__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(6386);
-/* harmony import */ var _components_common_SmallPop__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(1867);
-var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_components_common_Layout__WEBPACK_IMPORTED_MODULE_5__, _components_pages_products_ProdRegister__WEBPACK_IMPORTED_MODULE_7__, _components_common_Calendar__WEBPACK_IMPORTED_MODULE_8__]);
-([_components_common_Layout__WEBPACK_IMPORTED_MODULE_5__, _components_pages_products_ProdRegister__WEBPACK_IMPORTED_MODULE_7__, _components_common_Calendar__WEBPACK_IMPORTED_MODULE_8__] = __webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__);
+/* harmony import */ var mobx_react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(2062);
+/* harmony import */ var mobx_react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(mobx_react__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(6689);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _hooks_useLoco__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(3355);
+/* harmony import */ var _components_common_Layout__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(4367);
+/* harmony import */ var _api_getProdReg__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(3126);
+/* harmony import */ var _components_pages_products_ProdRegister__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(5499);
+/* harmony import */ var _components_common_Calendar__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(6386);
+/* harmony import */ var _components_common_SmallPop__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(1867);
+/* harmony import */ var _components_common_SeoBlock__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(3534);
+var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_components_common_Layout__WEBPACK_IMPORTED_MODULE_4__, _components_pages_products_ProdRegister__WEBPACK_IMPORTED_MODULE_6__, _components_common_Calendar__WEBPACK_IMPORTED_MODULE_7__]);
+([_components_common_Layout__WEBPACK_IMPORTED_MODULE_4__, _components_pages_products_ProdRegister__WEBPACK_IMPORTED_MODULE_6__, _components_common_Calendar__WEBPACK_IMPORTED_MODULE_7__] = __webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__);
 
 
 
@@ -413,10 +417,10 @@ var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_com
 
 
 
-const ProductsRegister = (0,mobx_react__WEBPACK_IMPORTED_MODULE_2__.observer)(({ hydrationData: props  })=>{
-    const { 0: loading , 1: setLoading  } = (0,react__WEBPACK_IMPORTED_MODULE_3__.useState)(false);
-    (0,_hooks_useLoco__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .Z)(!loading);
-    (0,react__WEBPACK_IMPORTED_MODULE_3__.useEffect)(()=>{
+const ProductsRegister = (0,mobx_react__WEBPACK_IMPORTED_MODULE_1__.observer)(({ hydrationData: props  })=>{
+    const { 0: loading , 1: setLoading  } = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)(true);
+    (0,_hooks_useLoco__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .Z)(!loading);
+    (0,react__WEBPACK_IMPORTED_MODULE_2__.useEffect)(()=>{
         if (!loading) {
             if (true) {
                 return;
@@ -425,33 +429,39 @@ const ProductsRegister = (0,mobx_react__WEBPACK_IMPORTED_MODULE_2__.observer)(({
     }, [
         loading
     ]);
+    (0,react__WEBPACK_IMPORTED_MODULE_2__.useEffect)(()=>{
+        if (props.content) {
+            setLoading(false);
+        }
+    }, [
+        props
+    ]);
     return /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
         children: [
-            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx((next_head__WEBPACK_IMPORTED_MODULE_1___default()), {
-                children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("title", {
-                    children: "Be relax"
-                })
+            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_components_common_SeoBlock__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .Z, {
+                seo: props.seo
             }),
-            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_components_common_Layout__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .Z, {
+            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_components_common_Layout__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .Z, {
                 delay: 1,
-                children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_components_pages_products_ProdRegister__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .Z, {})
+                children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_components_pages_products_ProdRegister__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .Z, {})
             }),
-            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_components_common_Calendar__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .Z, {
+            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_components_common_Calendar__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .Z, {
                 afterDate: true
             }),
-            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_components_common_SmallPop__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .Z, {})
+            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_components_common_SmallPop__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .Z, {})
         ]
     });
 });
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (ProductsRegister);
 async function getStaticProps() {
-    const response = await (0,_api_getProdReg__WEBPACK_IMPORTED_MODULE_6__/* .getProdReg */ .X)();
+    const response = await (0,_api_getProdReg__WEBPACK_IMPORTED_MODULE_5__/* .getProdReg */ .X)();
     return {
         props: {
             hydrationData: {
                 ...response
             }
-        }
+        },
+        revalidate: 10
     };
 }
 
@@ -670,13 +680,6 @@ module.exports = require("next/dist/shared/lib/utils.js");
 
 /***/ }),
 
-/***/ 968:
-/***/ ((module) => {
-
-module.exports = require("next/head");
-
-/***/ }),
-
 /***/ 1853:
 /***/ ((module) => {
 
@@ -726,6 +729,13 @@ module.exports = require("react/jsx-runtime");
 
 /***/ }),
 
+/***/ 4956:
+/***/ ((module) => {
+
+module.exports = require("reading-time");
+
+/***/ }),
+
 /***/ 9915:
 /***/ ((module) => {
 
@@ -747,7 +757,7 @@ module.exports = import("react-intersection-observer");;
 var __webpack_require__ = require("../../webpack-runtime.js");
 __webpack_require__.C(exports);
 var __webpack_exec__ = (moduleId) => (__webpack_require__(__webpack_require__.s = moduleId))
-var __webpack_exports__ = __webpack_require__.X(0, [676,1664,5975,7077,1867,6386], () => (__webpack_exec__(4440)));
+var __webpack_exports__ = __webpack_require__.X(0, [676,1664,7378,991,1867,6386], () => (__webpack_exec__(4440)));
 module.exports = __webpack_exports__;
 
 })();

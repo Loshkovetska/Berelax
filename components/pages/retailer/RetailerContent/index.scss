@@ -27,7 +27,7 @@
 
   .retail-pop__container {
     margin-top: 49px;
-    height: calc(var(--vh, 1vh) * 100 - 80);
+    height: calc(var(--viewport-height, 1vh) * 100 - 80);
 
     @media (max-width: 1023px) {
       margin-top: 32px;

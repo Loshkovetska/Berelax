@@ -4,15 +4,14 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "next build && next export",
     "start": "next start",
-    "lint": "next lint",
-    "export": "next export"
+    "lint": "next lint"
   },
   "dependencies": {
-    "@next/font": "^13.0.7",
     "@react-google-maps/api": "^2.17.0",
     "@svgr/webpack": "^6.5.1",
+    "@types/lodash": "^4.14.191",
     "@types/react-calendar": "^3.9.0",
     "animate.css": "^4.1.1",
     "classnames": "^2.3.2",
@@ -35,6 +34,7 @@
     "react-slick": "^0.29.0",
     "react-trip-date": "^1.11.0",
     "react-wow": "^1.0.0",
+    "reading-time": "^1.5.0",
     "sass": "^1.56.0",
     "url-loader": "^4.1.1",
     "wowjs": "^1.1.3"

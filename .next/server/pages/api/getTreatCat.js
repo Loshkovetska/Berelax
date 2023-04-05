@@ -12,10 +12,10 @@ module.exports = require("mobx");
 
 /***/ }),
 
-/***/ 6689:
+/***/ 4956:
 /***/ ((module) => {
 
-module.exports = require("react");
+module.exports = require("reading-time");
 
 /***/ }),
 
@@ -26,16 +26,20 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "getTreatCat": () => (/* binding */ getTreatCat)
 /* harmony export */ });
-/* harmony import */ var _stores_ContentState__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(8340);
+/* harmony import */ var _stores_ContentState__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(5079);
 
 const getTreatCat = async (cat)=>{
-    const header = await (0,_stores_ContentState__WEBPACK_IMPORTED_MODULE_0__/* .getHeader */ .Pg)(), footer = await (0,_stores_ContentState__WEBPACK_IMPORTED_MODULE_0__/* .getFooter */ .PX)(), content = await (0,_stores_ContentState__WEBPACK_IMPORTED_MODULE_0__/* .getTreatCatPage */ .su)(cat), countrypop = await (0,_stores_ContentState__WEBPACK_IMPORTED_MODULE_0__/* .getCountryPop */ .Pc)(), cards = await (0,_stores_ContentState__WEBPACK_IMPORTED_MODULE_0__/* .getServices */ .U2)();
+    const cats = await (0,_stores_ContentState__WEBPACK_IMPORTED_MODULE_0__/* .getServiceCat */ .cP)();
+    let dt = await (0,_stores_ContentState__WEBPACK_IMPORTED_MODULE_0__/* .getServices */ .U2)();
+    const current = cats.find((c)=>c.slug == cat);
+    const { header , footer , countrypop  } = await (0,_stores_ContentState__WEBPACK_IMPORTED_MODULE_0__/* .getHeader */ .Pg)(), { content , seo  } = await (0,_stores_ContentState__WEBPACK_IMPORTED_MODULE_0__/* .getTreatCatPage */ .su)(current.id), cards = dt.filter((d)=>d.category == cat);
     return {
         header,
         footer,
         content,
         countrypop,
-        cards
+        cards,
+        seo
     };
 };
 
@@ -49,7 +53,7 @@ const getTreatCat = async (cat)=>{
 var __webpack_require__ = require("../../webpack-api-runtime.js");
 __webpack_require__.C(exports);
 var __webpack_exec__ = (moduleId) => (__webpack_require__(__webpack_require__.s = moduleId))
-var __webpack_exports__ = __webpack_require__.X(0, [8340], () => (__webpack_exec__(6857)));
+var __webpack_exports__ = __webpack_require__.X(0, [5079], () => (__webpack_exec__(6857)));
 module.exports = __webpack_exports__;
 
 })();

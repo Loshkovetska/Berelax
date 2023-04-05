@@ -30,6 +30,7 @@ var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_com
 
 const Explore = (0,mobx_react_lite__WEBPACK_IMPORTED_MODULE_1__.observer)(()=>{
     const { content  } = (0,_hooks_RootStoreProvider__WEBPACK_IMPORTED_MODULE_2__/* .useContentState */ .b3)();
+    if (!content?.explore?.list.length) return /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.Fragment, {});
     return /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("section", {
         className: "explore-block",
         children: /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
@@ -178,15 +179,16 @@ __webpack_async_result__();
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "R": () => (/* binding */ getProductsC)
 /* harmony export */ });
-/* harmony import */ var _stores_ContentState__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(9787);
+/* harmony import */ var _stores_ContentState__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(9815);
 
 const getProductsC = async ()=>{
-    const header = await (0,_stores_ContentState__WEBPACK_IMPORTED_MODULE_0__/* .getHeader */ .Pg)(), footer = await (0,_stores_ContentState__WEBPACK_IMPORTED_MODULE_0__/* .getFooter */ .PX)(), content = await (0,_stores_ContentState__WEBPACK_IMPORTED_MODULE_0__/* .getProductsContent */ .t_)(), countrypop = await (0,_stores_ContentState__WEBPACK_IMPORTED_MODULE_0__/* .getCountryPop */ .Pc)();
+    const { header , footer , countrypop  } = await (0,_stores_ContentState__WEBPACK_IMPORTED_MODULE_0__/* .getHeader */ .Pg)(), { content , seo  } = await (0,_stores_ContentState__WEBPACK_IMPORTED_MODULE_0__/* .getProductsContent */ .t_)(190);
     return {
         header,
         footer,
         content,
-        countrypop
+        countrypop,
+        seo
     };
 };
 
@@ -204,20 +206,19 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(997);
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var next_head__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(968);
-/* harmony import */ var next_head__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(next_head__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var mobx_react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(2062);
-/* harmony import */ var mobx_react__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(mobx_react__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(6689);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _hooks_useLoco__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(3355);
-/* harmony import */ var _components_common_Layout__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(4367);
-/* harmony import */ var _api_getProductsC__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(6840);
-/* harmony import */ var _components_pages_products_ProductsIntro__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(5664);
-/* harmony import */ var _components_pages_location_Banner__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(2749);
-/* harmony import */ var _components_pages_products_Explore__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(9688);
-var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_components_common_Layout__WEBPACK_IMPORTED_MODULE_5__, _components_pages_products_ProductsIntro__WEBPACK_IMPORTED_MODULE_7__, _components_pages_location_Banner__WEBPACK_IMPORTED_MODULE_8__, _components_pages_products_Explore__WEBPACK_IMPORTED_MODULE_9__]);
-([_components_common_Layout__WEBPACK_IMPORTED_MODULE_5__, _components_pages_products_ProductsIntro__WEBPACK_IMPORTED_MODULE_7__, _components_pages_location_Banner__WEBPACK_IMPORTED_MODULE_8__, _components_pages_products_Explore__WEBPACK_IMPORTED_MODULE_9__] = __webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__);
+/* harmony import */ var mobx_react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(2062);
+/* harmony import */ var mobx_react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(mobx_react__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(6689);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _hooks_useLoco__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(3355);
+/* harmony import */ var _components_common_Layout__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(4367);
+/* harmony import */ var _api_getProductsC__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(6840);
+/* harmony import */ var _components_pages_products_ProductsIntro__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(5664);
+/* harmony import */ var _components_pages_location_Banner__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(2749);
+/* harmony import */ var _components_pages_products_Explore__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(9688);
+/* harmony import */ var _components_common_SeoBlock__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(3534);
+var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_components_common_Layout__WEBPACK_IMPORTED_MODULE_4__, _components_pages_products_ProductsIntro__WEBPACK_IMPORTED_MODULE_6__, _components_pages_location_Banner__WEBPACK_IMPORTED_MODULE_7__, _components_pages_products_Explore__WEBPACK_IMPORTED_MODULE_8__]);
+([_components_common_Layout__WEBPACK_IMPORTED_MODULE_4__, _components_pages_products_ProductsIntro__WEBPACK_IMPORTED_MODULE_6__, _components_pages_location_Banner__WEBPACK_IMPORTED_MODULE_7__, _components_pages_products_Explore__WEBPACK_IMPORTED_MODULE_8__] = __webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__);
 
 
 
@@ -228,10 +229,10 @@ var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_com
 
 
 
-const TreatmentsCategoryPage = (0,mobx_react__WEBPACK_IMPORTED_MODULE_2__.observer)(({ hydrationData: props  })=>{
-    const { 0: loading , 1: setLoading  } = (0,react__WEBPACK_IMPORTED_MODULE_3__.useState)(false);
-    (0,_hooks_useLoco__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .Z)(!loading);
-    (0,react__WEBPACK_IMPORTED_MODULE_3__.useEffect)(()=>{
+const TreatmentsCategoryPage = (0,mobx_react__WEBPACK_IMPORTED_MODULE_1__.observer)(({ hydrationData: props  })=>{
+    const { 0: loading , 1: setLoading  } = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)(true);
+    (0,_hooks_useLoco__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .Z)(!loading);
+    (0,react__WEBPACK_IMPORTED_MODULE_2__.useEffect)(()=>{
         if (!loading) {
             if (true) {
                 return;
@@ -240,21 +241,26 @@ const TreatmentsCategoryPage = (0,mobx_react__WEBPACK_IMPORTED_MODULE_2__.observ
     }, [
         loading
     ]);
+    (0,react__WEBPACK_IMPORTED_MODULE_2__.useEffect)(()=>{
+        if (props.content) {
+            setLoading(false);
+        }
+    }, [
+        props
+    ]);
     return /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
         children: [
-            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx((next_head__WEBPACK_IMPORTED_MODULE_1___default()), {
-                children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("title", {
-                    children: "Be relax"
-                })
+            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_components_common_SeoBlock__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .Z, {
+                seo: props.seo
             }),
-            /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(_components_common_Layout__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .Z, {
+            /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(_components_common_Layout__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .Z, {
                 delay: 1,
                 children: [
-                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_components_pages_products_ProductsIntro__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .Z, {}),
-                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_components_pages_location_Banner__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .Z, {
+                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_components_pages_products_ProductsIntro__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .Z, {}),
+                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_components_pages_location_Banner__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .Z, {
                         theme: "blue"
                     }),
-                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_components_pages_products_Explore__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .Z, {})
+                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_components_pages_products_Explore__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .Z, {})
                 ]
             })
         ]
@@ -262,13 +268,14 @@ const TreatmentsCategoryPage = (0,mobx_react__WEBPACK_IMPORTED_MODULE_2__.observ
 });
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (TreatmentsCategoryPage);
 async function getStaticProps() {
-    const response = await (0,_api_getProductsC__WEBPACK_IMPORTED_MODULE_6__/* .getProductsC */ .R)();
+    const response = await (0,_api_getProductsC__WEBPACK_IMPORTED_MODULE_5__/* .getProductsC */ .R)();
     return {
         props: {
             hydrationData: {
                 ...response
             }
-        }
+        },
+        revalidate: 10
     };
 }
 
@@ -487,13 +494,6 @@ module.exports = require("next/dist/shared/lib/utils.js");
 
 /***/ }),
 
-/***/ 968:
-/***/ ((module) => {
-
-module.exports = require("next/head");
-
-/***/ }),
-
 /***/ 1853:
 /***/ ((module) => {
 
@@ -529,6 +529,13 @@ module.exports = require("react/jsx-runtime");
 
 /***/ }),
 
+/***/ 4956:
+/***/ ((module) => {
+
+module.exports = require("reading-time");
+
+/***/ }),
+
 /***/ 9915:
 /***/ ((module) => {
 
@@ -550,7 +557,7 @@ module.exports = import("react-intersection-observer");;
 var __webpack_require__ = require("../webpack-runtime.js");
 __webpack_require__.C(exports);
 var __webpack_exec__ = (moduleId) => (__webpack_require__(__webpack_require__.s = moduleId))
-var __webpack_exports__ = __webpack_require__.X(0, [676,1664,5975,7077,2749,2804,3680], () => (__webpack_exec__(810)));
+var __webpack_exports__ = __webpack_require__.X(0, [676,1664,7378,991,2749,2804,3680], () => (__webpack_exec__(810)));
 module.exports = __webpack_exports__;
 
 })();

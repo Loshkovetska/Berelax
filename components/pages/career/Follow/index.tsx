@@ -54,6 +54,12 @@ const Follow = observer(() => {
               <InViewComponent key={i} delay={f}>
                 <div
                   className="follow-us__blocks-item"
+                  onClick={() => {
+                    const el = document.createElement('div')
+                    el.insertAdjacentHTML('beforeend', f)
+                    const frame: any = el.querySelector('iframe')
+                    window.open(frame?.src.replaceAll('/embed', ''), '_blank')
+                  }}
                   dangerouslySetInnerHTML={{ __html: f }}
                 ></div>
               </InViewComponent>

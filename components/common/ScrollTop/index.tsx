@@ -7,7 +7,6 @@ const ScrollTop = observer(() => {
   const router = useRouter()
   useEffect(() => {
     router.beforePopState(({ as }): any => {
-      console.log(as, router.asPath)
       console.log('back')
 
       if (as !== router.asPath) {

@@ -4,9 +4,9 @@ export const IconComponent = ({
   name,
   ...rest
 }: {
-  name: any
-  className?: any
-  onClick?: any
+  name: string
+  className?: string
+  onClick?: (val?: any) => void
 }) => {
   const ImportedIconRef = React.useRef()
   const [loading, setLoading] = React.useState(true)

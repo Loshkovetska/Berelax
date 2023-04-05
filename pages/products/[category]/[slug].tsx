@@ -1,9 +1,7 @@
-import Head from 'next/head'
 import { observer } from 'mobx-react'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 import useLocoScroll from '../../../hooks/useLoco'
-import GlobalState from '../../../stores/GlobalState'
-import { getHeader, getProducts } from '../../../stores/ContentState'
+import { getProducts } from '../../../stores/ContentState'
 import Layout from '../../../components/common/Layout'
 import { getProduct } from '../../api/getProduct'
 import Intro from '../../../components/pages/product/Intro'
@@ -11,9 +9,10 @@ import Benefits from '../../../components/pages/service/Benefits'
 import Banner from '../../../components/pages/location/Banner'
 import Similiar from '../../../components/pages/service/Similiar'
 import RetailPop from '../../../components/common/RetailPop'
+import SeoBlock from '../../../components/common/SeoBlock'
 
 const TreatmentsCategoryPage = observer(({ hydrationData: props }: any) => {
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(true)
   useLocoScroll(!loading)
   useEffect(() => {
     if (!loading) {
@@ -23,11 +22,15 @@ const TreatmentsCategoryPage = observer(({ hydrationData: props }: any) => {
     }
   }, [loading])
 
+  useEffect(() => {
+    if (props.content) {
+      setLoading(false)
+    }
+  }, [props])
+
   return (
     <>
-      <Head>
-        <title>Be relax</title>
-      </Head>
+      <SeoBlock seo={props.seo} />
 
       <Layout delay={1}>
         <Intro />
@@ -50,10 +53,7 @@ export async function getStaticPaths() {
     paths.push({
       params: {
         category: li.category,
-        slug: li.link
-          .replaceAll('products', '')
-          .replaceAll('/', '')
-          .replaceAll(li.category, ''),
+        slug: li.slug,
         path: li.link,
       },
     })
@@ -61,16 +61,17 @@ export async function getStaticPaths() {
 
   return {
     paths: paths,
-    fallback: 'blocking',
+    fallback: false,
   }
 }
 
 export async function getStaticProps({ params }: any) {
-  const response = await getProduct(params.slug)
+  const response = (await getProduct(params.slug)) || null
 
   return {
     props: {
       hydrationData: { ...response },
     },
+    revalidate: 10,
   }
 }

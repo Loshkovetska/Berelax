@@ -116,6 +116,8 @@
       color: #c48868;
       margin-top: 16px;
       cursor: pointer;
+      display: flex;
+      align-items: center;
       svg {
         max-height: 14px;
         width: 14px;
@@ -189,6 +191,8 @@
       }
     }
     &__pop {
+      min-width: 200px;
+      max-width: 200px;
       .loc-svg {
         min-width: 32px;
         max-width: 32px;
@@ -196,17 +200,21 @@
         bottom: -16px;
       }
 
-      // &.show {
-      //   transform: translate(0%, 48px);
-      // }
-      transform: translate(-50%, 0);
+      transform: translate(0%, 0);
       &.show {
-        transform: translate(-50%, 48px);
+        transform: translate(0%, 48px);
       }
     }
   }
 
   @media (max-width: 480px) {
     height: 107vw;
+
+    &__pop {
+      transform: translate(0%, 0);
+      &.show {
+        transform: translate(0%, 48px);
+      }
+    }
   }
 }

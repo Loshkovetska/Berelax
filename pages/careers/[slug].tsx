@@ -1,19 +1,16 @@
-import Head from 'next/head'
 import { observer } from 'mobx-react'
 import { useEffect, useRef, useState } from 'react'
 import useLocoScroll from '../../hooks/useLoco'
-import GlobalState from '../../stores/GlobalState'
 import Layout from '../../components/common/Layout'
 import SmallPop from '../../components/common/SmallPop'
 import ResumeForm from '../../components/pages/career/ResumeForm'
 import { getVacancies } from '../../stores/ContentState'
 import { getCareerPost } from '../api/getCareerPost'
 import Intro from '../../components/pages/vacancy/Intro'
+import SeoBlock from '../../components/common/SeoBlock'
 
 const CareerPostPage = observer(({ hydrationData: props }: any) => {
-  const [loading, setLoading] = useState(false)
-  const ref = useRef<any>(null)
-
+  const [loading, setLoading] = useState(true)
   useLocoScroll(!loading)
   useEffect(() => {
     if (!loading) {
@@ -23,12 +20,14 @@ const CareerPostPage = observer(({ hydrationData: props }: any) => {
     }
   }, [loading])
 
-
+  useEffect(() => {
+    if (props.content) {
+      setLoading(false)
+    }
+  }, [props])
   return (
     <>
-      <Head>
-        <title>Be relax</title>
-      </Head>
+      <SeoBlock seo={props.seo} />
       <Layout delay={1}>
         <Intro />
         <ResumeForm isCareerPage={false} />
@@ -46,15 +45,15 @@ export async function getStaticPaths() {
   news?.forEach((p: any) => {
     paths.push({
       params: {
-        slug: p.link.replaceAll('/careers/', '').replaceAll('/', ''),
-        path: p.link.replaceAll('/careers/', '').replaceAll('/', ''),
+        slug: p.slug,
+        path: p.link,
       },
     })
   })
 
   return {
     paths: paths,
-    fallback: 'blocking',
+    fallback: false,
   }
 }
 
@@ -65,5 +64,6 @@ export async function getStaticProps({ params }: any) {
     props: {
       hydrationData: { ...response },
     },
+    revalidate: 10,
   }
 }

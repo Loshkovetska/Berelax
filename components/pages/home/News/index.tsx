@@ -42,6 +42,15 @@ const News = observer(() => {
     }
   }, [news])
 
+  if (!newsList) return <></>
+
+  const newsSortedList = JSON.parse(JSON.stringify(newsList))
+    ?.sort(
+      (a: NewsType, b: NewsType) =>
+        new Date(b.datetime).getTime() - new Date(a.datetime).getTime(),
+    )
+    .slice(0, 3)
+
   return (
     <section className="news">
       <div className="news__container">
@@ -62,28 +71,20 @@ const News = observer(() => {
           />
         </div>
         <div className="news__list">
-          {JSON.parse(JSON.stringify(newsList))
-            ?.sort(
-              (a: NewsType, b: NewsType) =>
-                new Date(b.datetime).getTime() - new Date(a.datetime).getTime(),
-            )
-            .slice(0, 3)
-            .map((ni: NewsType, i: number) => (
-              <NewsPost post={ni} key={i} />
-            ))}
+          {newsSortedList?.map((ni: NewsType, i: number) => (
+            <NewsPost post={ni} key={i} />
+          ))}
         </div>
         <div className="news__slider">
-          <CustomSlider slidesToShow={1} slidesToScroll={1} variableWidth infinite={false}>
-            {JSON.parse(JSON.stringify(newsList))
-              ?.sort(
-                (a: NewsType, b: NewsType) =>
-                  new Date(b.datetime).getTime() -
-                  new Date(a.datetime).getTime(),
-              )
-              .slice(0, 3)
-              .map((ni: NewsType, i: number) => (
-                <NewsPost post={ni} key={i} />
-              ))}
+          <CustomSlider
+            slidesToShow={1}
+            slidesToScroll={1}
+            variableWidth
+            infinite={false}
+          >
+            {newsSortedList?.map((ni: NewsType, i: number) => (
+              <NewsPost post={ni} key={i} />
+            ))}
           </CustomSlider>
         </div>
         <InViewComponent>

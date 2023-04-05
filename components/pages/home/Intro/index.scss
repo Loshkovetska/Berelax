@@ -2,6 +2,10 @@
   width: 100%;
   padding-top: 115px;
   overflow: hidden;
+  & > .in-view.zoomin {
+    position: relative;
+    z-index: 1;
+  }
 
   &__title {
     max-width: 800px;
@@ -21,6 +25,10 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+
+    .button {
+      width: 224px;
+    }
   }
 
   &__gallery {
@@ -72,7 +80,7 @@
       }
       &.small {
         min-width: 19.5vw;
-        
+
         margin-top: -192px;
 
         @media (max-width: 1024px) {
@@ -125,7 +133,6 @@
         border-radius: 104px;
       }
       &.b72 {
-    
       }
       &.h339 {
         height: 23.6vw;

@@ -1,18 +1,17 @@
-import Head from 'next/head'
 import { observer } from 'mobx-react'
 import { useEffect, useState } from 'react'
 import useLocoScroll from '../../../hooks/useLoco'
 import { getTreatCat } from '../../api/getTreatCat'
-import { getFooter, getHeader } from '../../../stores/ContentState'
+import { getServiceCat } from '../../../stores/ContentState'
 import Categories from '../../../components/pages/treatcat/Categories'
 import Intro from '../../../components/pages/treatcat/Intro'
 import ServicesList from '../../../components/pages/treatcat/ServicesList'
 import Banner from '../../../components/pages/location/Banner'
 import Layout from '../../../components/common/Layout'
+import SeoBlock from '../../../components/common/SeoBlock'
 
 const TreatmentsCategoryPage = observer(({ hydrationData: props }: any) => {
-  const [loading, setLoading] = useState(false)
-
+  const [loading, setLoading] = useState(true)
   useLocoScroll(!loading)
   useEffect(() => {
     if (!loading) {
@@ -22,13 +21,17 @@ const TreatmentsCategoryPage = observer(({ hydrationData: props }: any) => {
     }
   }, [loading])
 
+  useEffect(() => {
+    if (props.content) {
+      setLoading(false)
+    }
+  }, [props])
+
   return (
     <>
-      <Head>
-        <title>Be relax</title>
-      </Head>
-      <Layout isTreatCat>
-        <Categories />
+      <SeoBlock seo={props.seo} />
+      <Layout isTreatCat >
+        <Categories/>
         <Intro />
         <ServicesList />
         <Banner />
@@ -40,14 +43,14 @@ const TreatmentsCategoryPage = observer(({ hydrationData: props }: any) => {
 export default TreatmentsCategoryPage
 
 export async function getStaticPaths() {
-  const footer = await getFooter()
-  const paths: any = []
-  const treats = footer?.cols[1]?.list
+  const sv = await getServiceCat()
 
-  treats?.map((p: any) => {
+  const paths: any = []
+
+  sv?.map((p: any) => {
     paths.push({
       params: {
-        category: p.link.replaceAll('/', '').replaceAll('treatments', ''),
+        category: p.slug,
         path: p.link,
       },
     })
@@ -55,7 +58,7 @@ export async function getStaticPaths() {
 
   return {
     paths: paths,
-    fallback: 'blocking',
+    fallback: false,
   }
 }
 
@@ -66,5 +69,6 @@ export async function getStaticProps({ params }: any) {
     props: {
       hydrationData: { ...response },
     },
+    revalidate: 10,
   }
 }

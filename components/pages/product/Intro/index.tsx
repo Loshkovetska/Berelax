@@ -17,10 +17,11 @@ const Intro = observer(() => {
   const [selectedColor, setColor] = useState('')
   const { width } = useWindowDimensions()
   useEffect(() => {
-    if (!selectedColor.length && content?.colors) {
+    if (content?.colors) {
       setColor(content?.colors[0].title)
     }
-  }, [content?.colors, selectedColor])
+  }, [content?.colors])
+
 
   return (
     <section className="product-intro">
@@ -38,7 +39,10 @@ const Intro = observer(() => {
                     )}
                     key={i}
                   >
-                    <ImageComponent src={g.images[0]} />
+                    <ImageComponent
+                      src={g.images[0].src}
+                      alt={g.images[0].alt}
+                    />
                   </div>
                 ))}
               </div>
@@ -50,7 +54,7 @@ const Intro = observer(() => {
                         className={classNames('product-intro__images-item')}
                         key={id}
                       >
-                        <ImageComponent src={im} />
+                        <ImageComponent src={im.src} alt={im.alt} />
                       </div>
                     ))}
                 </Fragment>
@@ -69,7 +73,7 @@ const Intro = observer(() => {
                         )}
                         key={id}
                       >
-                        <ImageComponent src={im} />
+                        <ImageComponent src={im.src} alt={im.alt} />
                       </div>
                     ))}
                 </Fragment>
@@ -115,18 +119,22 @@ const Intro = observer(() => {
                     dangerouslySetInnerHTML={{ __html: content?.text }}
                   ></div>
                   <div className="product-intro__btns">
-                    <Button
-                      classStr="beige button-arrow button-svg p20p24"
-                      isLink
-                      link={content?.buttonLink1}
-                      target
-                      inner={
-                        <>
-                          {content?.buttonTitle1}
-                          <IconComponent name={'arrow'} />
-                        </>
-                      }
-                    />
+                    {!content?.buttonLink1.includes('#') ? (
+                      <Button
+                        classStr="beige button-arrow button-svg p20p24"
+                        isLink
+                        link={content?.buttonLink1}
+                        target
+                        inner={
+                          <>
+                            {content?.buttonTitle1}
+                            <IconComponent name={'arrow'} />
+                          </>
+                        }
+                      />
+                    ) : (
+                      <></>
+                    )}
                     <div
                       className="product-intro__link"
                       onClick={changeRetailerState}
@@ -166,18 +174,22 @@ const Intro = observer(() => {
               dangerouslySetInnerHTML={{ __html: content?.text }}
             ></div>
             <div className="product-intro__btns">
-              <Button
-                classStr="beige button-arrow button-svg p20p24"
-                isLink
-                link={content?.buttonLink1}
-                target
-                inner={
-                  <>
-                    {content?.buttonTitle1}
-                    <IconComponent name={'arrow'} />
-                  </>
-                }
-              />
+              {!content?.buttonLink1.includes('#') ? (
+                <Button
+                  classStr="beige button-arrow button-svg p20p24"
+                  isLink
+                  link={content?.buttonLink1}
+                  target
+                  inner={
+                    <>
+                      {content?.buttonTitle1}
+                      <IconComponent name={'arrow'} />
+                    </>
+                  }
+                />
+              ) : (
+                <></>
+              )}
               <div
                 className="product-intro__link"
                 onClick={changeRetailerState}

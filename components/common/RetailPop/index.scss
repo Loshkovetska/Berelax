@@ -1,6 +1,6 @@
 .retail-pop {
   width: 100%;
-  height: calc(var(--vh, 1vh) * 100);
+  height: calc(var(--viewport-height, 1vh) * 100);
   background: #ffffff;
   padding: 40px 100px;
   position: fixed;
@@ -24,11 +24,11 @@
     height: 100%;
     position: relative;
     justify-content: space-between;
-       width: 100%;
+    width: 100%;
     max-width: 80vw;
     margin: 0 auto;
     max-height: 770px;
-      @media (max-width: 1280px) {
+    @media (max-width: 1280px) {
       max-width: none;
     }
   }
@@ -274,17 +274,22 @@
     border: 1px solid rgba(46, 99, 135, 0.17);
   }
   &__top {
+    display: flex;
+    align-items: flex-start;
     svg {
       margin-right: 8px;
-      vertical-align: middle;
-      display: inline-block;
+      // vertical-align: middle;
       min-width: 24px;
       max-width: 24px;
       height: 24px;
+      display: none;
       &.shop {
         min-width: 20px;
         max-width: 20px;
         height: 20px;
+      }
+      &.visible {
+        display: inline-block;
       }
     }
   }

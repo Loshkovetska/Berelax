@@ -16,7 +16,7 @@ __webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __we
 /* harmony import */ var mobx_react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(mobx_react__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _hooks_RootStoreProvider__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(5975);
 /* harmony import */ var _common_CustomSlider__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(9742);
-/* harmony import */ var _common_ImageComponent__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(4042);
+/* harmony import */ var _common_ImageComponent__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(9808);
 /* harmony import */ var _common_InViewComponent__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(2949);
 /* harmony import */ var _common_Text__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(2785);
 /* harmony import */ var _common_Title40__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(6336);
@@ -55,7 +55,8 @@ const CompanyValues = (0,mobx_react__WEBPACK_IMPORTED_MODULE_1__.observer)(()=>{
                                     /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
                                         className: "company-values__item-icon",
                                         children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_common_ImageComponent__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .Z, {
-                                            src: li.icon
+                                            src: li.icon,
+                                            alt: li.alt
                                         })
                                     }),
                                     /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_common_Title40__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .Z, {
@@ -86,7 +87,8 @@ const CompanyValues = (0,mobx_react__WEBPACK_IMPORTED_MODULE_1__.observer)(()=>{
                                         /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
                                             className: "company-values__item-icon",
                                             children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_common_ImageComponent__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .Z, {
-                                                src: li.icon
+                                                src: li.icon,
+                                                alt: li.alt
                                             })
                                         }),
                                         /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_common_Title40__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .Z, {

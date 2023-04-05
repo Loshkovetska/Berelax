@@ -3,7 +3,7 @@
   position: relative;
   margin-bottom: 16px;
   &__top {
-    padding: 16px 24px;
+    padding: 24px 24px;
     width: 100%;
     display: flex;
     align-items: center;
@@ -13,7 +13,7 @@
     border: 1px solid rgba(46, 99, 135, 0.17);
     border-radius: 32px;
     position: relative;
-    z-index: 1;
+    z-index: 2;
   }
 
   &__flag {
@@ -68,7 +68,7 @@
     color: #3a4458;
     &:-webkit-autofill {
       -webkit-text-fill-color: rgb(7, 34, 74) !important;
-       -webkit-box-shadow: 0 0 0 30px white inset !important;
+      -webkit-box-shadow: 0 0 0 30px white inset !important;
     }
 
     &::placeholder {
@@ -87,6 +87,7 @@
     position: absolute;
     top: 0;
     left: 0;
+    z-index: 1;
     visibility: hidden;
     transition: 0.3s ease-in-out all;
     background: #ffffff;
@@ -131,18 +132,25 @@
   }
 
   &.show {
+    .phone-select__top {
+      z-index: 6;
+    }
     .phone-select__top svg {
       transform: rotate(-180deg);
     }
     .phone-select__list {
       padding: 80px 24px 10px;
-      max-height: 100000px;
+      max-height: 250px;
       opacity: 1;
+      z-index: 5;
       visibility: visible;
     }
   }
 
   @media (max-width: 768px) {
+    &__top {
+      padding: 16px 24px;
+    }
     &__input,
     &__flag,
     &__item {
@@ -157,7 +165,7 @@
     &.show {
       .phone-select__list {
         padding: 80px 24px 18px;
-        max-height: 100000px;
+        max-height: 250px;
         opacity: 1;
         visibility: visible;
       }

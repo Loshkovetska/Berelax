@@ -22,7 +22,7 @@ __webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __we
 /* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(9003);
 /* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(classnames__WEBPACK_IMPORTED_MODULE_6__);
 /* harmony import */ var _hooks_RootStoreProvider__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(5975);
-/* harmony import */ var _common_ImageComponent__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(4042);
+/* harmony import */ var _common_ImageComponent__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(9808);
 var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([react_intersection_observer__WEBPACK_IMPORTED_MODULE_4__]);
 react_intersection_observer__WEBPACK_IMPORTED_MODULE_4__ = (__webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__)[0];
 
@@ -36,6 +36,7 @@ react_intersection_observer__WEBPACK_IMPORTED_MODULE_4__ = (__webpack_async_depe
 
 const FollowUs = (0,mobx_react__WEBPACK_IMPORTED_MODULE_1__.observer)(()=>{
     const { content: { follow  } ,  } = (0,_hooks_RootStoreProvider__WEBPACK_IMPORTED_MODULE_7__/* .useContentState */ .b3)();
+    const { 0: photos , 1: setPhotos  } = (0,react__WEBPACK_IMPORTED_MODULE_5__.useState)([]);
     const { 0: end , 1: setEnd  } = (0,react__WEBPACK_IMPORTED_MODULE_5__.useState)(false);
     const { ref , inView , entry  } = (0,react_intersection_observer__WEBPACK_IMPORTED_MODULE_4__.useInView)({
         threshold: 0
@@ -100,7 +101,7 @@ const FollowUs = (0,mobx_react__WEBPACK_IMPORTED_MODULE_1__.observer)(()=>{
                 }),
                 /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
                     className: "follow-us__list",
-                    children: follow?.images?.map((f, i)=>/*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(FollowUsImage, {
+                    children: (photos?.length > 0 ? photos : follow?.images)?.map((f, i)=>/*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(FollowUsImage, {
                             f: f
                         }, i))
                 })
@@ -121,11 +122,15 @@ const FollowUsImage = ({ f  })=>{
     }, [
         inView
     ]);
-    return /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
+    return /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("a", {
         className: classnames__WEBPACK_IMPORTED_MODULE_6___default()("follow-us__img", end && "animated"),
         ref: ref,
+        href: f.link,
+        target: "_blank",
+        rel: "noreferrer",
         children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_common_ImageComponent__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .Z, {
-            src: f || ""
+            src: f.img || "",
+            alt: f.alt
         })
     });
 };

@@ -6,6 +6,13 @@
     max-width: 80vw;
     margin: 0 auto;
   }
+  &__title {
+    margin-bottom: 75px;
+
+    @media (max-width: 768px) {
+      margin-bottom: 32px;
+    }
+  }
 
   &__block {
     max-width: 710px;
@@ -39,6 +46,23 @@
 
       @media (max-width: 768px) {
         font-size: 24px;
+        line-height: 125%;
+      }
+    }
+    h3 {
+      font-family: 'Antic Didone';
+      font-style: normal;
+      font-weight: 400;
+      font-size: 32px;
+      line-height: 125%;
+      color: #13233b;
+      margin-bottom: 24px;
+      @media (max-width: 1024px) {
+        font-size: 28px;
+      }
+
+      @media (max-width: 768px) {
+        font-size: 18px;
         line-height: 125%;
       }
     }

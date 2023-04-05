@@ -41,7 +41,10 @@ const BookFinal = observer(() => {
         <InViewComponent delay={0.5}>
           <div className="book-final__content">
             <div className="book-final__img">
-              <ImageComponent src={UserData?.treatments[0].img} />
+              <ImageComponent
+                src={UserData?.treatments[0].img}
+                alt={UserData?.treatments[0].alt}
+              />
             </div>
             <div className="book-final__table">
               <div className="book-final__table-col">
@@ -65,10 +68,15 @@ const BookFinal = observer(() => {
                     </div>
                     <div className="book-final__row">
                       <div className="book-final__subtitle">
-                        {content?.bookDetails?.duratTitle}
+                        {!['nail-care', 'beauty'].includes(tr.category)
+                          ? content?.bookDetails?.duratTitle
+                          : ''}
                       </div>
                       <div className="book-final__subtext">
-                        {tr.time} min - ${tr.price}
+                        {tr.time}{' '}
+                        {!['nail-care', 'beauty'].includes(tr.category) &&
+                          'min'}{' '}
+                        - {tr.price}
                       </div>
                     </div>
                   </Fragment>

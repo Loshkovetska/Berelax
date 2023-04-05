@@ -41,20 +41,22 @@ const Header = observer(
           }
         })
       }
-    }, [GlobalState.locoScroll])
+    }, [GlobalState.locoScroll, isAbsolute])
 
     useEffect(() => {
       const header = document.querySelector('.header.absolute')
       if (!header) return
-      ;(document.querySelectorAll('.navigation') as any)?.forEach((n: any) => {
-        if (n) {
-          n?.style.setProperty(
-            '--header-height',
-            header.getBoundingClientRect().height + 'px',
-          )
-        }
-      })
-      ;(document.querySelector('.searchbox') as any)?.style.setProperty(
+      ;(document.querySelectorAll('.navigation') as any)?.forEach(
+        (n: HTMLElement) => {
+          if (n) {
+            n?.style.setProperty(
+              '--header-height',
+              header.getBoundingClientRect().height + 'px',
+            )
+          }
+        },
+      )
+      ;(document.querySelector('.searchbox') as HTMLElement)?.style.setProperty(
         '--header-height',
         header.getBoundingClientRect().height + 'px',
       )
@@ -120,6 +122,7 @@ const Header = observer(
               <ImageComponent
                 classStr="header__logo"
                 src={header?.logo || ''}
+                alt={header?.altLogo}
               />
             </div>
             <Navigation classStr={!isAbsolute ? 'fixed' : 'absolute'} />

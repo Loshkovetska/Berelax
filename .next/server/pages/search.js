@@ -27,15 +27,13 @@ __webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __we
 /* harmony import */ var _common_MainSelect__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(5619);
 /* harmony import */ var _common_NewsPost__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(3438);
 /* harmony import */ var _common_ProductItem__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(2804);
-/* harmony import */ var _assets_products_product_png__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(2757);
-/* harmony import */ var _assets_news_Frame_14_png__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(629);
-/* harmony import */ var _assets_home_image_303_png__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(9170);
-/* harmony import */ var _common_ServiceItem__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(8510);
-/* harmony import */ var _common_InViewComponent__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(2949);
-/* harmony import */ var _common_Title__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(4353);
-var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_common_NewsPost__WEBPACK_IMPORTED_MODULE_9__, _common_InViewComponent__WEBPACK_IMPORTED_MODULE_15__]);
-([_common_NewsPost__WEBPACK_IMPORTED_MODULE_9__, _common_InViewComponent__WEBPACK_IMPORTED_MODULE_15__] = __webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__);
-
+/* harmony import */ var _common_ServiceItem__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(8510);
+/* harmony import */ var _common_InViewComponent__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(2949);
+/* harmony import */ var _common_Title__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(4353);
+/* harmony import */ var _stores_ContentState__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(9815);
+/* harmony import */ var _pages_search__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(2564);
+var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_common_NewsPost__WEBPACK_IMPORTED_MODULE_9__, _common_InViewComponent__WEBPACK_IMPORTED_MODULE_12__, _pages_search__WEBPACK_IMPORTED_MODULE_15__]);
+([_common_NewsPost__WEBPACK_IMPORTED_MODULE_9__, _common_InViewComponent__WEBPACK_IMPORTED_MODULE_12__, _pages_search__WEBPACK_IMPORTED_MODULE_15__] = __webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__);
 
 
 
@@ -53,314 +51,100 @@ var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_com
 
 
 const SearchContent = (0,mobx_react__WEBPACK_IMPORTED_MODULE_2__.observer)(()=>{
+    const { 0: searchTitle , 1: setSearchTitle  } = (0,react__WEBPACK_IMPORTED_MODULE_3__.useState)("");
+    const ref = (0,react__WEBPACK_IMPORTED_MODULE_3__.useRef)(false);
     const { content  } = (0,_hooks_RootStoreProvider__WEBPACK_IMPORTED_MODULE_4__/* .useContentState */ .b3)();
     const { 0: value , 1: setTitle  } = (0,react__WEBPACK_IMPORTED_MODULE_3__.useState)("");
     const { 0: section , 1: setSection  } = (0,react__WEBPACK_IMPORTED_MODULE_3__.useState)("");
-    const { 0: results , 1: setResults  } = (0,react__WEBPACK_IMPORTED_MODULE_3__.useState)({
-        section: "",
-        list: Array()
-    });
+    const { 0: all , 1: setAll  } = (0,react__WEBPACK_IMPORTED_MODULE_3__.useState)([]);
     (0,react__WEBPACK_IMPORTED_MODULE_3__.useEffect)(()=>{
         if (sessionStorage.getItem("search-value")) {
             setTitle(sessionStorage.getItem("search-value") || "");
-            search(sessionStorage.getItem("search-value") || "", content?.sections[0]);
+            search(sessionStorage.getItem("search-value") || "");
         }
         if (content?.sections) {
             setSection(content?.sections[0]);
         }
-    }, []);
-    const search = (value, section)=>{
-        const fd = new FormData();
-        fd.append("status", "search");
-        fd.append("value", value);
-        fd.append("section", section);
-        fetch("https://api.publicapis.org/entries", {
-        }).then(()=>{
-            if (section == "news") {
-                setResults({
-                    section: "news",
-                    list: [
-                        {
-                            id: 1,
-                            link: "/news/integer",
-                            title: "Facial massage with a jade <br/> stone. Techniques and tips.",
-                            text: "Aliquet amet nec justo, sit auctor nisl, nunc. Maecenas felis nunc id ut nisi, condimentum sit vulputate. Sit est suspendisse bibendum rutrum eget. Sapien mattis Maecenas felis nunc id ut nisi, condimentum sit vulputate. Sit est suspendisse bibendum rutrum eget. Sapien mattis",
-                            datetime: "2022-10-11",
-                            cat: "Massage",
-                            readTime: "5min",
-                            img: _assets_news_Frame_14_png__WEBPACK_IMPORTED_MODULE_12__/* ["default"].src */ .Z.src
-                        },
-                        {
-                            id: 2,
-                            link: "/news/integer",
-                            title: "Facial massage with a jade<br/> stone. Techniques and tips.",
-                            text: "Aliquet amet nec justo, sit auctor nisl, nunc. Maecenas felis nunc id ut nisi, condimentum sit vulputate. Sit est suspendisse bibendum rutrum eget. Sapien mattis Maecenas felis nunc id ut nisi, condimentum sit vulputate. Sit est suspendisse bibendum rutrum eget. Sapien mattis",
-                            datetime: "2022-10-16",
-                            cat: "Beauty",
-                            readTime: "2min",
-                            img: _assets_news_Frame_14_png__WEBPACK_IMPORTED_MODULE_12__/* ["default"].src */ .Z.src
-                        },
-                        {
-                            id: 3,
-                            link: "/news/integer",
-                            title: "Facial massage with a jade<br/> stone. Techniques and tips.",
-                            text: "Aliquet amet nec justo, sit auctor nisl, nunc. Maecenas felis nunc id ut nisi, condimentum sit vulputate. Sit est suspendisse bibendum rutrum eget. Sapien mattis Maecenas felis nunc id ut nisi, condimentum sit vulputate. Sit est suspendisse bibendum rutrum eget. Sapien mattis",
-                            datetime: "2022-11-08",
-                            cat: "Travel",
-                            readTime: "2min",
-                            img: _assets_news_Frame_14_png__WEBPACK_IMPORTED_MODULE_12__/* ["default"].src */ .Z.src
-                        },
-                        {
-                            id: 1,
-                            link: "/news/integer",
-                            title: "Integer rhoncus diam<br/> tristique odio donec.",
-                            text: "Aliquet amet nec justo, sit auctor nisl, nunc. Maecenas felis nunc id ut nisi, condimentum sit vulputate. Sit est suspendisse bibendum rutrum eget. Sapien mattis Maecenas felis nunc id ut nisi, condimentum sit vulputate. Sit est suspendisse bibendum rutrum eget. Sapien mattis",
-                            datetime: "2022-10-11",
-                            cat: "Massage",
-                            readTime: "5min",
-                            img: _assets_news_Frame_14_png__WEBPACK_IMPORTED_MODULE_12__/* ["default"].src */ .Z.src
-                        },
-                        {
-                            id: 2,
-                            link: "/news/integer",
-                            title: "Integer rhoncus diam<br/> tristique odio donec.",
-                            text: "Aliquet amet nec justo, sit auctor nisl, nunc. Maecenas felis nunc id ut nisi, condimentum sit vulputate. Sit est suspendisse bibendum rutrum eget. Sapien mattis Maecenas felis nunc id ut nisi, condimentum sit vulputate. Sit est suspendisse bibendum rutrum eget. Sapien mattis",
-                            datetime: "2022-10-16",
-                            cat: "Beauty",
-                            readTime: "2min",
-                            img: _assets_news_Frame_14_png__WEBPACK_IMPORTED_MODULE_12__/* ["default"].src */ .Z.src
-                        },
-                        {
-                            id: 3,
-                            link: "/news/integer",
-                            title: "Integer rhoncus diam<br/> tristique odio donec.",
-                            text: "Aliquet amet nec justo, sit auctor nisl, nunc. Maecenas felis nunc id ut nisi, condimentum sit vulputate. Sit est suspendisse bibendum rutrum eget. Sapien mattis Maecenas felis nunc id ut nisi, condimentum sit vulputate. Sit est suspendisse bibendum rutrum eget. Sapien mattis",
-                            datetime: "2022-11-06",
-                            cat: "Travel",
-                            readTime: "2min",
-                            img: _assets_news_Frame_14_png__WEBPACK_IMPORTED_MODULE_12__/* ["default"].src */ .Z.src
-                        }, 
-                    ]
-                });
-            }
-            if (section == "products") {
-                setResults({
-                    section: "products",
-                    list: [
-                        {
-                            id: 1,
-                            title: "Original Plus Pillow Original Plus Pillow",
-                            text: "Ac, id interdum fusce vestibulum. Nulla tortor libero convallis sit. Suscipit nulla at a sed",
-                            link: "/products/travel-pillows/original-plus-pillow",
-                            img: _assets_products_product_png__WEBPACK_IMPORTED_MODULE_11__/* ["default"].src */ .Z.src,
-                            color: [
-                                "red",
-                                "black"
-                            ],
-                            isNew: true,
-                            soldCount: 100,
-                            filling: [
-                                "inflatable"
-                            ],
-                            bodyPart: [
-                                "neck",
-                                "back"
-                            ],
-                            heatOption: [
-                                "1",
-                                "2"
-                            ],
-                            concern: [
-                                "firming",
-                                "cleaning"
-                            ],
-                            type: "electric"
-                        },
-                        {
-                            id: 1,
-                            link: "/products/travel-pillows",
-                            title: "Original Plus Pillow",
-                            text: "Ac, id interdum fusce vestibulum. Nulla tortor libero convallis sit. Suscipit nulla at a sed",
-                            img: _assets_products_product_png__WEBPACK_IMPORTED_MODULE_11__/* ["default"].src */ .Z.src,
-                            color: [
-                                "black"
-                            ],
-                            isNew: false,
-                            soldCount: 10,
-                            filling: [
-                                "microbead"
-                            ],
-                            bodyPart: [
-                                "legs",
-                                "back"
-                            ],
-                            heatOption: [
-                                "1",
-                                "2"
-                            ],
-                            concern: [
-                                "firming",
-                                "cleaning"
-                            ],
-                            type: "manual"
-                        },
-                        {
-                            id: 1,
-                            link: "/products/travel-pillows",
-                            title: "Original Plus Pillow",
-                            text: "Ac, id interdum fusce vestibulum. Nulla tortor libero convallis sit. Suscipit nulla at a sed",
-                            img: _assets_products_product_png__WEBPACK_IMPORTED_MODULE_11__/* ["default"].src */ .Z.src,
-                            color: [
-                                "blue"
-                            ],
-                            isNew: false,
-                            soldCount: 10,
-                            filling: [
-                                "microbead"
-                            ],
-                            bodyPart: [
-                                "legs",
-                                "back",
-                                "calf"
-                            ],
-                            heatOption: [
-                                "1",
-                                "2"
-                            ],
-                            concern: [
-                                "firming",
-                                "cleaning"
-                            ],
-                            type: "manual"
-                        }, 
-                    ]
-                });
-            }
-            if (section == "treatments") {
-                setResults({
-                    section: "treatments",
-                    list: [
-                        {
-                            title: "Absolute Massage",
-                            link: "/treatments/massages/absolute-massage",
-                            text: "Massage focused on full body muscle relief. It is ideal to relax your body within a short time and to help you sleep better on the plane.",
-                            img: _assets_home_image_303_png__WEBPACK_IMPORTED_MODULE_13__/* ["default"].src */ .Z.src,
-                            time: [
-                                "30",
-                                "60"
-                            ],
-                            bodyPart: [
-                                "Neck",
-                                "Legs"
-                            ],
-                            locations: [
-                                "Atlanta International Airport",
-                                "Detroit Metropolitan Airport", 
-                            ],
-                            serviceType: [
-                                "Oxygen & Aromatherapy"
-                            ]
-                        },
-                        {
-                            title: "Be Relax",
-                            link: "/treatments/massages/be-relax",
-                            text: "Massage focused on full body muscle relief. It is ideal to relax your body within a short time and to help you sleep better on the plane.",
-                            img: _assets_home_image_303_png__WEBPACK_IMPORTED_MODULE_13__/* ["default"].src */ .Z.src,
-                            time: [
-                                "20",
-                                "30",
-                                "40"
-                            ],
-                            bodyPart: [
-                                "Shoulders",
-                                "Legs"
-                            ],
-                            locations: [
-                                "Frankfurt Airport",
-                                "London Heathrow Airport"
-                            ],
-                            serviceType: [
-                                "Oxygen & Aromatherapy"
-                            ]
-                        },
-                        {
-                            title: "Be Up",
-                            link: "/treatments/massages/be-up",
-                            text: "Massage focused on full body muscle relief. It is ideal to relax your body within a short time and to help you sleep better on the plane.",
-                            img: _assets_home_image_303_png__WEBPACK_IMPORTED_MODULE_13__/* ["default"].src */ .Z.src,
-                            time: [
-                                "20",
-                                "30",
-                                "40"
-                            ],
-                            bodyPart: [
-                                "Back",
-                                "Arms"
-                            ],
-                            locations: [
-                                "Frankfurt Airport",
-                                "Detroit Metropolitan Airport"
-                            ],
-                            serviceType: [
-                                "Facial"
-                            ]
-                        },
-                        {
-                            title: "Be Feet",
-                            link: "/treatments/massages/be-feet",
-                            text: "Massage focused on full body muscle relief. It is ideal to relax your body within a short time and to help you sleep better on the plane.",
-                            img: _assets_home_image_303_png__WEBPACK_IMPORTED_MODULE_13__/* ["default"].src */ .Z.src,
-                            time: [
-                                "20",
-                                "30"
-                            ],
-                            bodyPart: [
-                                "Back",
-                                "Face",
-                                "Hands"
-                            ],
-                            locations: [
-                                "Detroit Metropolitan Airport",
-                                "London Heathrow Airport", 
-                            ],
-                            serviceType: [
-                                "Waxing",
-                                "Facial"
-                            ]
-                        }, 
-                    ]
-                });
-            }
+    }, [
+        content?.sections
+    ]);
+    const search = async (value)=>{
+        (0,_stores_ContentState__WEBPACK_IMPORTED_MODULE_14__/* .searchByParams */ .P4)(value).then((res)=>{
+            const result = [];
+            const resultProducts = Array();
+            const resultServices = Array();
+            const resultNews = Array();
+            res.forEach((r)=>{
+                if (r.post_type == "products") {
+                    const product = _pages_search__WEBPACK_IMPORTED_MODULE_15__.StateArrays.products?.find((p)=>p.id == r.ID);
+                    if (product) {
+                        resultProducts.push(product);
+                    }
+                }
+                if (r.post_type == "treatments") {
+                    const product1 = _pages_search__WEBPACK_IMPORTED_MODULE_15__.StateArrays.services?.find((p)=>p.id == r.ID);
+                    if (product1) {
+                        resultServices.push(product1);
+                    }
+                }
+                if (r.post_type == "post") {
+                    const product2 = _pages_search__WEBPACK_IMPORTED_MODULE_15__.StateArrays.news?.find((p)=>p.id == r.ID);
+                    if (product2) {
+                        resultNews.push(product2);
+                    }
+                }
+            });
+            result.push({
+                section: "products",
+                list: resultProducts
+            });
+            result.push({
+                section: "treatments",
+                list: resultServices
+            });
+            result.push({
+                section: "news",
+                list: resultNews
+            });
+            setAll(result);
+            setSearchTitle(value);
         });
     };
-    (0,react__WEBPACK_IMPORTED_MODULE_3__.useEffect)(()=>{
-        search(value, section);
+    const results = (0,react__WEBPACK_IMPORTED_MODULE_3__.useMemo)(()=>{
+        if (!all.length) {
+            return null;
+        }
+        const res = all?.find((a)=>a.section == section)?.list;
+        return {
+            section: section,
+            list: res || []
+        };
     }, [
-        section,
-        value
+        all,
+        section
     ]);
     return /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("section", {
         className: "search-content",
         children: /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
             className: "search-content__container",
             children: [
-                /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(_common_InViewComponent__WEBPACK_IMPORTED_MODULE_15__/* ["default"] */ .Z, {
+                /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(_common_InViewComponent__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .Z, {
                     children: [
-                        /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_common_Title__WEBPACK_IMPORTED_MODULE_16__/* ["default"] */ .Z, {
+                        /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_common_Title__WEBPACK_IMPORTED_MODULE_13__/* ["default"] */ .Z, {
                             classStr: "search-content__title",
-                            text: value
+                            text: searchTitle
                         }),
                         /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
                             className: "search-content__count",
                             children: [
-                                results.list?.length,
+                                results?.list?.length ? results?.list?.length : 0,
                                 " ",
-                                !results.list?.length || results.list?.length > 1 ? "results" : "result"
+                                !results?.list?.length || results?.list?.length > 1 ? "results" : "result"
                             ]
                         })
                     ]
                 }),
-                /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_common_InViewComponent__WEBPACK_IMPORTED_MODULE_15__/* ["default"] */ .Z, {
+                /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_common_InViewComponent__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .Z, {
                     delay: 0.1,
                     children: /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
                         className: "search-content__search",
@@ -384,7 +168,7 @@ const SearchContent = (0,mobx_react__WEBPACK_IMPORTED_MODULE_2__.observer)(()=>{
                                             }),
                                             classStr: "beige button-search",
                                             isLink: false,
-                                            action: ()=>search(value, section)
+                                            action: ()=>search(value)
                                         })
                                     ]
                                 })
@@ -405,14 +189,14 @@ const SearchContent = (0,mobx_react__WEBPACK_IMPORTED_MODULE_2__.observer)(()=>{
                 /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
                     className: "search-content__result",
                     children: [
-                        /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_common_InViewComponent__WEBPACK_IMPORTED_MODULE_15__/* ["default"] */ .Z, {
+                        /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_common_InViewComponent__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .Z, {
                             delay: 0.2,
                             children: /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("h2", {
                                 className: "search-content__result-title",
                                 children: [
-                                    results.list?.length,
+                                    results?.list?.length || 0,
                                     " “",
-                                    value,
+                                    searchTitle,
                                     "” ",
                                     results?.section
                                 ]
@@ -420,24 +204,24 @@ const SearchContent = (0,mobx_react__WEBPACK_IMPORTED_MODULE_2__.observer)(()=>{
                         }),
                         /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
                             className: classnames__WEBPACK_IMPORTED_MODULE_1___default()("search-content__result-list", results?.section == "news" && "single", results?.section == "products" && "three", results?.section == "treatments" && "two"),
-                            children: results.list?.map((re, i)=>/*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(react__WEBPACK_IMPORTED_MODULE_3__.Fragment, {
+                            children: results?.list?.map((re, i)=>/*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(react__WEBPACK_IMPORTED_MODULE_3__.Fragment, {
                                     children: [
-                                        results?.section == "news" && /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_common_InViewComponent__WEBPACK_IMPORTED_MODULE_15__/* ["default"] */ .Z, {
+                                        results?.section == "news" && /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_common_InViewComponent__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .Z, {
                                             delay: i * 0.1 + 0.2,
                                             children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_common_NewsPost__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .Z, {
                                                 post: re
                                             })
                                         }),
-                                        results?.section == "products" && /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_common_InViewComponent__WEBPACK_IMPORTED_MODULE_15__/* ["default"] */ .Z, {
+                                        results?.section == "products" && /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_common_InViewComponent__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .Z, {
                                             delay: i * 0.1 + 0.2,
                                             children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_common_ProductItem__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .Z, {
                                                 item: re,
                                                 buttonText: content?.productButton
                                             })
                                         }),
-                                        results?.section == "treatments" && /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_common_InViewComponent__WEBPACK_IMPORTED_MODULE_15__/* ["default"] */ .Z, {
+                                        results?.section == "treatments" && /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_common_InViewComponent__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .Z, {
                                             delay: i * 0.1 + 0.2,
-                                            children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_common_ServiceItem__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .Z, {
+                                            children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_common_ServiceItem__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .Z, {
                                                 item: re
                                             })
                                         })
@@ -463,15 +247,16 @@ __webpack_async_result__();
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "o": () => (/* binding */ getSearch)
 /* harmony export */ });
-/* harmony import */ var _stores_ContentState__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(9787);
+/* harmony import */ var _stores_ContentState__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(9815);
 
 const getSearch = async ()=>{
-    const header = await (0,_stores_ContentState__WEBPACK_IMPORTED_MODULE_0__/* .getHeader */ .Pg)(), footer = await (0,_stores_ContentState__WEBPACK_IMPORTED_MODULE_0__/* .getFooter */ .PX)(), content = await (0,_stores_ContentState__WEBPACK_IMPORTED_MODULE_0__/* .getSearchContent */ .no)(), countrypop = await (0,_stores_ContentState__WEBPACK_IMPORTED_MODULE_0__/* .getCountryPop */ .Pc)();
+    const { header , footer , countrypop  } = await (0,_stores_ContentState__WEBPACK_IMPORTED_MODULE_0__/* .getHeader */ .Pg)(), { content , seo  } = await (0,_stores_ContentState__WEBPACK_IMPORTED_MODULE_0__/* .getSearchContent */ .no)();
     return {
         header,
         footer,
         content,
-        countrypop
+        countrypop,
+        seo
     };
 };
 
@@ -484,23 +269,26 @@ const getSearch = async ()=>{
 __webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __webpack_async_result__) => { try {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "StateArrays": () => (/* binding */ StateArrays),
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__),
 /* harmony export */   "getStaticProps": () => (/* binding */ getStaticProps)
 /* harmony export */ });
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(997);
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var next_head__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(968);
-/* harmony import */ var next_head__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(next_head__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var mobx_react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(2062);
-/* harmony import */ var mobx_react__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(mobx_react__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(6689);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _hooks_useLoco__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(3355);
-/* harmony import */ var _components_common_Layout__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(4367);
-/* harmony import */ var _api_getSearch__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(602);
-/* harmony import */ var _components_pages_search_SearchContent__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(9907);
-var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_components_common_Layout__WEBPACK_IMPORTED_MODULE_5__, _components_pages_search_SearchContent__WEBPACK_IMPORTED_MODULE_7__]);
-([_components_common_Layout__WEBPACK_IMPORTED_MODULE_5__, _components_pages_search_SearchContent__WEBPACK_IMPORTED_MODULE_7__] = __webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__);
+/* harmony import */ var mobx_react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(2062);
+/* harmony import */ var mobx_react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(mobx_react__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(6689);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _hooks_useLoco__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(3355);
+/* harmony import */ var _components_common_Layout__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(4367);
+/* harmony import */ var _api_getSearch__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(602);
+/* harmony import */ var _components_pages_search_SearchContent__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(9907);
+/* harmony import */ var _components_common_SeoBlock__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(3534);
+/* harmony import */ var _stores_ContentState__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(9815);
+/* harmony import */ var mobx__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(6211);
+/* harmony import */ var mobx__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(mobx__WEBPACK_IMPORTED_MODULE_9__);
+var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_components_common_Layout__WEBPACK_IMPORTED_MODULE_4__, _components_pages_search_SearchContent__WEBPACK_IMPORTED_MODULE_6__]);
+([_components_common_Layout__WEBPACK_IMPORTED_MODULE_4__, _components_pages_search_SearchContent__WEBPACK_IMPORTED_MODULE_6__] = __webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__);
 
 
 
@@ -509,10 +297,18 @@ var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_com
 
 
 
-const Search = (0,mobx_react__WEBPACK_IMPORTED_MODULE_2__.observer)(({ hydrationData: props  })=>{
-    const { 0: loading , 1: setLoading  } = (0,react__WEBPACK_IMPORTED_MODULE_3__.useState)(false);
-    (0,_hooks_useLoco__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .Z)(!loading);
-    (0,react__WEBPACK_IMPORTED_MODULE_3__.useEffect)(()=>{
+
+
+const StateArrays = (0,mobx__WEBPACK_IMPORTED_MODULE_9__.observable)({
+    products: null,
+    services: null,
+    news: null
+});
+const Search = (0,mobx_react__WEBPACK_IMPORTED_MODULE_1__.observer)(({ hydrationData: props  })=>{
+    const { 0: loading , 1: setLoading  } = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)(true);
+    const ref = (0,react__WEBPACK_IMPORTED_MODULE_2__.useRef)(false);
+    (0,_hooks_useLoco__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .Z)(!loading);
+    (0,react__WEBPACK_IMPORTED_MODULE_2__.useEffect)(()=>{
         if (!loading) {
             if (true) {
                 return;
@@ -521,28 +317,62 @@ const Search = (0,mobx_react__WEBPACK_IMPORTED_MODULE_2__.observer)(({ hydration
     }, [
         loading
     ]);
+    (0,react__WEBPACK_IMPORTED_MODULE_2__.useEffect)(()=>{
+        if (ref.current) return;
+        (0,_stores_ContentState__WEBPACK_IMPORTED_MODULE_8__/* .getProducts */ .Xp)().then((res)=>{
+            (0,mobx__WEBPACK_IMPORTED_MODULE_9__.runInAction)(()=>{
+                StateArrays.products = res;
+            });
+        });
+        (0,_stores_ContentState__WEBPACK_IMPORTED_MODULE_8__/* .getNews */ .dD)().then((res)=>{
+            (0,mobx__WEBPACK_IMPORTED_MODULE_9__.runInAction)(()=>{
+                StateArrays.news = res;
+            });
+        });
+        (0,_stores_ContentState__WEBPACK_IMPORTED_MODULE_8__/* .getServices */ .U2)().then((res)=>{
+            (0,mobx__WEBPACK_IMPORTED_MODULE_9__.runInAction)(()=>{
+                StateArrays.services = res;
+            });
+        });
+        ref.current = true;
+    }, []);
+    (0,react__WEBPACK_IMPORTED_MODULE_2__.useEffect)(()=>{
+        if (StateArrays.news && StateArrays.products && StateArrays.services) {
+            setTimeout(()=>{
+                setLoading(false);
+            }, 200);
+        }
+    }, [
+        StateArrays.news,
+        StateArrays.products,
+        StateArrays.services
+    ]);
     return /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
         children: [
-            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx((next_head__WEBPACK_IMPORTED_MODULE_1___default()), {
-                children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("title", {
-                    children: "Be relax"
-                })
+            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_components_common_SeoBlock__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .Z, {
+                seo: props.seo
             }),
-            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_components_common_Layout__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .Z, {
-                children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_components_pages_search_SearchContent__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .Z, {})
+            !loading ? /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_components_common_Layout__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .Z, {
+                children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_components_pages_search_SearchContent__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .Z, {})
+            }) : /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
+                style: {
+                    width: "100%",
+                    height: 500
+                }
             })
         ]
     });
 });
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Search);
 async function getStaticProps() {
-    const response = await (0,_api_getSearch__WEBPACK_IMPORTED_MODULE_6__/* .getSearch */ .o)();
+    const response = await (0,_api_getSearch__WEBPACK_IMPORTED_MODULE_5__/* .getSearch */ .o)();
     return {
         props: {
             hydrationData: {
                 ...response
             }
-        }
+        },
+        revalidate: 10
     };
 }
 
@@ -761,13 +591,6 @@ module.exports = require("next/dist/shared/lib/utils.js");
 
 /***/ }),
 
-/***/ 968:
-/***/ ((module) => {
-
-module.exports = require("next/head");
-
-/***/ }),
-
 /***/ 1853:
 /***/ ((module) => {
 
@@ -803,6 +626,13 @@ module.exports = require("react/jsx-runtime");
 
 /***/ }),
 
+/***/ 4956:
+/***/ ((module) => {
+
+module.exports = require("reading-time");
+
+/***/ }),
+
 /***/ 9915:
 /***/ ((module) => {
 
@@ -824,7 +654,7 @@ module.exports = import("react-intersection-observer");;
 var __webpack_require__ = require("../webpack-runtime.js");
 __webpack_require__.C(exports);
 var __webpack_exec__ = (moduleId) => (__webpack_require__(__webpack_require__.s = moduleId))
-var __webpack_exports__ = __webpack_require__.X(0, [676,1664,5975,7077,2804,5619,8510,3438], () => (__webpack_exec__(2564)));
+var __webpack_exports__ = __webpack_require__.X(0, [676,1664,7378,991,5619,2804,8510,3438], () => (__webpack_exec__(2564)));
 module.exports = __webpack_exports__;
 
 })();

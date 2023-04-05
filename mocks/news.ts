@@ -18,7 +18,6 @@ const news = {
           'Aliquet amet nec justo, sit auctor nisl, nunc. Maecenas felis nunc id ut nisi, condimentum sit vulputate. Sit est suspendisse bibendum rutrum eget. Sapien mattis Maecenas felis nunc id ut nisi, condimentum sit vulputate. Sit est suspendisse bibendum rutrum eget. Sapien mattis',
         datetime: '2022-10-11',
         cat: 'Massage',
-        readTime: '5min',
         img: im1.src,
       },
       {
@@ -30,7 +29,6 @@ const news = {
           'Aliquet amet nec justo, sit auctor nisl, nunc. Maecenas felis nunc id ut nisi, condimentum sit vulputate. Sit est suspendisse bibendum rutrum eget. Sapien mattis Maecenas felis nunc id ut nisi, condimentum sit vulputate. Sit est suspendisse bibendum rutrum eget. Sapien mattis',
         datetime: '2022-10-16',
         cat: 'Beauty',
-        readTime: '2min',
         img: im3.src,
       },
       {
@@ -42,7 +40,6 @@ const news = {
           'Aliquet amet nec justo, sit auctor nisl, nunc. Maecenas felis nunc id ut nisi, condimentum sit vulputate. Sit est suspendisse bibendum rutrum eget. Sapien mattis Maecenas felis nunc id ut nisi, condimentum sit vulputate. Sit est suspendisse bibendum rutrum eget. Sapien mattis',
         datetime: '2022-11-08',
         cat: 'Travel',
-        readTime: '2min',
         img: im2.src,
       },
     ],

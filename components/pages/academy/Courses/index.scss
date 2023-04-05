@@ -6,7 +6,7 @@
     width: 100%;
     max-width: 80vw;
     margin: 0 auto;
-      @media (max-width: 1280px) {
+    @media (max-width: 1280px) {
       max-width: none;
     }
   }
@@ -62,7 +62,20 @@
       flex-grow: 1;
     }
     &-title {
-      margin-bottom: 12px;
+      // margin-bottom: 12px;
+      text-align: left;
+      font-size: 48px;
+      margin-bottom: 16px;
+
+      @media (max-width: 1280px) {
+        font-size: 40px;
+        margin-bottom: 12px;
+      }
+
+      @media (max-width: 768px) {
+        font-size: 24px;
+        line-height: 125%;
+      }
     }
     &-text {
       font-family: 'Gotham Pro';
@@ -72,6 +85,12 @@
       line-height: 145%;
       color: #3a4458;
       max-width: 630px;
+      font-size: 18px;
+
+      @media (max-width: 1280px) {
+        font-size: 16px;
+      }
+
     }
 
     ul {

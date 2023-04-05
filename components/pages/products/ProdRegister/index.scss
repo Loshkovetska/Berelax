@@ -67,6 +67,22 @@
     }
   }
 
+  &__tooltip {
+    font-family: 'Gotham Pro';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 115%;
+    color: #3a4458;
+    margin-top: -6px;
+    display: flex;
+    margin-bottom: 16px;
+
+    @media (max-width: 480px) {
+      font-size: 12px;
+    }
+  }
+
   &__form {
     background: #f4f8fb;
     border-radius: 48px;

@@ -40,7 +40,7 @@ const Categories = ({
           } else fixedEl?.classList.remove('show')
         })
     }
-  }, [GlobalState.locoScroll])
+  }, [GlobalState.locoScroll, isFixed])
 
   return (
     <section
@@ -62,7 +62,7 @@ const Categories = ({
                 href={ci.link}
               >
                 <span> {ci.title}</span>
-                <ImageComponent src={ci?.img} />
+                <ImageComponent src={ci?.img} alt={ci?.alt} />
               </a>
             ) : (
               <InViewComponent animationClass="zoomin" delay={i * 0.1}>
@@ -74,7 +74,7 @@ const Categories = ({
                   href={ci.link}
                 >
                   <span> {ci.title}</span>
-                  <ImageComponent src={ci?.img} />
+                  <ImageComponent src={ci?.img} alt={ci?.alt} />
                 </a>
               </InViewComponent>
             )}
@@ -99,7 +99,7 @@ const Categories = ({
                   href={ci.link}
                 >
                   <span> {ci.title}</span>
-                  <ImageComponent src={ci?.img} />
+                  <ImageComponent src={ci?.img} alt={ci?.alt} />
                 </a>
               ) : (
                 <InViewComponent animationClass="zoomin" delay={i * 0.1}>
@@ -111,7 +111,7 @@ const Categories = ({
                     href={ci.link}
                   >
                     <span> {ci.title}</span>
-                    <ImageComponent src={ci?.img} />
+                    <ImageComponent src={ci?.img} alt={ci?.alt} />
                   </a>
                 </InViewComponent>
               )}

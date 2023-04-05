@@ -3,7 +3,7 @@
   top: var(--header-height);
   left: 0;
   position: fixed;
-  height: calc(var(--vh, 1vh) * 100);
+  height: calc(var(--viewport-height, 1vh) * 100);
   transform: translateY(calc(-100% - var(--header-height)));
   width: 100vw;
   transition: 0.8s cubic-bezier(0.075, 0.82, 0.165, 1);

@@ -66,13 +66,6 @@ const productcat = {
     img: banner.src,
   },
   paramsForFilter: ['isNew', 'color', 'type'],
-  //pillows
-  //'color', 'filling'
-  //electric
-  // 'bodyPart', 'heatOption'
-
-  //beauty
-  //'concern', 'type'
 }
 
 export default productcat

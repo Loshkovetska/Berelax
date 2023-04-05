@@ -2,6 +2,7 @@ import classNames from 'classnames'
 import { observable } from 'mobx'
 import { observer } from 'mobx-react'
 import Link from 'next/link'
+import { MouseEventHandler, ReactElement } from 'react'
 import { ScrollPos } from '../../../hooks/useScrollPos'
 
 const Button = observer(
@@ -13,8 +14,8 @@ const Button = observer(
     link,
     target,
   }: {
-    inner: any
-    action?: any
+    inner: ReactElement
+    action?: MouseEventHandler<HTMLDivElement>
     classStr: string
     isLink?: boolean
     link?: string
@@ -31,22 +32,22 @@ const Button = observer(
           className={classNames('button', classStr)}
           target={target ? '_blank' : ''}
           rel="noreferrer"
-        >              {inner}
-</a>
+        >
+          {inner}
+        </a>
       )
     }
 
     return (
       <>
         {isLink ? (
-          <Link href={link || ''}>
-            <a
-              className={classNames('button', classStr)}
-              onClick={() => !target && setPos(0, ScrollPos.top)}
-            >
-              {inner}
-            </a>
-          </Link>
+          <a
+            href={link || ''}
+            className={classNames('button', classStr)}
+            onClick={() => !target && setPos(0, ScrollPos.top)}
+          >
+            {inner}
+          </a>
         ) : (
           <div className={classNames('button', classStr)} onClick={action}>
             {inner}

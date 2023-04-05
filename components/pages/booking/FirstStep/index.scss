@@ -34,6 +34,8 @@
       }
     }
   }
+
+  
   &__tab {
     padding-bottom: 8px;
     font-family: 'Gotham Pro';
@@ -77,6 +79,7 @@
     grid-template-columns: repeat(3, 1fr);
     column-gap: 16px;
     row-gap: 16px;
+    min-height: 100px;
   }
 
   &__back {

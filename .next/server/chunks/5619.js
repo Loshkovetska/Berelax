@@ -50,7 +50,8 @@ const Select = (0,mobx_react__WEBPACK_IMPORTED_MODULE_2__.observer)(({ placehold
             setValue(defaultValue);
         }
     }, [
-        defaultValue
+        defaultValue,
+        value
     ]);
     (0,react__WEBPACK_IMPORTED_MODULE_3__.useEffect)(()=>{
         if (!open) {

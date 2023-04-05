@@ -1,6 +1,6 @@
 .country-pop {
   width: 100%;
-  height: calc(var(--vh, 1vh) * 100);
+  height: calc(var(--viewport-height, 1vh) * 100);
   position: fixed;
   left: 0;
   top: 0;
@@ -29,7 +29,7 @@
 
   &.open {
     opacity: 1;
-    visibility: visible;
+    visibility: visible !important;
     transform: translateY(0);
   }
 

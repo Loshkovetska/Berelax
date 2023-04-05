@@ -1,7 +1,5 @@
-import classNames from 'classnames'
 import { observable, runInAction } from 'mobx'
 import { observer } from 'mobx-react'
-import { Fragment, useState } from 'react'
 import { useWindowDimensions } from '../../../../hooks/getWindowDimensions'
 import { useContentState } from '../../../../hooks/RootStoreProvider'
 import GlobalState from '../../../../stores/GlobalState'
@@ -11,7 +9,10 @@ import InViewComponent from '../../../common/InViewComponent'
 import Title54 from '../../../common/Title54'
 import RoadMapYears from '../RoadMapYears'
 
-export const SliderState = observable({
+export const SliderState: {
+  id: number
+  slider: any
+} = observable({
   id: 0,
   slider: null,
 })
@@ -43,7 +44,7 @@ const RoadMap = observer(() => {
             <InViewComponent key={i} delay={0.1}>
               <div className="roadmap__item">
                 <div className="roadmap__item-img">
-                  <ImageComponent src={ca.img} />
+                  <ImageComponent src={ca.img} alt={ca.alt} />
                 </div>
                 <div className="roadmap__item-content">
                   <div className="roadmap__item-year">{ca.year}</div>

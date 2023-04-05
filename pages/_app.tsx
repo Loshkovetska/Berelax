@@ -2,6 +2,7 @@ import '../styles/index.scss'
 import 'locomotive-scroll/src/locomotive-scroll.scss'
 import { RootStoreProvider } from '../hooks/RootStoreProvider'
 import { useEffect } from 'react'
+import { changeLocale } from '../stores/GlobalState'
 
 function MyApp({ Component, pageProps }: any) {
   useEffect(() => {
@@ -38,6 +39,27 @@ function MyApp({ Component, pageProps }: any) {
       (get_browser().version <= '69' && get_browser().name == 'Opera')
     ) {
       document.querySelector('body')?.classList.add('old-device')
+    }
+  }, [])
+
+  useEffect(() => {
+    let vh = window.innerHeight * 0.01
+    const s = document.querySelector('html')
+    if (!s) return
+    ;(s as any).style.setProperty('--viewport-height', `${vh}px`)
+
+    window.addEventListener('resize', function (e) {
+      let vh = window.innerHeight * 0.01
+      ;(s as any).style.setProperty('--viewport-height', `${vh}px`)
+    })
+  }, [])
+
+  useEffect(() => {
+    if (sessionStorage.getItem('locale')) {
+      const locale = JSON.parse(sessionStorage.getItem('locale')!)
+      if (locale.country) {
+        changeLocale()
+      }
     }
   }, [])
 

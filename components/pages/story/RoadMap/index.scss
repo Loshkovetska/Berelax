@@ -55,7 +55,6 @@
       width: 100%;
       margin: 0;
       justify-content: flex-start;
-
     }
     .slick-track {
     }
@@ -91,6 +90,7 @@
       line-height: 120%;
       letter-spacing: 0.02em;
       color: #13233b;
+      margin-bottom: 48px;
     }
     &-content {
       display: flex;
@@ -201,11 +201,13 @@
 
     &__item {
       border-radius: 32px;
+      width: 100%;
       &-year {
         font-size: 40px;
       }
       &-content {
         padding: 32px 32px 32px 24px;
+        justify-content: flex-start;
       }
     }
     &__years {
@@ -229,6 +231,8 @@
   @media (max-width: 767px) {
     &__item {
       grid-template-columns: repeat(1, 1fr);
+      display: flex;
+      flex-direction: column;
       &-img {
         height: 40vw;
       }

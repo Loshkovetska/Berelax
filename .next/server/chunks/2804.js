@@ -13,15 +13,12 @@ exports.modules = {
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var mobx_react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(2062);
 /* harmony import */ var mobx_react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(mobx_react__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var next_link__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(1664);
-/* harmony import */ var next_link__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(next_link__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(6689);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _hooks_useScrollPos__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(7767);
-/* harmony import */ var _Button__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(8133);
-/* harmony import */ var _IconComponent__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(9286);
-/* harmony import */ var _ImageComponent__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(4042);
-
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(6689);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _hooks_useScrollPos__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(7767);
+/* harmony import */ var _Button__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(8133);
+/* harmony import */ var _IconComponent__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(9286);
+/* harmony import */ var _ImageComponent__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(9808);
 
 
 
@@ -30,7 +27,7 @@ exports.modules = {
 
 
 const ProductItem = (0,mobx_react__WEBPACK_IMPORTED_MODULE_1__.observer)(({ item , buttonText  })=>{
-    const titleRef = (0,react__WEBPACK_IMPORTED_MODULE_3__.useRef)(null), ref = (0,react__WEBPACK_IMPORTED_MODULE_3__.useRef)(null), textRef = (0,react__WEBPACK_IMPORTED_MODULE_3__.useRef)(null), contentRef = (0,react__WEBPACK_IMPORTED_MODULE_3__.useRef)(null), imgRef = (0,react__WEBPACK_IMPORTED_MODULE_3__.useRef)(null);
+    const titleRef = (0,react__WEBPACK_IMPORTED_MODULE_2__.useRef)(null), ref = (0,react__WEBPACK_IMPORTED_MODULE_2__.useRef)(null), textRef = (0,react__WEBPACK_IMPORTED_MODULE_2__.useRef)(null), contentRef = (0,react__WEBPACK_IMPORTED_MODULE_2__.useRef)(null), imgRef = (0,react__WEBPACK_IMPORTED_MODULE_2__.useRef)(null);
     const changeValues = ()=>{
         let titleHeight = 0, textHeight = 0;
         if (titleRef.current) {
@@ -53,7 +50,7 @@ const ProductItem = (0,mobx_react__WEBPACK_IMPORTED_MODULE_1__.observer)(({ item
             ref.current.style.setProperty("--text-height", textHeight + "px");
         }
     };
-    (0,react__WEBPACK_IMPORTED_MODULE_3__.useEffect)(()=>{
+    (0,react__WEBPACK_IMPORTED_MODULE_2__.useEffect)(()=>{
         if (window.innerWidth > 900) {
             changeValues();
             window.addEventListener("resize", ()=>{
@@ -61,62 +58,61 @@ const ProductItem = (0,mobx_react__WEBPACK_IMPORTED_MODULE_1__.observer)(({ item
             });
         }
     }, []);
-    const { x , y  } = (0,_hooks_useScrollPos__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .Z)();
+    const { x , y  } = (0,_hooks_useScrollPos__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .Z)();
     const setPos = (x, y)=>{
         sessionStorage.setItem("position", JSON.stringify({
             x,
             y
         }));
     };
-    return /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx((next_link__WEBPACK_IMPORTED_MODULE_2___default()), {
+    return /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("a", {
+        className: "product-item",
+        ref: ref,
+        onClick: ()=>setPos(0, y),
         href: item.link,
-        children: /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("a", {
-            className: "product-item",
-            ref: ref,
-            onClick: ()=>setPos(0, y),
-            children: [
-                /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
-                    className: "product-item__img",
-                    ref: imgRef,
-                    children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_ImageComponent__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .Z, {
-                        src: item.img
-                    })
-                }),
-                /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-                    className: "product-item__content",
-                    ref: contentRef,
-                    children: [
-                        /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
-                            className: "product-item__title",
-                            dangerouslySetInnerHTML: {
-                                __html: item.title
-                            },
-                            ref: titleRef
-                        }),
-                        /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
-                            className: "product-item__text",
-                            dangerouslySetInnerHTML: {
-                                __html: item.text
-                            },
-                            ref: textRef
-                        }),
-                        /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_Button__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .Z, {
-                            isLink: true,
-                            link: item.link,
-                            inner: /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
-                                children: [
-                                    buttonText,
-                                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_IconComponent__WEBPACK_IMPORTED_MODULE_6__/* .IconComponent */ .o, {
-                                        name: "arrow"
-                                    })
-                                ]
-                            }),
-                            classStr: "white button-arrow button-svg p16p20"
-                        })
-                    ]
+        children: [
+            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
+                className: "product-item__img",
+                ref: imgRef,
+                children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_ImageComponent__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .Z, {
+                    src: item.img,
+                    alt: item.alt
                 })
-            ]
-        })
+            }),
+            /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+                className: "product-item__content",
+                ref: contentRef,
+                children: [
+                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
+                        className: "product-item__title",
+                        dangerouslySetInnerHTML: {
+                            __html: item.title
+                        },
+                        ref: titleRef
+                    }),
+                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
+                        className: "product-item__text",
+                        dangerouslySetInnerHTML: {
+                            __html: item.text
+                        },
+                        ref: textRef
+                    }),
+                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_Button__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .Z, {
+                        isLink: true,
+                        link: item.link,
+                        inner: /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
+                            children: [
+                                buttonText,
+                                /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_IconComponent__WEBPACK_IMPORTED_MODULE_5__/* .IconComponent */ .o, {
+                                    name: "arrow"
+                                })
+                            ]
+                        }),
+                        classStr: "white button-arrow button-svg p16p20"
+                    })
+                ]
+            })
+        ]
     });
 });
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (ProductItem);

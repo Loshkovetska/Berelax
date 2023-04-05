@@ -20,7 +20,7 @@ const Courses = observer(() => {
               <div className={classNames('courses__row', i == 1 && 'reverse')}>
                 <>
                   <div className="courses__row-img">
-                    <ImageComponent src={co.img} />
+                    <ImageComponent src={co.img} alt={co.alt} />
                   </div>
                   <div className="courses__row-block">
                     <Title40 text={co.title} classStr="courses__row-title" />
@@ -28,13 +28,15 @@ const Courses = observer(() => {
                       className="courses__row-text"
                       dangerouslySetInnerHTML={{ __html: co.text }}
                     ></div>
-                    <ul>
-                      {co?.list?.map((re: any, id: number) => (
-                        <li className="courses__row-text" key={id}>
-                          {re}
-                        </li>
-                      ))}
-                    </ul>
+                    {co?.list?.length > 0 && (
+                      <ul>
+                        {co?.list?.map((re: any, id: number) => (
+                          <li className="courses__row-text" key={id}>
+                            {re}
+                          </li>
+                        ))}
+                      </ul>
+                    )}
                   </div>
                 </>
               </div>

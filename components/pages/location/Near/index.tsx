@@ -12,6 +12,7 @@ import NearItem from '../../../common/NearItem'
 const Near = observer(() => {
   const { content } = useContentState()
 
+  if (!content?.nearSpas?.length) return <></>
   return (
     <section className="near-by">
       <div className="near-by__top">

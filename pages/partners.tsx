@@ -1,8 +1,6 @@
-import Head from 'next/head'
 import { observer } from 'mobx-react'
 import { useEffect, useRef, useState } from 'react'
 import useLocoScroll from '../hooks/useLoco'
-import GlobalState from '../stores/GlobalState'
 import Layout from '../components/common/Layout'
 import { getPartners } from './api/getPartners'
 import Intro from '../components/pages/partners/Intro'
@@ -10,11 +8,10 @@ import Follow from '../components/pages/career/Follow'
 import PartnersList from '../components/pages/partners/PartnersList'
 import PartnerForm from '../components/pages/partners/PartnerForm'
 import SmallPop from '../components/common/SmallPop'
+import SeoBlock from '../components/common/SeoBlock'
 
 const PartnersPage = observer(({ hydrationData: props }: any) => {
-  const [loading, setLoading] = useState(false)
-  const ref = useRef<any>(null)
-
+  const [loading, setLoading] = useState(true)
   useLocoScroll(!loading)
   useEffect(() => {
     if (!loading) {
@@ -24,11 +21,15 @@ const PartnersPage = observer(({ hydrationData: props }: any) => {
     }
   }, [loading])
 
+  useEffect(() => {
+    if (props.content) {
+      setLoading(false)
+    }
+  }, [props])
+  
   return (
     <>
-      <Head>
-        <title>Be relax</title>
-      </Head>
+      <SeoBlock seo={props.seo} />
       <Layout delay={1}>
         <Intro />
         <PartnersList />
@@ -49,5 +50,6 @@ export async function getStaticProps() {
     props: {
       hydrationData: { ...response },
     },
+    revalidate: 10,
   }
 }

@@ -1,14 +1,13 @@
+import classNames from 'classnames'
 import { observer } from 'mobx-react'
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { useWindowDimensions } from '../../../../hooks/getWindowDimensions'
 import { useContentState } from '../../../../hooks/RootStoreProvider'
-import GlobalState from '../../../../stores/GlobalState'
 import InViewComponent from '../../../common/InViewComponent'
 import Select from '../../../common/MainSelect'
 import ServiceItem from '../../../common/ServiceItem'
 
 const ServicesList = observer(() => {
-  const [services, setServices] = useState<Array<any> | null>(null)
   const { content, cards } = useContentState()
 
   const { width } = useWindowDimensions()
@@ -18,49 +17,35 @@ const ServicesList = observer(() => {
     p3: null,
   })
 
-  useEffect(() => {
-    if (!services) {
-      setServices(cards)
-    }
-  }, [cards])
-
-  useEffect(() => {
+  const services = useMemo(() => {
     let res: any = cards
     const params = content?.paramsForFilter
 
-    if (!filters.p1 && !filters.p2 && !filters.p3) {
-      setServices(cards)
-     
-      return
+    if (!filters.p1?.length && !filters.p2?.length && !filters.p3?.length) {
+      return res
     }
     if (filters.p1) {
       if (params[0] == 'time') {
         filters.p1.forEach((c: any) => {
-          const vals = c.replaceAll('from', '').replaceAll('to', '').trim()
-          const ars = vals.split(' ').filter((c: any) => c != '')
-
-          if (c.includes('to') && c.includes('from')) {
+          const vals = c
+            .replace(/[^0-9]/g, ' ')
+            .trim()
+            .split(' ')
+            .filter((ci: any) => ci.length)
+          if (c.includes('-')) {
             const sub = Array.from(res).filter((c: any) => {
-              const r = c.time.filter((t: any) => t >= ars[0] && t <= ars[1])
+              const r = c.time.filter((t: any) => t >= vals[0] && t <= vals[1])
+              // +c.time[0] >= +vals[0] && +c.time[c.time.length - 1] <= +vals[1]
               if (r.length) {
+                //.length
                 return c
               }
             })
             res = sub
-          }
-          if (c.includes('to') && !c.includes('from')) {
+          } else {
             const sub = Array.from(res).filter((c: any) => {
-              const r = c.time.filter((t: any) => t <= ars[0])
-              if (r.length) {
-                return c
-              }
-            })
-            res = sub
-          }
+              const r = c.time.filter((t: any) => t > vals[0]) //+c.time[c.time.length - 1] > +vals[0]
 
-          if (!c.includes('to') && c.includes('from')) {
-            const sub = Array.from(res).filter((c: any) => {
-              const r = c.time.filter((t: any) => t >= ars[0])
               if (r.length) {
                 return c
               }
@@ -98,23 +83,26 @@ const ServicesList = observer(() => {
       }
       if (params[2] == 'serviceType') {
         filters.p3.forEach((c: any) => {
-          let sub = Array.from(res).filter((ci: any) => {
+          res = Array.from(res).filter((ci: any) => {
             if (ci.serviceType.includes(c)) {
               return ci
             }
           })
-          res = sub
         })
       }
     }
-    setServices(res)
-   
-  }, [filters])
+    return res
+  }, [filters, cards, content?.paramsForFilter])
 
   return (
     <section className="services-list">
       <InViewComponent delay={width > 767 ? 0.5 : 0.5}>
-        <div className="services-list__selects">
+        <div
+          className={classNames(
+            'services-list__selects',
+            !content?.select3?.length && 'two-selects',
+          )}
+        >
           <Select
             placeholder={content?.select1Title}
             dt={JSON.parse(
@@ -141,19 +129,21 @@ const ServicesList = observer(() => {
               })
             }}
           />
-          <Select
-            multiple
-            placeholder={content?.select3Title}
-            dt={JSON.parse(
-              JSON.stringify(content?.select3),
-            ).sort((a: any, b: any) => a.localeCompare(b))}
-            getValue={(value) => {
-              setFilters({
-                ...filters,
-                p3: value,
-              })
-            }}
-          />
+          {content?.select3?.length > 0 && (
+            <Select
+              multiple
+              placeholder={content?.select3Title}
+              dt={JSON.parse(
+                JSON.stringify(content?.select3),
+              ).sort((a: any, b: any) => a.localeCompare(b))}
+              getValue={(value) => {
+                setFilters({
+                  ...filters,
+                  p3: value,
+                })
+              }}
+            />
+          )}
         </div>
       </InViewComponent>
       <div className="services-list__list">

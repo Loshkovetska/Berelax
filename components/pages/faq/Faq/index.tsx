@@ -12,15 +12,13 @@ import Title from '../../../common/Title'
 const Faq = observer(() => {
   const [tab, setTab] = useState(0)
   const { content } = useContentState()
-
   const [active, setActive] = useState(-1)
-  const refs = useRef<any>(Array())
-
   const { width } = useWindowDimensions()
 
   useEffect(() => {
-    if (!refs.current) return
-    refs.current.forEach((re: any, i: number) => {
+    const ars = document.querySelectorAll('.faq-page .faqs__item-text')
+    if (!ars?.length) return
+    ars.forEach((re: any, i: number) => {
       if (re) {
         if (active == i) {
           const height = (re as HTMLElement).scrollHeight
@@ -32,7 +30,11 @@ const Faq = observer(() => {
         }
       }
     })
-  }, [active])
+  }, [active, tab])
+
+  useEffect(() => {
+    setActive(-1)
+  }, [tab])
 
   return (
     <section className="faq-page">
@@ -116,9 +118,6 @@ const Faq = observer(() => {
                         <div className="faqs__item-content">
                           <div
                             className="faqs__item-text"
-                            ref={(r) =>
-                              !refs.current.includes(r) && refs.current.push(r)
-                            }
                             dangerouslySetInnerHTML={{ __html: li.text }}
                           ></div>
                         </div>

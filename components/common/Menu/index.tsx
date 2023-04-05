@@ -14,23 +14,14 @@ const Menu = observer(() => {
   const { header, footer } = useContentState()
 
   useEffect(() => {
-    let vh = window.innerHeight * 0.01
     const s = document.querySelector('.menu')
     const header = document.querySelector('.header')
 
     if (!s || !header) return
-    ;(s as any).style.setProperty('--vh', `${vh}px`)
     ;(s as any).style.setProperty(
       '--header-height',
       `${header.getBoundingClientRect().height}px`,
     )
-
-    window.addEventListener('resize', function (e) {
-      let vh = window.innerHeight * 0.01
-      const s = document.querySelector('.menu')
-      if (!s) return
-      ;(s as any).style.setProperty('--vh', `${vh}px`)
-    })
   }, [])
 
   useEffect(() => {
@@ -40,8 +31,6 @@ const Menu = observer(() => {
         : (GlobalState.locoScroll as any).start()
     }
   }, [GlobalState.isMenuOpen, GlobalState.locoScroll])
-
-  
 
   return (
     <section className={classNames('menu', GlobalState.isMenuOpen && 'open')}>
@@ -69,9 +58,9 @@ const Menu = observer(() => {
                 {hi.submenu.length ? (
                   <div className="menu__link"> {hi.title}</div>
                 ) : (
-                  <Link href={hi.link}>
-                    <a className="menu__link">{hi.title}</a>
-                  </Link>
+                  <a className="menu__link" href={hi.link}>
+                    {hi.title}
+                  </a>
                 )}
 
                 {hi.submenu.length ? (
@@ -123,9 +112,9 @@ const Menu = observer(() => {
                     {hi?.submenu?.map((sub: any, i: number) => (
                       <div className="menu__subitem" key={i}>
                         {hi.isProducts ? (
-                          <Link href={sub.link}>
-                            <a className="menu__subitem-title">{sub.title}</a>
-                          </Link>
+                          <a className="menu__subitem-title" href={sub.link}>
+                            {sub.title}
+                          </a>
                         ) : (
                           <></>
                         )}
@@ -133,9 +122,12 @@ const Menu = observer(() => {
                         <div className="menu__subitem-list">
                           {(sub as any)?.list ? (
                             (sub as any)?.list?.map((li: any, idx: number) => (
-                              <Link key={idx} href={li.link}>
-                                <a className="menu__subitem-text">{li.title}</a>
-                              </Link>
+                              <a
+                                className="menu__subitem-text"
+                                key={idx}
+                                href={li.link}
+                                dangerouslySetInnerHTML={{ __html: li.title }}
+                              ></a>
                             ))
                           ) : (
                             <Button

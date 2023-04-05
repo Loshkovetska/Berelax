@@ -13,11 +13,25 @@ const StoryBlocks = observer(() => {
         {content?.storyblocks?.map((st: any, i: number) => (
           <div className="story-blocks__item" key={i}>
             <div className="story-blocks__item-img">
-              <ImageComponent src={st.img} />
+              <ImageComponent src={st.img} alt={st.alt} />
             </div>
             <div className="story-blocks__item-cont">
-              <div className="story-blocks__item-subtitle">{st.subtitle}</div>
-              <div className="story-blocks__item-title">{st.title}</div>
+              <div
+                className="story-blocks__item-subtitle"
+                style={{
+                  color: `${st.color}`,
+                }}
+              >
+                {st.subtitle}
+              </div>
+              <div
+                className="story-blocks__item-title"
+                style={{
+                  color: `${st.color}`,
+                }}
+              >
+                {st.title}
+              </div>
             </div>
             <Button
               isLink

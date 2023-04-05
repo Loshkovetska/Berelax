@@ -26,6 +26,8 @@ __webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __we
 /* harmony import */ var mobx__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(6211);
 /* harmony import */ var mobx__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(mobx__WEBPACK_IMPORTED_MODULE_8__);
 /* harmony import */ var _pages_booking_Steps__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(4355);
+/* harmony import */ var next_router__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(1853);
+/* harmony import */ var next_router__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(next_router__WEBPACK_IMPORTED_MODULE_10__);
 var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_pages_booking_Steps__WEBPACK_IMPORTED_MODULE_9__]);
 _pages_booking_Steps__WEBPACK_IMPORTED_MODULE_9__ = (__webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__)[0];
 
@@ -38,7 +40,9 @@ _pages_booking_Steps__WEBPACK_IMPORTED_MODULE_9__ = (__webpack_async_dependencie
 
 
 
+
 const CustomCalendar = (0,mobx_react__WEBPACK_IMPORTED_MODULE_1__.observer)(({ beforeDate =false , afterDate =false  })=>{
+    const { asPath  } = (0,next_router__WEBPACK_IMPORTED_MODULE_10__.useRouter)();
     const { 0: date , 1: setDate  } = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)("2022-12");
     const { 0: after , 1: setAfter  } = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)("2022-12-21");
     const ref = (0,react__WEBPACK_IMPORTED_MODULE_2__.useRef)(null);
@@ -90,9 +94,13 @@ const CustomCalendar = (0,mobx_react__WEBPACK_IMPORTED_MODULE_1__.observer)(({ b
                         numberOfSelectableDays: 1
                     })
                 }),
-                /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
+                /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
                     className: "calendar__text",
-                    children: content?.popCalendarText
+                    children: [
+                        "*",
+                        asPath.includes("booking") ? _pages_booking_Steps__WEBPACK_IMPORTED_MODULE_9__/* .UserData.location */ .mt.location?.country : "London",
+                        " Time Zone"
+                    ]
                 })
             ]
         })

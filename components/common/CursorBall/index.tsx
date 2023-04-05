@@ -1,10 +1,12 @@
 import { observer } from 'mobx-react'
 import { useEffect, useRef, useState } from 'react'
+import { useWindowDimensions } from '../../../hooks/getWindowDimensions'
 import GlobalState from '../../../stores/GlobalState'
 import { IconComponent } from '../IconComponent'
 
 const CursorBall = observer(() => {
   const cursor = useRef<any>(null)
+  const { width } = useWindowDimensions()
   const [isShow, setShow] = useState(false)
   let mouse = { x: 0, y: 0 }
   let pos = {
@@ -23,7 +25,7 @@ const CursorBall = observer(() => {
     }
   }
 
-  const updateCoordinates = (e: any) => {
+  const updateCoordinates = (e: MouseEvent) => {
     mouse = { x: e.clientX, y: e.clientY }
     cursor.current && ((cursor.current as HTMLElement).style.opacity = '1')
     loop()
@@ -34,17 +36,18 @@ const CursorBall = observer(() => {
     requestAnimationFrame(loop)
   }
 
-  const setClass = (e: any) => {
-    const target = e.currentTarget
+  const setClass = (e: MouseEvent) => {
+    const target: EventTarget| null = e.currentTarget
+    if (!target) return
     const cursor = document.querySelector('.cursor-ball')
-    const className = target.getAttribute('cursor-class')
-    if (!(cursor as any).classList.contains(className)) {
+    const className = (target as HTMLElement).getAttribute('cursor-class')
+    if (className && !(cursor as HTMLElement).classList.contains(className)) {
       cursor!.classList.add(className)
     }
     loop()
   }
 
-  const removeClass = (e: any) => {
+  const removeClass = (e: MouseEvent) => {
     const cursor = document.querySelector('.cursor-ball')
     cursor!.className = 'cursor-ball'
     loop()
@@ -53,8 +56,8 @@ const CursorBall = observer(() => {
   useEffect(() => {
     const components = document.querySelectorAll('[cursor-class]') as any
     if (!components) return
-    components.forEach((element: any) => {
-      element.addEventListener('mousemove', (e: any) => setClass(e))
+    components.forEach((element: HTMLElement) => {
+      element.addEventListener('mousemove', (e: MouseEvent) => setClass(e))
       element.addEventListener('mouseleave', removeClass)
     })
 
@@ -62,9 +65,9 @@ const CursorBall = observer(() => {
       const components = document.querySelectorAll('[cursor-class]') as any
       if (!components) return
 
-      components.forEach((element: any) => {
-        element.addEventListener('removeEventListener', (e: any) => setClass(e))
-        element.addEventListener('removeEventListener', removeClass)
+      components.forEach((element: HTMLElement) => {
+        element.removeEventListener('mousemove', (e: MouseEvent) => setClass(e))
+        element.removeEventListener('mouseleave', removeClass)
       })
     }
   }, [])
@@ -88,6 +91,10 @@ const CursorBall = observer(() => {
       document.querySelector('.cursor-ball')?.classList.add('hidden')
     } else document.querySelector('.cursor-ball')?.classList.remove('hidden')
   }, [GlobalState.isTouch])
+
+  if (width <= 1024) {
+    return <></>
+  }
 
   return (
     <div className="cursor-ball" ref={cursor}>

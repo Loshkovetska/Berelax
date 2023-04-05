@@ -92,7 +92,10 @@ const BookAside = observer(() => {
       <div className="book-aside__title">{bookDetails?.title}</div>
       <div className="book-aside__img">
         {UserData.treatments.length ? (
-          <ImageComponent src={UserData.treatments[0].img} />
+          <ImageComponent
+            src={UserData.treatments[0].img}
+            alt={UserData.treatments[0].alt}
+          />
         ) : (
           <></>
         )}
@@ -122,10 +125,14 @@ const BookAside = observer(() => {
             </div>
             <div className="book-aside__row">
               <div className="book-aside__subtitle">
-                {bookDetails?.duratTitle}
+                {!['nail-care', 'beauty'].includes(tr.category)
+                  ? bookDetails?.duratTitle
+                  : ''}
               </div>
               <div className="book-aside__text">
-                {tr.time} min - ${tr.price}
+                {tr.time}{' '}
+                {!['nail-care', 'beauty'].includes(tr.category) && 'min'} -{' '}
+                {tr.price}
               </div>
             </div>
           </Fragment>

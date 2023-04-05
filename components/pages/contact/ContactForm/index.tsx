@@ -15,6 +15,7 @@ import Title from '../../../common/Title'
 import Title40 from '../../../common/Title40'
 import { UserData } from '../../booking/Steps'
 import ReCAPTCHA from 'react-google-recaptcha'
+import { contactForm } from '../../../../stores/ContentState'
 
 const ContactForm = observer(() => {
   const ref = useRef<any>(null),
@@ -35,27 +36,13 @@ const ContactForm = observer(() => {
   })
 
   const submit = () => {
-    if (!ref.current || !isVerify) return
+    if (!ref.current || !isVerify || !state.subject.length) return
     if (state.subject.includes('Defective') && !state.file && !state.file2)
       return
-    const fd = new FormData(ref.current)
-    fd.append('subject', state.subject)
-    fd.append('location', JSON.stringify(state.location))
-    state.subject.includes('Defective') &&
-      state.file &&
-      fd.append('file', state.file)
-    state.subject.includes('Defective') &&
-      state.file2 &&
-      fd.append('file2', state.file2)
 
-    fd.append('status', 'contact')
-
-    // fetch('/', {
-    //   method: 'POST',
-    //   body: fd,
-    // }).then(() => {})
-
-    changeSmallPopState()
+    contactForm(state).then(() => {
+      changeSmallPopState()
+    })
   }
 
   const fileLoad = (e: any) => {
@@ -192,7 +179,7 @@ const ContactForm = observer(() => {
                   placeholder={content?.subjectPlaceholder}
                 />
               </div>
-              <div className="contact__form-row">
+              {/* <div className="contact__form-row">
                 <Select
                   withSearch
                   isLocate
@@ -200,7 +187,7 @@ const ContactForm = observer(() => {
                   value=""
                   placeholder={content?.locatePlaceholder}
                 />
-              </div>
+              </div> */}
               <div className="contact__form-row">
                 <textarea
                   required

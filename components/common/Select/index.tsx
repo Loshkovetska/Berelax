@@ -1,13 +1,16 @@
 import classNames from 'classnames'
 import { observable, runInAction } from 'mobx'
 import { observer } from 'mobx-react'
-import { Fragment, useEffect, useRef, useState } from 'react'
+import { useRouter } from 'next/router'
+import { Fragment, useCallback, useEffect, useRef, useState } from 'react'
+import { arrayMinDistance, distance } from '../../../funcs/distance'
 import useClickOutSide from '../../../hooks/ClickOutSide'
 import { useWindowDimensions } from '../../../hooks/getWindowDimensions'
 import GlobalState from '../../../stores/GlobalState'
 import { UserData } from '../../pages/booking/Steps'
 import { FindTabState } from '../../pages/find/Intro'
 import { Airports } from '../../pages/find/PlacesList'
+import { PlaceCardState } from '../../pages/find/PlacesListMob'
 import Button from '../Button'
 import { IconComponent } from '../IconComponent'
 
@@ -24,6 +27,8 @@ const Select = observer(
     withSearch = true,
     isTimeSelect = false,
     isSearchIcon = false,
+    isFindUs = false,
+    findUsValue = null,
   }: {
     placeholder: string
     value: string
@@ -32,15 +37,20 @@ const Select = observer(
     withSearch?: boolean
     isTimeSelect?: boolean
     isSearchIcon?: boolean
+    isFindUs?: boolean
+    findUsValue?: any
   }) => {
+    const navigate = useRouter()
     const [userLocation, setLocation] = useState<any>(null)
-    const ref = useRef<any>(null)
+    const ref = useRef<HTMLElement | null>(null)
     const outside = useClickOutSide(ref)
     const [val, setVal] = useState(value)
     const [open, setOpen] = useState(false)
     const [selected, setSelected] = useState<any>(null)
     const [list, setList] = useState(null)
-    const getLocation = () => {
+    const { width, height } = useWindowDimensions()
+
+    const getLocation = useCallback(() => {
       const options = {
         enableHighAccuracy: true,
         timeout: 1000,
@@ -58,9 +68,8 @@ const Select = observer(
           options,
         )
       }
-    }
+    }, [])
 
-    const { width, height } = useWindowDimensions()
     useEffect(() => {
       if (outside) {
         setOpen(false)
@@ -95,16 +104,26 @@ const Select = observer(
           }
         })
 
-        runInAction(() => {
-          Airports.list = res
-          SelectState.selected = selected
-          FindTabState.location = res[0].list[0].locations
-        })
+        if (res.length) {
+          runInAction(() => {
+            Airports.list = res
+            SelectState.selected = selected
+            PlaceCardState.selected = selected
+            FindTabState.location = res[0].list[0].locations
+          })
+        }
 
         const smooth = document.querySelector('.smooth')
         const items = document.querySelector('.places')
         const header = document.querySelector('.header')
         if (!smooth || !items || !header) return
+
+        if (width > 900) {
+          GlobalState.locoScroll &&
+            GlobalState.locoScroll.scrollTo(items, {
+              offset: -header.getBoundingClientRect().height,
+            })
+        }
 
         if (width <= 900 && !FindTabState.tab) {
           GlobalState.locoScroll &&
@@ -118,7 +137,7 @@ const Select = observer(
           UserData.time = selected
         })
       }
-    }, [selected, dt, width])
+    }, [selected, dt, width, isTimeSelect, isLocate])
 
     useEffect(() => {
       if (!SelectState.selected && selected && isLocate) {
@@ -127,42 +146,7 @@ const Select = observer(
       if (!isLocate && selected && !UserData.time) {
         setSelected(null)
       }
-    }, [SelectState.selected, UserData.time])
-
-    const arrayMinDistance = (arr: any) => {
-      return arr.reduce(function (p: any, v: any) {
-        return p.distance < v.distance ? p : v
-      })
-    }
-
-    const distance = (
-      lat1: any,
-      lon1: any,
-      lat2: any,
-      lon2: any,
-      unit: any,
-    ) => {
-      var radlat1 = (Math.PI * lat1) / 180
-      var radlat2 = (Math.PI * lat2) / 180
-      var theta = lon1 - lon2
-      var radtheta = (Math.PI * theta) / 180
-      var dist =
-        Math.sin(radlat1) * Math.sin(radlat2) +
-        Math.cos(radlat1) * Math.cos(radlat2) * Math.cos(radtheta)
-      if (dist > 1) {
-        dist = 1
-      }
-      dist = Math.acos(dist)
-      dist = (dist * 180) / Math.PI
-      dist = dist * 60 * 1.1515
-      if (unit == 'K') {
-        dist = dist * 1.609344
-      }
-      if (unit == 'N') {
-        dist = dist * 0.8684
-      }
-      return dist
-    }
+    }, [SelectState.selected, UserData.time, selected, isLocate])
 
     useEffect(() => {
       if (userLocation && isLocate) {
@@ -201,6 +185,7 @@ const Select = observer(
         runInAction(() => {
           Airports.list = res
         })
+
         const smooth = document.querySelector('.smooth')
         const items = document.querySelector('.places')
         const header = document.querySelector('.header')
@@ -219,9 +204,11 @@ const Select = observer(
         }
       }
     }, [dt, userLocation])
+
     useEffect(() => {
-      if (val.length && isLocate && !selected) {
-        const res: any = []
+      if (val.length && isLocate) {
+        //&& !selected
+        let res: any = []
         dt &&
           dt?.map((d) => {
             d?.list?.map((li: any) => {
@@ -235,17 +222,42 @@ const Select = observer(
               }
             })
           })
+
+        if (res.length) {
+          const unic = Array.from(
+            new Set(
+              (res as any)
+                ?.sort((a: any, b: any) => a.title.localeCompare(b.title))
+                ?.map((li: any) => li.title),
+            ),
+          )
+
+          const sub: any = []
+          unic.forEach((c) => {
+            const su = res.find((r: any) => r.title == c)
+            if (su) {
+              sub.push(su)
+            }
+          })
+          res = sub
+        }
         setList(res)
       } else if (!val.length && isLocate) {
         setList(null)
       }
-    }, [val])
+    }, [val, selected])
 
     useEffect(() => {
       if (!selected && isTimeSelect) {
         setSelected(value)
       }
     }, [])
+
+    useEffect(() => {
+      if (isFindUs && findUsValue && !selected) {
+        setSelected(findUsValue)
+      }
+    }, [findUsValue, isFindUs, selected])
 
     return (
       <section className={classNames('loc-select', open && 'open')} ref={ref}>
@@ -311,21 +323,22 @@ const Select = observer(
           )}
           {isLocate && list && (
             <>
-              {(list as any)
-                ?.sort((a: any, b: any) => a.title.localeCompare(b.title))
-                .map((li: any, id: number) => (
-                  <div
-                    className="loc-select__subitem"
-                    key={id}
-                    onClick={() => {
-                      setSelected(li)
-                      setVal(li.title)
-                      setOpen(false)
-                    }}
-                  >
-                    {li.title}
-                  </div>
-                ))}
+              {(list as any)?.map((li: any, id: number) => (
+                <div
+                  className="loc-select__subitem"
+                  key={id}
+                  onClick={() => {
+                    // if (isFindUs) {
+                    //   navigate.push('/find-us/' + li?.skyCat.slug)
+                    // }
+                    setSelected(li)
+                    setVal(li.title)
+                    setOpen(false)
+                  }}
+                >
+                  {li.title}
+                </div>
+              ))}
             </>
           )}
           {isLocate &&
@@ -346,13 +359,26 @@ const Select = observer(
                   {d.continent}
                 </div>
                 <div className="loc-select__sublist">
-                  {d.list
-                    ?.sort((a: any, b: any) => a.title.localeCompare(b.title))
-                    .map((li: any, id: number) => (
+                  {Array.from(
+                    new Set(
+                      d.list
+                        ?.sort((a: any, b: any) =>
+                          a.title.localeCompare(b.title),
+                        )
+                        ?.map((li: any) => li.title),
+                    ),
+                  )
+                    .map((c: any) => ({
+                      ...d.list.find((don: any) => don.title == c),
+                    }))
+                    ?.map((li: any, id: number) => (
                       <div
                         className="loc-select__subitem"
                         key={id}
                         onClick={() => {
+                          // if (isFindUs) {
+                          //   navigate.push('/find-us/' + li?.skyCat.slug)
+                          // }
                           setSelected({
                             title: li.title,
                             continent: d.continent,

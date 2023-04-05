@@ -72,6 +72,9 @@
     .loc-select {
       width: 100%;
       max-width: none;
+      &.open .loc-select__list {
+        max-height: 240px;
+      }
     }
   }
 

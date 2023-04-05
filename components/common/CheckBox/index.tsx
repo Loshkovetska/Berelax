@@ -1,5 +1,5 @@
 import classNames from 'classnames'
-import { useEffect, useState } from 'react'
+import { ReactElement, useEffect, useState } from 'react'
 import { IconComponent } from '../IconComponent'
 
 const CheckBox = ({
@@ -7,7 +7,7 @@ const CheckBox = ({
   value,
   returnValue,
 }: {
-  label: any
+  label: ReactElement | string
   value: boolean
   returnValue: (value: boolean) => void
 }) => {

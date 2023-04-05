@@ -17,7 +17,7 @@ const Intro = observer(() => {
         </div>
       </InViewComponent>
       <InViewComponent delay={1}>
-        <ImgBackground src={content?.img} />
+        <ImgBackground src={content?.img} alt={content.alt} />
       </InViewComponent>
     </section>
   )

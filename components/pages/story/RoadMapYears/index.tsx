@@ -27,6 +27,7 @@ const RoadMapYears = observer(({ list }: { list: any }) => {
   }
 
   const translate = (value: any) => {
+    if (!ref.current) return
     requestAnimationFrame(() => {
       ref.current.style.transform = `translate3d(-${value}px,0,0)`
     })
@@ -45,7 +46,6 @@ const RoadMapYears = observer(({ list }: { list: any }) => {
       if (!slide) {
         translate(part * slide)
       } else translate(part * (slide + 1))
-
     }
   }, [slide])
   return (

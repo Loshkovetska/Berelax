@@ -23,7 +23,7 @@ const CompanyValues = observer(() => {
             <InViewComponent key={i} delay={i * 0.1 + 0.1}>
               <div className="company-values__item">
                 <div className="company-values__item-icon">
-                  <ImageComponent src={li.icon} />
+                  <ImageComponent src={li.icon} alt={li.alt} />
                 </div>
                 <Title40
                   classStr="company-values__item-title"
@@ -46,7 +46,7 @@ const CompanyValues = observer(() => {
               <InViewComponent key={i} delay={0}>
                 <div className="company-values__item">
                   <div className="company-values__item-icon">
-                    <ImageComponent src={li.icon} />
+                    <ImageComponent src={li.icon} alt={li.alt} />
                   </div>
                   <Title40
                     classStr="company-values__item-title"

@@ -1,23 +1,19 @@
 import {
   getBookingPage,
-  getCountryPop,
-  getFooter,
   getHeader,
-  getLocations,
+  getSortLocations,
 } from '../../stores/ContentState'
 
 export const getBooking = async () => {
-  const header = await getHeader(),
-    footer = await getFooter(),
-    content = await getBookingPage(),
-    airports = await getLocations(),
-    countrypop = await getCountryPop()
-
+  const { header, countrypop, footer } = await getHeader(),
+    { content, seo } = await getBookingPage(),
+    airports = await getSortLocations()
   return {
     header,
     footer,
     content,
     airports,
     countrypop,
+    seo,
   }
 }

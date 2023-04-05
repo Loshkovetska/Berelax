@@ -5,23 +5,27 @@ module.exports = {
   eslint: {
     ignoreDuringBuilds: true,
   },
-
+  staticPageGenerationTimeout: 300000,
   swcMinify: false,
   exclude: /\.svg$/,
   sassOptions: {
     includePaths: [path.join(__dirname, 'styles')],
   },
   inlineImageLimit: false,
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'http',
+        hostname: '153.92.209.247',
+        port: '',
+      },
+    ],
+  },
 
   webpack(config, options) {
     config.module.rules.push({
       test: /\.svg$/,
       use: ['@svgr/webpack', 'url-loader'],
-    })
-
-    config.module.rules.push({
-      test: /\.mp3|ogg$/,
-      use: ['file-loader'],
     })
 
     return config

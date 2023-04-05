@@ -1,7 +1,7 @@
 import { runInAction } from 'mobx'
 import { observer } from 'mobx-react'
 import { useRouter } from 'next/router'
-import React, { useEffect, useRef, useState } from 'react'
+import React, { ReactNode, useEffect, useRef } from 'react'
 import GlobalState from '../../../stores/GlobalState'
 import { UserData } from '../../pages/booking/Steps'
 import Categories from '../../pages/treatcat/Categories'
@@ -11,7 +11,7 @@ import CursorBall from '../CursorBall'
 import Footer from '../Footer'
 import Header from '../Header'
 import Menu from '../Menu'
-import MusicBox, { MusicBoxState } from '../MusicBox'
+import MusicBox from '../MusicBox'
 import ScrollTop from '../ScrollTop'
 import ScrollTopButton from '../ScrollTopButton'
 import SearchBox from '../SearchBox'
@@ -24,13 +24,13 @@ const Layout = observer(
     delay = 2,
     isTreats = true,
   }: {
-    children: any
+    children: Array<ReactNode> | ReactNode
     isMain?: boolean
     isTreatCat?: boolean
     delay?: number
     isTreats?: boolean
   }) => {
-    const ref = useRef<any>(null)
+    const ref = useRef<HTMLDivElement | null>(null)
     const router = useRouter()
 
     const isTouch = () => {
@@ -94,6 +94,16 @@ const Layout = observer(
         <CursorBall />
         <SearchBox />
         <Cookie />
+        <canvas
+          id="canvas"
+          style={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            opacity: 0,
+            visibility: 'hidden',
+          }}
+        />
       </>
     )
   },

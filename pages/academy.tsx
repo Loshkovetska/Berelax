@@ -1,19 +1,16 @@
-import Head from 'next/head'
 import { observer } from 'mobx-react'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 import useLocoScroll from '../hooks/useLoco'
-import GlobalState from '../stores/GlobalState'
 import Layout from '../components/common/Layout'
 import Intro from '../components/pages/story/Intro'
 import { getAcademy } from './api/getAcademy'
 import Courses from '../components/pages/academy/Courses'
 import Stories from '../components/pages/academy/Stories'
 import Banner from '../components/pages/location/Banner'
+import SeoBlock from '../components/common/SeoBlock'
 
 const AcademyPage = observer(({ hydrationData: props }: any) => {
-  const [loading, setLoading] = useState(false)
-  const ref = useRef<any>(null)
-
+  const [loading, setLoading] = useState(true)
   useLocoScroll(!loading)
   useEffect(() => {
     if (!loading) {
@@ -23,12 +20,15 @@ const AcademyPage = observer(({ hydrationData: props }: any) => {
     }
   }, [loading])
 
+  useEffect(() => {
+    if (props.content) {
+      setLoading(false)
+    }
+  }, [props])
 
   return (
     <>
-      <Head>
-        <title>Be relax</title>
-      </Head>
+      <SeoBlock seo={props.seo} />
       <Layout delay={1}>
         <Intro />
         <Courses />
@@ -48,5 +48,6 @@ export async function getStaticProps() {
     props: {
       hydrationData: { ...response },
     },
+    revalidate: 10,
   }
 }

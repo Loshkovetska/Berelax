@@ -31,7 +31,7 @@ const ProductCat = observer(
       if (!end) {
         setEnd(inView)
       }
-    }, [inView])
+    }, [inView, end])
 
     const { x, y } = useScrollPos()
 
@@ -46,7 +46,7 @@ const ProductCat = observer(
           className={classNames('products__item', end && 'animated')}
           onClick={() => setPos(0, y)}
         >
-          <ImageComponent src={pr.img} />
+          <ImageComponent src={pr.img} alt={pr.alt} />
           <h3 className={classNames('products__item-title', isDark && 'dark')}>
             {pr.title}
           </h3>

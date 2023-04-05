@@ -13,6 +13,7 @@ import Title40 from '../../../common/Title40'
 import { UserData } from '../../booking/Steps'
 import ReCAPTCHA from 'react-google-recaptcha'
 import PhoneSelect from '../../../common/PhoneSelect'
+import { vacancyForm } from '../../../../stores/ContentState'
 
 const ResumeForm = observer(({ isCareerPage }: { isCareerPage: boolean }) => {
   const ref = useRef<any>(null),
@@ -68,25 +69,16 @@ const ResumeForm = observer(({ isCareerPage }: { isCareerPage: boolean }) => {
 
   const submit = () => {
     if (!ref.current || !isVerify) return
-
-    const fd = new FormData(ref.current)
-
     if (isCareerPage && (!state.profType.length || !state.location)) return
-    if (isCareerPage) {
-      fd.append('profType', state.profType)
-      fd.append('location', JSON.stringify(state.location))
-    }
-    state.file && fd.append('resume', state.file)
-    state.file2 && fd.append('cover-letter', state.file2)
 
-    fd.append('status', 'apply-job')
-
-    fetch('/', {
-      method: 'POST',
-      body: fd,
-    }).then(() => {})
-
-    changeSmallPopState()
+    vacancyForm({
+      ...state,
+      lmail: (state.location as any)?.continent.includes('North America')
+        ? 1
+        : 0,
+    }).then(() => {
+      changeSmallPopState()
+    })
   }
 
   useEffect(() => {
@@ -204,7 +196,6 @@ const ResumeForm = observer(({ isCareerPage }: { isCareerPage: boolean }) => {
             </div>
             <div className="resume-form__form-row">
               <PhoneSelect
-                dt={form?.phoneCodes}
                 isRequired
                 placeholder={form?.phoneNumberPlaceholder}
                 resetField={resetState}
@@ -215,19 +206,6 @@ const ResumeForm = observer(({ isCareerPage }: { isCareerPage: boolean }) => {
                   })
                 }
               />
-              {/* <Input
-                value={state.phone}
-                setValue={(value) =>
-                  setState({
-                    ...state,
-                    phone: value,
-                  })
-                }
-                name="phone"
-                isRequired
-                placeHolder={form?.phoneNumberPlaceholder}
-                classStr=""
-              /> */}
             </div>
             <div className="resume-form__form-row">
               <Input
@@ -253,7 +231,7 @@ const ResumeForm = observer(({ isCareerPage }: { isCareerPage: boolean }) => {
                 }
                 name="country"
                 isRequired
-                placeHolder={form?.countryPlaceholder}
+                placeHolder={form?.countryPlaceHolder}
                 classStr=""
               />
             </div>
@@ -267,7 +245,7 @@ const ResumeForm = observer(({ isCareerPage }: { isCareerPage: boolean }) => {
                     placeholder={form?.profPlaceholder}
                     isTimeSelect
                     dt={JSON.parse(
-                      JSON.stringify(content?.offers?.select1),
+                      JSON.stringify(form?.profSelect),
                     ).sort((a: any, b: any) => a.localeCompare(b))}
                   />
                 </div>

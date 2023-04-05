@@ -24,7 +24,6 @@ const Navigation = observer(({ classStr }: { classStr: string }) => {
               'navigation__item',
               asPath.includes(hi.link) && 'active',
             )}
-        
             onMouseMove={() => {
               if (width > 1024) {
                 const items = document.querySelectorAll(
@@ -51,9 +50,9 @@ const Navigation = observer(({ classStr }: { classStr: string }) => {
               {!hi.link || hi.link.includes('#') ? (
                 <div className="navigation__link"> {hi.title}</div>
               ) : (
-                <Link href={hi.link}>
-                  <a className={classNames('navigation__link')}>{hi.title}</a>
-                </Link>
+                <a className={classNames('navigation__link')} href={hi.link}>
+                  {hi.title}
+                </a>
               )}
               {hi.submenu.length ? (
                 <IconComponent name={'ic'} className="" />
@@ -73,34 +72,35 @@ const Navigation = observer(({ classStr }: { classStr: string }) => {
                       key={i}
                     >
                       {hi.isProducts ? (
-                        <Link href={sub.link}>
-                          <a className="navigation__subitem-img">
-                            <ImageComponent src={sub.img} />
-                          </a>
-                        </Link>
+                        <a className="navigation__subitem-img" href={sub.link}>
+                          <ImageComponent src={sub.img} alt={sub.alt} />
+                        </a>
                       ) : (
-                        <div className="navigation__subitem-img">
-                          <ImageComponent src={sub.img} />
-                        </div>
+                        <a className="navigation__subitem-img" href={sub.link}>
+                          <ImageComponent src={sub.img} alt={sub.alt} />
+                        </a>
                       )}
                       {hi.isProducts ? (
-                        <Link href={sub.link}>
-                          <a className="navigation__subitem-title">
-                            {' '}
-                            {sub.title}
-                          </a>
-                        </Link>
+                        <a
+                          className="navigation__subitem-title"
+                          href={sub.link}
+                        >
+                          {sub.title}
+                        </a>
                       ) : (
                         <></>
                       )}
                       <div className="navigation__subitem-list">
                         {(sub as any)?.list ? (
                           (sub as any)?.list?.map((li: any, idx: number) => (
-                            <Link key={idx} href={li.link}>
-                              <a className="navigation__subitem-text">
-                                {li.title}
-                              </a>
-                            </Link>
+                            <a
+                              className="navigation__subitem-text"
+                              href={li.link}
+                              key={idx}
+                              dangerouslySetInnerHTML={{__html:li.title}}
+                            >
+                              {/* {li.title} */}
+                            </a>
                           ))
                         ) : (
                           <Button

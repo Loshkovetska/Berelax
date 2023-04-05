@@ -5,9 +5,11 @@ export type NewsType = {
   link: string
   datetime: string
   cat: string
-  readTime: string
   img: string
   views: number
+  alt: string
+  content: string
+  readTime: string
 }
 
 export type ProductCatType = {
@@ -15,6 +17,7 @@ export type ProductCatType = {
   title: string
   link: string
   img: string
+  alt: string
 }
 
 export type ServiceCatType = {
@@ -22,6 +25,8 @@ export type ServiceCatType = {
   title: string
   link: string
   img: string
+  alt: string
+  buttonText: string
 }
 
 export type PlaceCard = {
@@ -29,6 +34,7 @@ export type PlaceCard = {
   text: string
   country: string
   img: string | null
+  alt: string
   link: string
   locations: {
     lat: number | string
@@ -42,6 +48,7 @@ export type serviceType = {
   link: string
   text: string
   img: string | null
+  alt: string
   price: Array<{
     time: number | string
     amount: number | string
@@ -64,6 +71,7 @@ export type TreatType = {
   link: string
   text: string
   img: string | null
+  alt: string
   time: Array<any>
   bodyPart: Array<any>
   locations: Array<any>
@@ -77,9 +85,10 @@ export type ProductType = {
   text: string
   link: string
   img: string | null
+  alt: string
   color?: Array<any>
   isNew: boolean
-  soldCount: number
+  isBestSeller: boolean
   filling?: Array<any>
   bodyPart?: Array<any>
   heatOption?: Array<any>

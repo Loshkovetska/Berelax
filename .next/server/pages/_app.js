@@ -17,6 +17,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _hooks_RootStoreProvider__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(5975);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(6689);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _stores_GlobalState__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(4812);
+
 
 
 
@@ -62,6 +64,24 @@ function MyApp({ Component , pageProps  }) {
             document.querySelector("body")?.classList.add("old-device");
         }
     }, []);
+    (0,react__WEBPACK_IMPORTED_MODULE_2__.useEffect)(()=>{
+        let vh = window.innerHeight * 0.01;
+        const s = document.querySelector("html");
+        if (!s) return;
+        s.style.setProperty("--viewport-height", `${vh}px`);
+        window.addEventListener("resize", function(e) {
+            let vh = window.innerHeight * 0.01;
+            s.style.setProperty("--viewport-height", `${vh}px`);
+        });
+    }, []);
+    (0,react__WEBPACK_IMPORTED_MODULE_2__.useEffect)(()=>{
+        if (sessionStorage.getItem("locale")) {
+            const locale = JSON.parse(sessionStorage.getItem("locale"));
+            if (locale.country) {
+                (0,_stores_GlobalState__WEBPACK_IMPORTED_MODULE_3__/* .changeLocale */ .wo)();
+            }
+        }
+    }, []);
     return /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_hooks_RootStoreProvider__WEBPACK_IMPORTED_MODULE_1__/* .RootStoreProvider */ .LD, {
         hydrationData: pageProps?.hydrationData,
         children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(Component, {
@@ -100,6 +120,13 @@ module.exports = require("react");
 
 module.exports = require("react/jsx-runtime");
 
+/***/ }),
+
+/***/ 4956:
+/***/ ((module) => {
+
+module.exports = require("reading-time");
+
 /***/ })
 
 };
@@ -109,7 +136,7 @@ module.exports = require("react/jsx-runtime");
 var __webpack_require__ = require("../webpack-runtime.js");
 __webpack_require__.C(exports);
 var __webpack_exec__ = (moduleId) => (__webpack_require__(__webpack_require__.s = moduleId))
-var __webpack_exports__ = __webpack_require__.X(0, [5975], () => (__webpack_exec__(5656)));
+var __webpack_exports__ = __webpack_require__.X(0, [7378], () => (__webpack_exec__(5656)));
 module.exports = __webpack_exports__;
 
 })();

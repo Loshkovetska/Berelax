@@ -21,7 +21,7 @@ __webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __we
 /* harmony import */ var _Button__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(8133);
 /* harmony import */ var _IconComponent__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(9286);
 /* harmony import */ var react_intersection_observer__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(4009);
-/* harmony import */ var _ImageComponent__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(4042);
+/* harmony import */ var _ImageComponent__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(9808);
 /* harmony import */ var next_link__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(1664);
 /* harmony import */ var next_link__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(next_link__WEBPACK_IMPORTED_MODULE_8__);
 /* harmony import */ var _hooks_useScrollPos__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(7767);
@@ -50,7 +50,8 @@ const ServiceCat = (0,mobx_react__WEBPACK_IMPORTED_MODULE_2__.observer)(({ se , 
             setEnd(inView);
         }
     }, [
-        inView
+        inView,
+        end
     ]);
     const { x , y  } = (0,_hooks_useScrollPos__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .Z)();
     const setPos = (x, y)=>{
@@ -71,7 +72,8 @@ const ServiceCat = (0,mobx_react__WEBPACK_IMPORTED_MODULE_2__.observer)(({ se , 
                     children: se.title
                 }),
                 /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_ImageComponent__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .Z, {
-                    src: se.img
+                    src: se.img,
+                    alt: se.alt
                 }),
                 /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_Button__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .Z, {
                     isLink: true,
@@ -79,7 +81,7 @@ const ServiceCat = (0,mobx_react__WEBPACK_IMPORTED_MODULE_2__.observer)(({ se , 
                     classStr: "button-arrow button-svg white p24",
                     inner: /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
                         children: [
-                            servicesBtn,
+                            se.buttonText,
                             " ",
                             /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_IconComponent__WEBPACK_IMPORTED_MODULE_5__/* .IconComponent */ .o, {
                                 name: "arrow"
@@ -96,7 +98,8 @@ const ServiceCat = (0,mobx_react__WEBPACK_IMPORTED_MODULE_2__.observer)(({ se , 
                 /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
                     className: "service-cat__img",
                     children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_ImageComponent__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .Z, {
-                        src: se.img
+                        src: se.img,
+                        alt: se.alt
                     })
                 }),
                 /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
@@ -112,7 +115,7 @@ const ServiceCat = (0,mobx_react__WEBPACK_IMPORTED_MODULE_2__.observer)(({ se , 
                             classStr: "button-arrow button-svg white p24",
                             inner: /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
                                 children: [
-                                    servicesBtn,
+                                    se.buttonText,
                                     " ",
                                     /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_IconComponent__WEBPACK_IMPORTED_MODULE_5__/* .IconComponent */ .o, {
                                         name: "arrow"

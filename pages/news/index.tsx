@@ -1,16 +1,14 @@
-import Head from 'next/head'
 import { observer } from 'mobx-react'
 import { useEffect, useState } from 'react'
 import useLocoScroll from '../../hooks/useLoco'
-import GlobalState from '../../stores/GlobalState'
 import Layout from '../../components/common/Layout'
 import { getNewsC } from '../api/getNews'
 import Intro from '../../components/pages/news/Intro'
 import TopArticles from '../../components/pages/news/TopArticles'
 import NewsList from '../../components/pages/news/NewsList'
+import SeoBlock from '../../components/common/SeoBlock'
 const NewsPage = observer(({ hydrationData: props }: any) => {
-  const [loading, setLoading] = useState(false)
-
+  const [loading, setLoading] = useState(true)
   useLocoScroll(!loading)
   useEffect(() => {
     if (!loading) {
@@ -20,11 +18,14 @@ const NewsPage = observer(({ hydrationData: props }: any) => {
     }
   }, [loading])
 
+  useEffect(() => {
+    if (props.content) {
+      setLoading(false)
+    }
+  }, [props])
   return (
     <>
-      <Head>
-        <title>Be relax</title>
-      </Head>
+      <SeoBlock seo={props.seo} />
       <Layout delay={1}>
         <Intro />
         <TopArticles />
@@ -43,5 +44,6 @@ export async function getStaticProps() {
     props: {
       hydrationData: { ...response },
     },
+    revalidate: 10,
   }
 }

@@ -17,45 +17,21 @@ const Stories = observer(() => {
           <Title54 text={content?.stories?.title} classStr="stories__title" />
         </InViewComponent>
         <div className="stories__list">
-          {content?.stories?.list?.map((li: any, i: number) => (
-            <InViewComponent delay={0.1 * i} key={i}>
-              <div className="stories__item">
-                <div
-                  className="stories__item-video"
-                  dangerouslySetInnerHTML={{ __html: li.video }}
-                ></div>
-                <div className="stories__item-content">
-                  <div className="stories__item-top">
-                    <Title40 classStr="stories__item-title" text={li.title} />
-                    <Text classStr="stories__item-text" text={li.text} />
-                  </div>
-                  <Button
-                    classStr="white button-arrow button-svg p24"
-                    inner={
-                      <>
-                        {content?.stories?.buttonTitle}
-                        <IconComponent name={'arrow'} />
-                      </>
-                    }
-                  />
-                </div>
-              </div>
-            </InViewComponent>
-          ))}
-        </div>
-        <div className="stories__slider">
-          <CustomSlider
-            slidesToScroll={1}
-            slidesToShow={1}
-            infinite={false}
-            variableWidth
-          >
-            {content?.stories?.list?.map((li: any, i: number) => (
-              <InViewComponent delay={0.1} key={i}>
+          {content?.stories?.list?.map(
+            (
+              li: {
+                video: string | null
+                text: string
+                title: string
+                link: string
+              },
+              i: number,
+            ) => (
+              <InViewComponent delay={0.1 * i} key={i}>
                 <div className="stories__item">
                   <div
                     className="stories__item-video"
-                    dangerouslySetInnerHTML={{ __html: li.video }}
+                    dangerouslySetInnerHTML={{ __html: li.video || '' }}
                   ></div>
                   <div className="stories__item-content">
                     <div className="stories__item-top">
@@ -63,6 +39,8 @@ const Stories = observer(() => {
                       <Text classStr="stories__item-text" text={li.text} />
                     </div>
                     <Button
+                      isLink
+                      link={li.link}
                       classStr="white button-arrow button-svg p24"
                       inner={
                         <>
@@ -74,7 +52,57 @@ const Stories = observer(() => {
                   </div>
                 </div>
               </InViewComponent>
-            ))}
+            ),
+          )}
+        </div>
+        <div className="stories__slider">
+          <CustomSlider
+            slidesToScroll={1}
+            slidesToShow={1}
+            infinite={false}
+            variableWidth
+          >
+            {content?.stories?.list?.map(
+              (
+                li: {
+                  video: string | null
+                  text: string
+                  title: string
+                  link: string
+                },
+
+                i: number,
+              ) => (
+                <InViewComponent delay={0.1} key={i}>
+                  <div className="stories__item">
+                    <div
+                      className="stories__item-video"
+                      dangerouslySetInnerHTML={{ __html: li.video || '' }}
+                    ></div>
+                    <div className="stories__item-content">
+                      <div className="stories__item-top">
+                        <Title40
+                          classStr="stories__item-title"
+                          text={li.title}
+                        />
+                        <Text classStr="stories__item-text" text={li.text} />
+                      </div>
+                      <Button
+                        isLink
+                        link={li.link}
+                        classStr="white button-arrow button-svg p24"
+                        inner={
+                          <>
+                            {content?.stories?.buttonTitle}
+                            <IconComponent name={'arrow'} />
+                          </>
+                        }
+                      />
+                    </div>
+                  </div>
+                </InViewComponent>
+              ),
+            )}
           </CustomSlider>
         </div>
       </div>

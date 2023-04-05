@@ -20,6 +20,18 @@
     column-gap: 32px;
     justify-content: center;
     margin-top: 73px;
+
+    &.two-selects {
+      grid-template-columns: repeat(2, 286px);
+
+      @media (max-width: 1024px) {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      @media (max-width: 767px) {
+        grid-template-columns: repeat(1, 1fr);
+      }
+    }
   }
 
   &__list {

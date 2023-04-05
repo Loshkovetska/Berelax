@@ -1,7 +1,6 @@
 import { observer } from 'mobx-react'
 import { Fragment } from 'react'
 import { useContentState } from '../../../../hooks/RootStoreProvider'
-import HomeState from '../../../../stores/ContentState'
 import Button from '../../../common/Button'
 import { IconComponent } from '../../../common/IconComponent'
 import ImageComponent from '../../../common/ImageComponent'
@@ -38,17 +37,26 @@ const Intro = observer(() => {
               <InViewComponent delay={0.5}>
                 <div className="intro__gallery-col center middle">
                   <div className="intro__gallery-img b48 h300">
-                    <ImageComponent src={intro.images[0]} />
+                    <ImageComponent
+                      src={intro.images[0].src}
+                      alt={intro.images[0].alt}
+                    />
                   </div>
                 </div>
               </InViewComponent>
               <InViewComponent delay={1}>
                 <div className="intro__gallery-col small">
                   <div className="intro__gallery-img b104 h339">
-                    <ImageComponent src={intro.images[1]} />
+                    <ImageComponent
+                      src={intro.images[1].src}
+                      alt={intro.images[1].alt}
+                    />
                   </div>
                   <div className="intro__gallery-img b48 h200">
-                    <ImageComponent src={intro.images[2]} />
+                    <ImageComponent
+                      src={intro.images[2].src}
+                      alt={intro.images[2].alt}
+                    />
                   </div>
                 </div>
               </InViewComponent>
@@ -56,17 +64,26 @@ const Intro = observer(() => {
               <InViewComponent delay={1}>
                 <div className="intro__gallery-col small">
                   <div className="intro__gallery-img b48 h200">
-                    <ImageComponent src={intro.images[3]} />
+                    <ImageComponent
+                      src={intro.images[3].src}
+                      alt={intro.images[3].alt}
+                    />
                   </div>
                   <div className="intro__gallery-img b104 h339">
-                    <ImageComponent src={intro.images[4]} />
+                    <ImageComponent
+                      src={intro.images[4].src}
+                      alt={intro.images[4].alt}
+                    />
                   </div>
                 </div>
               </InViewComponent>
               <InViewComponent delay={0.5}>
                 <div className="intro__gallery-col center middle">
                   <div className="intro__gallery-img b48 h300 ">
-                    <ImageComponent src={intro.images[5]} />
+                    <ImageComponent
+                      src={intro.images[5].src}
+                      alt={intro.images[5].alt}
+                    />
                   </div>
                 </div>
               </InViewComponent>
@@ -74,7 +91,7 @@ const Intro = observer(() => {
           </div>
           <InViewComponent animationClass="apear" delay={1}>
             <div className="intro__img-mobile">
-              <ImageComponent src={intro?.mainImg} />
+              <ImageComponent src={intro?.mainImg} alt={intro?.mainImgAlt} />
             </div>
           </InViewComponent>
         </Fragment>

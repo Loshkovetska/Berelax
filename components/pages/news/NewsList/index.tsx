@@ -71,7 +71,7 @@ const NewsList = observer(() => {
         res = sub
       } else {
         const sub = res.filter((r: NewsType) => {
-          const tim1 = +r.readTime.replaceAll('min', '').replaceAll('s', '')
+          const tim1 = +r.readTime
           const tim2 = +filters.p3.replaceAll('min', '').replaceAll('s', '')
           if (tim1 == tim2) return r
         })

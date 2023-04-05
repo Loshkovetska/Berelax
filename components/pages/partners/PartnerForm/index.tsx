@@ -11,6 +11,7 @@ import InViewComponent from '../../../common/InViewComponent'
 import Title40 from '../../../common/Title40'
 import ReCAPTCHA from 'react-google-recaptcha'
 import PhoneSelect from '../../../common/PhoneSelect'
+import { partnerForm } from '../../../../stores/ContentState'
 
 const PartnerForm = observer(() => {
   const ref = useRef<any>(null),
@@ -46,20 +47,11 @@ const PartnerForm = observer(() => {
   }
 
   const submit = () => {
-    if (!ref.current || !isVerify) return
+    if (!ref.current || !isVerify|| !state.message.length) return
 
-    const fd = new FormData(ref.current)
-
-    state.file && fd.append('file', state.file)
-
-    fd.append('status', 'new-partner')
-
-    // fetch('/', {
-    //   method: 'POST',
-    //   body: fd,
-    // }).then(() => {})
-
-    changeSmallPopState()
+    partnerForm(state).then(() => {
+      changeSmallPopState()
+    })
   }
 
   useEffect(() => {
@@ -149,7 +141,6 @@ const PartnerForm = observer(() => {
             </div>
             <div className="partner-form__row">
               <PhoneSelect
-                dt={form?.phoneCodes}
                 isRequired
                 resetField={resetState}
                 placeholder={form?.phoneNumberPlaceholder}
@@ -193,6 +184,7 @@ const PartnerForm = observer(() => {
             <div className="partner-form__row">
               <textarea
                 className="input"
+                required
                 value={state.message}
                 placeholder={form?.msgPlaceholder}
                 onChange={(e) =>

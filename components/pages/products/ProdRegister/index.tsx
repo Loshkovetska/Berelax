@@ -1,7 +1,7 @@
 import classNames from 'classnames'
 import { runInAction } from 'mobx'
 import { observer } from 'mobx-react'
-import { useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { useContentState } from '../../../../hooks/RootStoreProvider'
 import GlobalState, {
   changeCalendarState,
@@ -16,6 +16,7 @@ import Select from '../../../common/Select'
 import Title from '../../../common/Title'
 import { UserData } from '../../booking/Steps'
 import ReCAPTCHA from 'react-google-recaptcha'
+import { productRegisterForm } from '../../../../stores/ContentState'
 
 const ProdRegister = observer(() => {
   const ref = useRef<any>(null),
@@ -50,24 +51,14 @@ const ProdRegister = observer(() => {
       file: e.target.files[0],
     })
   }
-  const submit = () => {
+  const submit = useCallback(() => {
     if (!ref.current || !isVerify) return
     if (state.check1) {
-      const fd = new FormData(ref.current)
-      fd.append('product', (state.product.id as any)?.toString() || '')
-      state.date && fd.append('date', state.date)
-      state.file && fd.append('file', state.file)
-      state.check2 && fd.append('sign-up', state.check2.toString())
-
-      fd.append('status', 'product-register')
-      //   fetch('/', {
-      //     method: 'POST',
-      //     body: fd,
-      //   }).then(() => {})
-
-      changeSmallPopState()
+      productRegisterForm(state).then(() => {
+        changeSmallPopState()
+      })
     }
-  }
+  }, [isVerify, state])
 
   useEffect(() => {
     setState({ ...state, date: UserData.date as any })
@@ -164,11 +155,14 @@ const ProdRegister = observer(() => {
                   withSearch={false}
                   placeholder={content?.productPlaceholder}
                   value={state.product?.title}
-                  dt={JSON.parse(
-                    JSON.stringify(content?.products.map((p: any) => p.title)),
+                  dt={content?.products.map((p: any) => {
+                      const title = p.title.replaceAll('&#8211;', '-').replaceAll('&#038;', '&').replaceAll('&#8217;', "\’").replaceAll('&#180;', "\´");
+                      return title
+                    }
                   ).sort((a: any, b: any) => a.localeCompare(b))}
                 />
               </div>
+
 
               <div className="product-reg__form-row">
                 <section className={classNames('loc-select')}>
@@ -205,6 +199,9 @@ const ProdRegister = observer(() => {
                   }
                 />
               </div>
+              <span className="product-reg__tooltip">
+                {content?.serialTool}
+              </span>
               <div className="product-reg__form-row">
                 <div
                   className={classNames(

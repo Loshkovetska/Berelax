@@ -1,16 +1,12 @@
 import {
-  getCountryPop,
-  getFooter,
   getHeader,
   getNews,
   getNewsPage,
 } from '../../stores/ContentState'
 
 export const getNewsC = async () => {
-  const header = await getHeader(),
-    footer = await getFooter(),
-    content = await getNewsPage(),
-    countrypop = await getCountryPop(),
+  const { header, footer, countrypop } = await getHeader(),
+    { seo, content } = await getNewsPage(),
     cards = await getNews()
   return {
     header,
@@ -18,5 +14,6 @@ export const getNewsC = async () => {
     content,
     countrypop,
     cards,
+    seo,
   }
 }

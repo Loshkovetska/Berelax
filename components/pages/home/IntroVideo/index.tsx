@@ -245,7 +245,7 @@ const IntroVideo = observer(() => {
           >
             <source type="video/mp4" src={intro?.mainVideo.video} />
           </video>
-          <ImageComponent src={intro?.mainImg} classStr="hidden intro-img" />
+          <ImageComponent src={intro?.mainImg} classStr="hidden intro-img" alt={intro?.mainImgAlt}/>
         </div>
       </div>
     </InViewComponent>

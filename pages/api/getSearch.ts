@@ -6,15 +6,14 @@ import {
 } from '../../stores/ContentState'
 
 export const getSearch = async () => {
-  const header = await getHeader(),
-    footer = await getFooter(),
-    content = await getSearchContent(),
-    countrypop = await getCountryPop()
+  const { header, footer, countrypop } = await getHeader(),
+    { content, seo } = await getSearchContent()
 
   return {
     header,
     footer,
     content,
     countrypop,
+    seo,
   }
 }

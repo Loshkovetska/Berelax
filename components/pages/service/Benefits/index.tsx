@@ -5,6 +5,8 @@ import InViewComponent from '../../../common/InViewComponent'
 
 const Benefits = observer(() => {
   const { content } = useContentState()
+
+  if (!content?.benefits?.list?.length) return <></>
   return (
     <section className="benefits">
       <InViewComponent>
@@ -14,11 +16,11 @@ const Benefits = observer(() => {
         ></h2>
       </InViewComponent>
       <div className="benefits__list">
-        {content?.benefits?.list.map((b: any, i: number) => (
+        {content?.benefits?.list?.map((b: any, i: number) => (
           <InViewComponent key={i} delay={i * 0.3}>
             <div className="benefits__item">
               <div className="benefits__item-img">
-                <ImageComponent src={b.src} />
+                <ImageComponent src={b.src} alt={b.alt} />
               </div>
               <div className="benefits__item-col">
                 <div className="benefits__item-title">{b?.title}</div>

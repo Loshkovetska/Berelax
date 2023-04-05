@@ -1,6 +1,6 @@
 import classNames from 'classnames'
 import { observer } from 'mobx-react'
-import { Fragment, useEffect, useState } from 'react'
+import { Fragment, useEffect, useMemo, useRef, useState } from 'react'
 import { useContentState } from '../../../../hooks/RootStoreProvider'
 import Button from '../../../common/Button'
 import { IconComponent } from '../../../common/IconComponent'
@@ -8,243 +8,102 @@ import Input from '../../../common/Input'
 import Select from '../../../common/MainSelect'
 import NewsPost from '../../../common/NewsPost'
 import ProductItem from '../../../common/ProductItem'
-import pI1 from '../../../../assets/products/product.png'
-import im1 from '../../../../assets/news/Frame 14.png'
-import sI1 from '../../../../assets/home/image 303.png'
+
 import ServiceItem from '../../../common/ServiceItem'
 import InViewComponent from '../../../common/InViewComponent'
 import Title from '../../../common/Title'
+import { searchByParams } from '../../../../stores/ContentState'
+import { StateArrays } from '../../../../pages/search'
 
 const SearchContent = observer(() => {
+  const [searchTitle, setSearchTitle] = useState('')
+  const ref = useRef<boolean>(false)
   const { content } = useContentState()
   const [value, setTitle] = useState('')
   const [section, setSection] = useState('')
-  const [results, setResults] = useState<any>({
-    section: '',
-    list: Array(),
-  })
+  const [all, setAll] = useState<any>([])
+
   useEffect(() => {
     if (sessionStorage.getItem('search-value')) {
       setTitle(sessionStorage.getItem('search-value') || '')
-      search(sessionStorage.getItem('search-value') || '', content?.sections[0])
+      search(sessionStorage.getItem('search-value') || '')
     }
     if (content?.sections) {
       setSection(content?.sections[0])
     }
-  }, [])
+  }, [content?.sections])
 
-  const search = (value: string, section: string) => {
-    const fd = new FormData()
-    fd.append('status', 'search')
-    fd.append('value', value)
-    fd.append('section', section)
-    fetch('https://api.publicapis.org/entries', {
-      //   method: 'POST',
-      //   body: fd,
-    }).then(() => {
-      if (section == 'news') {
-        setResults({
-          section: 'news',
-          list: [
-            {
-              id: 1,
-              link: '/news/integer',
-              title:
-                'Facial massage with a jade <br/> stone. Techniques and tips.',
-              text:
-                'Aliquet amet nec justo, sit auctor nisl, nunc. Maecenas felis nunc id ut nisi, condimentum sit vulputate. Sit est suspendisse bibendum rutrum eget. Sapien mattis Maecenas felis nunc id ut nisi, condimentum sit vulputate. Sit est suspendisse bibendum rutrum eget. Sapien mattis',
-              datetime: '2022-10-11',
-              cat: 'Massage',
-              readTime: '5min',
-              img: im1.src,
-            },
-            {
-              id: 2,
-              link: '/news/integer',
-              title:
-                'Facial massage with a jade<br/> stone. Techniques and tips.',
-              text:
-                'Aliquet amet nec justo, sit auctor nisl, nunc. Maecenas felis nunc id ut nisi, condimentum sit vulputate. Sit est suspendisse bibendum rutrum eget. Sapien mattis Maecenas felis nunc id ut nisi, condimentum sit vulputate. Sit est suspendisse bibendum rutrum eget. Sapien mattis',
-              datetime: '2022-10-16',
-              cat: 'Beauty',
-              readTime: '2min',
-              img: im1.src,
-            },
-            {
-              id: 3,
-              link: '/news/integer',
-              title:
-                'Facial massage with a jade<br/> stone. Techniques and tips.',
-              text:
-                'Aliquet amet nec justo, sit auctor nisl, nunc. Maecenas felis nunc id ut nisi, condimentum sit vulputate. Sit est suspendisse bibendum rutrum eget. Sapien mattis Maecenas felis nunc id ut nisi, condimentum sit vulputate. Sit est suspendisse bibendum rutrum eget. Sapien mattis',
-              datetime: '2022-11-08',
-              cat: 'Travel',
-              readTime: '2min',
-              img: im1.src,
-            },
-            {
-              id: 1,
-              link: '/news/integer',
-              title: 'Integer rhoncus diam<br/> tristique odio donec.',
-              text:
-                'Aliquet amet nec justo, sit auctor nisl, nunc. Maecenas felis nunc id ut nisi, condimentum sit vulputate. Sit est suspendisse bibendum rutrum eget. Sapien mattis Maecenas felis nunc id ut nisi, condimentum sit vulputate. Sit est suspendisse bibendum rutrum eget. Sapien mattis',
-              datetime: '2022-10-11',
-              cat: 'Massage',
-              readTime: '5min',
-              img: im1.src,
-            },
-            {
-              id: 2,
-              link: '/news/integer',
-              title: 'Integer rhoncus diam<br/> tristique odio donec.',
-              text:
-                'Aliquet amet nec justo, sit auctor nisl, nunc. Maecenas felis nunc id ut nisi, condimentum sit vulputate. Sit est suspendisse bibendum rutrum eget. Sapien mattis Maecenas felis nunc id ut nisi, condimentum sit vulputate. Sit est suspendisse bibendum rutrum eget. Sapien mattis',
-              datetime: '2022-10-16',
-              cat: 'Beauty',
-              readTime: '2min',
-              img: im1.src,
-            },
-            {
-              id: 3,
-              link: '/news/integer',
-              title: 'Integer rhoncus diam<br/> tristique odio donec.',
-              text:
-                'Aliquet amet nec justo, sit auctor nisl, nunc. Maecenas felis nunc id ut nisi, condimentum sit vulputate. Sit est suspendisse bibendum rutrum eget. Sapien mattis Maecenas felis nunc id ut nisi, condimentum sit vulputate. Sit est suspendisse bibendum rutrum eget. Sapien mattis',
-              datetime: '2022-11-06',
-              cat: 'Travel',
-              readTime: '2min',
-              img: im1.src,
-            },
-          ],
-        })
-      }
-      if (section == 'products') {
-        setResults({
-          section: 'products',
-          list: [
-            {
-              id: 1,
-              title: 'Original Plus Pillow Original Plus Pillow',
-              text:
-                'Ac, id interdum fusce vestibulum. Nulla tortor libero convallis sit. Suscipit nulla at a sed',
-              link: '/products/travel-pillows/original-plus-pillow',
-              img: pI1.src,
-              color: ['red', 'black'],
-              isNew: true,
-              soldCount: 100,
-              filling: ['inflatable'],
-              bodyPart: ['neck', 'back'],
-              heatOption: ['1', '2'],
-              concern: ['firming', 'cleaning'],
-              type: 'electric',
-            },
-            {
-              id: 1,
-              link: '/products/travel-pillows',
-              title: 'Original Plus Pillow',
-              text:
-                'Ac, id interdum fusce vestibulum. Nulla tortor libero convallis sit. Suscipit nulla at a sed',
-              img: pI1.src,
-              color: ['black'],
-              isNew: false,
-              soldCount: 10,
-              filling: ['microbead'],
-              bodyPart: ['legs', 'back'],
-              heatOption: ['1', '2'],
-              concern: ['firming', 'cleaning'],
-              type: 'manual',
-            },
-            {
-              id: 1,
-              link: '/products/travel-pillows',
-              title: 'Original Plus Pillow',
-              text:
-                'Ac, id interdum fusce vestibulum. Nulla tortor libero convallis sit. Suscipit nulla at a sed',
-              img: pI1.src,
-              color: ['blue'],
-              isNew: false,
-              soldCount: 10,
-              filling: ['microbead'],
-              bodyPart: ['legs', 'back', 'calf'],
-              heatOption: ['1', '2'],
-              concern: ['firming', 'cleaning'],
-              type: 'manual',
-            },
-          ],
-        })
-      }
-      if (section == 'treatments') {
-        setResults({
-          section: 'treatments',
-          list: [
-            {
-              title: 'Absolute Massage',
-              link: '/treatments/massages/absolute-massage',
-              text:
-                'Massage focused on full body muscle relief. It is ideal to relax your body within a short time and to help you sleep better on the plane.',
-              img: sI1.src,
-              time: ['30', '60'],
-              bodyPart: ['Neck', 'Legs'],
-              locations: [
-                'Atlanta International Airport',
-                'Detroit Metropolitan Airport',
-              ],
-              serviceType: ['Oxygen & Aromatherapy'],
-            },
-            {
-              title: 'Be Relax',
-              link: '/treatments/massages/be-relax',
+  const search = async (value: string) => {
+    searchByParams(value).then((res) => {
+      const result: any = []
+      const resultProducts: Array<any> = Array()
+      const resultServices: Array<any> = Array()
+      const resultNews: Array<any> = Array()
 
-              text:
-                'Massage focused on full body muscle relief. It is ideal to relax your body within a short time and to help you sleep better on the plane.',
-              img: sI1.src,
-              time: ['20', '30', '40'],
-              bodyPart: ['Shoulders', 'Legs'],
-              locations: ['Frankfurt Airport', 'London Heathrow Airport'],
-              serviceType: ['Oxygen & Aromatherapy'],
-            },
-            {
-              title: 'Be Up',
-              link: '/treatments/massages/be-up',
-              text:
-                'Massage focused on full body muscle relief. It is ideal to relax your body within a short time and to help you sleep better on the plane.',
-              img: sI1.src,
-              time: ['20', '30', '40'],
-              bodyPart: ['Back', 'Arms'],
-              locations: ['Frankfurt Airport', 'Detroit Metropolitan Airport'],
-              serviceType: ['Facial'],
-            },
-            {
-              title: 'Be Feet',
-              link: '/treatments/massages/be-feet',
-              text:
-                'Massage focused on full body muscle relief. It is ideal to relax your body within a short time and to help you sleep better on the plane.',
-              img: sI1.src,
-              time: ['20', '30'],
-              bodyPart: ['Back', 'Face', 'Hands'],
-              locations: [
-                'Detroit Metropolitan Airport',
-                'London Heathrow Airport',
-              ],
-              serviceType: ['Waxing', 'Facial'],
-            },
-          ],
-        })
-      }
+      res.forEach((r: any) => {
+        if (r.post_type == 'products') {
+          const product = StateArrays.products?.find((p: any) => p.id == r.ID)
+
+          if (product) {
+            resultProducts.push(product)
+          }
+        }
+        if (r.post_type == 'treatments') {
+          const product = StateArrays.services?.find((p: any) => p.id == r.ID)
+
+          if (product) {
+            resultServices.push(product)
+          }
+        }
+        if (r.post_type == 'post') {
+          const product = StateArrays.news?.find((p: any) => p.id == r.ID)
+
+          if (product) {
+            resultNews.push(product)
+          }
+        }
+      })
+
+      result.push({
+        section: 'products',
+        list: resultProducts,
+      })
+      result.push({
+        section: 'treatments',
+        list: resultServices,
+      })
+      result.push({
+        section: 'news',
+        list: resultNews,
+      })
+
+      setAll(result)
+      setSearchTitle(value)
     })
   }
 
-  useEffect(() => {
-    search(value, section)
-  }, [section, value])
+  const results: {
+    section: string
+    list: Array<any>
+  } | null = useMemo(() => {
+    if (!all.length) {
+      return null
+    }
+    const res = all?.find((a: any) => a.section == section)?.list
+    return {
+      section: section,
+      list: res || [],
+    }
+  }, [all, section])
+
   return (
     <section className="search-content">
       <div className="search-content__container">
         <InViewComponent>
-          <Title classStr="search-content__title" text={value} />
+          <Title classStr="search-content__title" text={searchTitle} />
           <div className="search-content__count">
-            {results.list?.length}{' '}
-            {!results.list?.length || results.list?.length > 1
+            {results?.list?.length ? results?.list?.length : 0}{' '}
+            {!results?.list?.length || results?.list?.length > 1
               ? 'results'
               : 'result'}
           </div>
@@ -268,7 +127,7 @@ const SearchContent = observer(() => {
                   }
                   classStr="beige button-search"
                   isLink={false}
-                  action={() => search(value, section)}
+                  action={() => search(value)}
                 />
               </div>
             </section>
@@ -289,7 +148,7 @@ const SearchContent = observer(() => {
         <div className="search-content__result">
           <InViewComponent delay={0.2}>
             <h2 className="search-content__result-title">
-              {results.list?.length} “{value}” {results?.section}
+              {results?.list?.length || 0} “{searchTitle}” {results?.section}
             </h2>
           </InViewComponent>
           <div
@@ -300,7 +159,7 @@ const SearchContent = observer(() => {
               results?.section == 'treatments' && 'two',
             )}
           >
-            {results.list?.map((re: any, i: number) => (
+            {results?.list?.map((re: any, i: number) => (
               <Fragment key={i}>
                 {results?.section == 'news' && (
                   <InViewComponent delay={i * 0.1 + 0.2}>

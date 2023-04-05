@@ -1,22 +1,17 @@
-import Head from 'next/head'
 import { observer } from 'mobx-react'
 import { useEffect, useRef, useState } from 'react'
 import useLocoScroll from '../../../hooks/useLoco'
-import GlobalState from '../../../stores/GlobalState'
-import {
-  getHeader,
-  getServices,
-  getTreatCatPage,
-} from '../../../stores/ContentState'
+import { getServices } from '../../../stores/ContentState'
 import { getService } from '../../api/getService'
 import Banner from '../../../components/pages/location/Banner'
 import Intro from '../../../components/pages/service/Intro'
 import Benefits from '../../../components/pages/service/Benefits'
 import Similiar from '../../../components/pages/service/Similiar'
 import Layout from '../../../components/common/Layout'
+import SeoBlock from '../../../components/common/SeoBlock'
 
 const TreatmentsCategoryPage = observer(({ hydrationData: props }: any) => {
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(true)
   useLocoScroll(!loading)
   useEffect(() => {
     if (!loading) {
@@ -26,12 +21,15 @@ const TreatmentsCategoryPage = observer(({ hydrationData: props }: any) => {
     }
   }, [loading])
 
+  useEffect(() => {
+    if (props.content) {
+      setLoading(false)
+    }
+  }, [props])
+
   return (
     <>
-      <Head>
-        <title>Be relax</title>
-      </Head>
-
+      <SeoBlock seo={props.seo} />
       <Layout delay={1}>
         <Intro />
         <Benefits />
@@ -52,28 +50,25 @@ export async function getStaticPaths() {
     paths.push({
       params: {
         category: p.category,
-        service: p.link
-          .replaceAll('treatments', '')
-          .replaceAll('/', '')
-          .replaceAll(p.category, ''),
-        path: p.link
+        service: p.slug,
+        path: p.link,
       },
     })
   })
 
-
   return {
     paths: paths,
-    fallback: 'blocking',
+    fallback: false,
   }
 }
 
 export async function getStaticProps({ params }: any) {
-  const response = await getService(params.service)
+  const response = (await getService(params.service)) || null
 
   return {
     props: {
       hydrationData: { ...response },
     },
+    revalidate: 10,
   }
 }

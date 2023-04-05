@@ -1,8 +1,6 @@
-import Head from 'next/head'
 import { observer } from 'mobx-react'
 import { useEffect, useRef, useState } from 'react'
 import useLocoScroll from '../hooks/useLoco'
-import GlobalState from '../stores/GlobalState'
 import Intro from '../components/pages/home/Intro'
 import TextBlock from '../components/pages/home/TextBlock'
 import Services from '../components/pages/home/Services'
@@ -12,11 +10,12 @@ import News from '../components/pages/home/News'
 import FollowUs from '../components/pages/home/FollowUs'
 import { getHome } from './api/getHome'
 import Layout from '../components/common/Layout'
+import SeoBlock from '../components/common/SeoBlock'
+import { changeCountryState, changeLocale } from '../stores/GlobalState'
 
 const Home = observer(({ hydrationData: props }: any) => {
-  const [loading, setLoading] = useState(false)
-  const ref = useRef<any>(null)
-
+  const [loading, setLoading] = useState(true)
+  const ref = useRef<boolean>(false)
   useLocoScroll(!loading)
   useEffect(() => {
     if (!loading) {
@@ -26,13 +25,46 @@ const Home = observer(({ hydrationData: props }: any) => {
     }
   }, [loading])
 
+  useEffect(() => {
+    if (props.content) {
+      setLoading(false)
+    }
+  }, [props])
 
+  const getLocation = () => {
+    fetch(
+      'https://api.geoapify.com/v1/ipinfo?apiKey=bfd5d7c6dda54e72aa811c792e169ee6',
+    )
+      .then((resp) => resp.json())
+      .then((userLocationData) => {
+        sessionStorage.setItem(
+          'locale',
+          JSON.stringify({
+            country: userLocationData.country.name,
+            code: userLocationData.country.iso_code,
+          }),
+        )
+        changeLocale()
+      })
+  }
 
+  useEffect(() => {
+    if (ref.current) return
+    if (sessionStorage.getItem('locale')) {
+      const locale = JSON.parse(sessionStorage.getItem('locale')!)
+      if (locale.country) {
+      } else getLocation()
+    } else {
+      getLocation()
+      setTimeout(() => {
+        changeCountryState()
+      }, 1000)
+    }
+    ref.current = true
+  }, [])
   return (
     <>
-      <Head>
-        <title>Be relax</title>
-      </Head>
+      <SeoBlock seo={props.seo} />
       <Layout isMain>
         <Intro />
         <TextBlock />
@@ -55,5 +87,6 @@ export async function getStaticProps() {
     props: {
       hydrationData: { ...response },
     },
+    revalidate: 10,
   }
 }

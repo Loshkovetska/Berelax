@@ -3,8 +3,8 @@ import { observable, runInAction } from 'mobx'
 const GlobalState: any = observable({
   locoScroll: null,
   currentLocale: {
-    country: 'Germany',
-    code: 'de',
+    country: '', //Germany
+    code: '', //de
   },
   isMenuOpen: false,
   menuTab: 0,
@@ -22,6 +22,17 @@ const GlobalState: any = observable({
 })
 
 export default GlobalState
+
+export const changeLocale = () => {
+  const locale = sessionStorage.getItem('locale')
+  if (locale && JSON.parse(locale)) {
+    runInAction(() => {
+      GlobalState.currentLocale = JSON.parse(locale)
+    })
+  } else {
+    sessionStorage.setItem('locale', JSON.stringify(GlobalState.currentLocale))
+  }
+}
 
 export const changeRetailerState = () => {
   runInAction(() => {

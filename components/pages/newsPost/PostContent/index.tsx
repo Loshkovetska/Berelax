@@ -1,4 +1,6 @@
 import { observer } from 'mobx-react'
+import { useRouter } from 'next/router'
+import { useCallback, useEffect, useState } from 'react'
 import { getDate } from '../../../../funcs/dates'
 import { useContentState } from '../../../../hooks/RootStoreProvider'
 import { IconComponent } from '../../../common/IconComponent'
@@ -9,13 +11,19 @@ import Text from '../../../common/Text'
 import Title from '../../../common/Title'
 
 const PostContent = observer(() => {
+  const [host, setHost] = useState('')
   const { content } = useContentState()
 
-  const copy = () => {
+  const copy = useCallback(() => {
     if (navigator && navigator.clipboard && navigator.clipboard.writeText) {
       navigator.clipboard.writeText(window.location.href)
     }
-  }
+  }, [])
+
+  useEffect(() => {
+    setHost(window.location.href)
+  }, [])
+
   return (
     <section className="post-content">
       <div className="post-content__container">
@@ -24,17 +32,21 @@ const PostContent = observer(() => {
           <Text text={content?.text} classStr="post-content__text" />
         </InViewComponent>
         <InViewComponent delay={0.3}>
-          <ImgBackground src={content?.img} />
+          <ImgBackground src={content?.img} alt={content?.alt} />
         </InViewComponent>
         <InViewComponent delay={0.5}>
           <div className="post-content__info">
             <div className="post-content__info-row">
-              <div className="post-content__info-col">
-                <div className="post-content__info-title">
-                  {content?.written}
+              {content?.author && (
+                <div className="post-content__info-col author-col">
+                  <div className="post-content__info-title">
+                    {content?.written}
+                  </div>
+                  <div className="post-content__info-text">
+                    {content?.author}
+                  </div>
                 </div>
-                <div className="post-content__info-text">{content?.author}</div>
-              </div>
+              )}
               <div className="post-content__info-col">
                 <div className="post-content__info-title">
                   {content?.publish}
@@ -55,13 +67,13 @@ const PostContent = observer(() => {
                 </div>
                 {content?.socials?.map((so: any, id: number) => (
                   <a
-                    href={so.link}
+                    href={so.link + host}
                     target={'_blank'}
                     key={id}
                     rel="noreferrer"
                     className="post-content__socials-item"
                   >
-                    <ImageComponent src={so.icon} />
+                    <ImageComponent src={so.icon} alt={so.alt} />
                   </a>
                 ))}
               </div>

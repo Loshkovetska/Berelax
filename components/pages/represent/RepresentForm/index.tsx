@@ -11,6 +11,7 @@ import InViewComponent from '../../../common/InViewComponent'
 import Title40 from '../../../common/Title40'
 import ReCAPTCHA from 'react-google-recaptcha'
 import PhoneSelect from '../../../common/PhoneSelect'
+import { airForm } from '../../../../stores/ContentState'
 
 const RepresentForm = observer(() => {
   const ref = useRef<any>(null),
@@ -47,20 +48,11 @@ const RepresentForm = observer(() => {
   }
 
   const submit = () => {
-    if (!ref.current || !isVerify) return
+    if (!ref.current || !isVerify || !state.message.length) return
 
-    const fd = new FormData(ref.current)
-
-    state.file && fd.append('file', state.file)
-
-    fd.append('status', 'air-representative')
-
-    fetch('/', {
-      method: 'POST',
-      body: fd,
-    }).then(() => {})
-
-    changeSmallPopState()
+    airForm(state).then(() => {
+      changeSmallPopState()
+    })
   }
 
   useEffect(() => {
@@ -149,8 +141,7 @@ const RepresentForm = observer(() => {
               />
             </div>
             <div className="partner-form__row">
-               <PhoneSelect
-                dt={form?.phoneCodes}
+              <PhoneSelect
                 isRequired
                 placeholder={form?.phoneNumberPlaceholder}
                 resetField={resetState}
@@ -161,19 +152,6 @@ const RepresentForm = observer(() => {
                   })
                 }
               />
-              {/* <Input
-                value={state.phone}
-                setValue={(value) =>
-                  setState({
-                    ...state,
-                    phone: value,
-                  })
-                }
-                name="phone"
-                isRequired
-                placeHolder={form?.phoneNumberPlaceholder}
-                classStr=""
-              /> */}
             </div>
             <div className="partner-form__row">
               <Input
@@ -193,6 +171,7 @@ const RepresentForm = observer(() => {
             <div className="partner-form__row">
               <textarea
                 className="input"
+                required
                 value={state.message}
                 placeholder={form?.msgPlaceholder}
                 onChange={(e) =>

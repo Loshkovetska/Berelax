@@ -67,36 +67,39 @@ const ProductItem = observer(
       sessionStorage.setItem('position', JSON.stringify({ x, y }))
     }
     return (
-      <Link href={item.link}>
-        <a className="product-item" ref={ref} onClick={() => setPos(0, y)}>
-          <div className="product-item__img" ref={imgRef}>
-            <ImageComponent src={item.img} />
-          </div>
-          <div className="product-item__content" ref={contentRef}>
-            <div
-              className="product-item__title"
-              dangerouslySetInnerHTML={{ __html: item.title }}
-              ref={titleRef}
-            ></div>
-            <div
-              className="product-item__text"
-              dangerouslySetInnerHTML={{ __html: item.text }}
-              ref={textRef}
-            ></div>
-            <Button
-              isLink
-              link={item.link}
-              inner={
-                <>
-                  {buttonText}
-                  <IconComponent name={'arrow'} />
-                </>
-              }
-              classStr="white button-arrow button-svg p16p20"
-            />
-          </div>
-        </a>
-      </Link>
+      <a
+        className="product-item"
+        ref={ref}
+        onClick={() => setPos(0, y)}
+        href={item.link}
+      >
+        <div className="product-item__img" ref={imgRef}>
+          <ImageComponent src={item.img} alt={item.alt} />
+        </div>
+        <div className="product-item__content" ref={contentRef}>
+          <div
+            className="product-item__title"
+            dangerouslySetInnerHTML={{ __html: item.title }}
+            ref={titleRef}
+          ></div>
+          <div
+            className="product-item__text"
+            dangerouslySetInnerHTML={{ __html: item.text }}
+            ref={textRef}
+          ></div>
+          <Button
+            isLink
+            link={item.link}
+            inner={
+              <>
+                {buttonText}
+                <IconComponent name={'arrow'} />
+              </>
+            }
+            classStr="white button-arrow button-svg p16p20"
+          />
+        </div>
+      </a>
     )
   },
 )

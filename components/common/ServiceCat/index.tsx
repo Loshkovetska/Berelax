@@ -30,7 +30,7 @@ const ServiceCat = observer(
       if (!end) {
         setEnd(inView)
       }
-    }, [inView])
+    }, [inView, end])
 
     const { x, y } = useScrollPos()
 
@@ -51,7 +51,7 @@ const ServiceCat = observer(
             ref={ref}
           >
             <h2 className="services__title">{se.title}</h2>
-            <ImageComponent src={se.img} />
+            <ImageComponent src={se.img} alt={se.alt} />
 
             <Button
               isLink
@@ -59,7 +59,7 @@ const ServiceCat = observer(
               classStr="button-arrow button-svg white p24"
               inner={
                 <>
-                  {servicesBtn} <IconComponent name={'arrow'} />
+                  {se.buttonText} <IconComponent name={'arrow'} />
                 </>
               }
             />
@@ -71,7 +71,7 @@ const ServiceCat = observer(
             ref={ref}
           >
             <div className="service-cat__img">
-              <ImageComponent src={se.img} />
+              <ImageComponent src={se.img} alt={se.alt}/>
             </div>
             <div className="service-cat__content">
               <h2 className="service-cat__title">{se.title}</h2>
@@ -82,7 +82,7 @@ const ServiceCat = observer(
                 classStr="button-arrow button-svg white p24"
                 inner={
                   <>
-                    {servicesBtn} <IconComponent name={'arrow'} />
+                    {se.buttonText} <IconComponent name={'arrow'} />
                   </>
                 }
               />

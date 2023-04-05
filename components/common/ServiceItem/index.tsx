@@ -11,6 +11,9 @@ const ServiceItem = observer(({ item }: any) => {
   const ref = useRef<any>(null)
   const { width } = useWindowDimensions()
   const getTime = (time: any) => {
+    if (time.length == 1) {
+      return `${time[0]} minutes`
+    }
     const first = time[0],
       last = time[time.length - 1]
     return `${first}-${last} minutes`
@@ -23,7 +26,7 @@ const ServiceItem = observer(({ item }: any) => {
     const lineHeight = parseInt(getComputedStyle(ref.current).lineHeight)
 
     ;(ref.current as HTMLElement).style.height = `${lineHeight * countLines}px`
-  })
+  }, [width])
 
   const { x, y } = useScrollPos()
 
@@ -32,10 +35,11 @@ const ServiceItem = observer(({ item }: any) => {
   }
 
   return (
-    <Link href={`${item.link}`}>
+    <>
       {width > 480 ? (
         <a
           className="service-item"
+          href={`${item.link}`}
           onMouseEnter={() => {
             if (width < 1024) return
             if (!ref.current) return
@@ -62,7 +66,7 @@ const ServiceItem = observer(({ item }: any) => {
           }}
         >
           <div className="service-item__img">
-            <ImageComponent src={item.img} />
+            <ImageComponent src={item.img} alt={item.alt} />
           </div>
           <div className="service-item__content">
             <div className="service-item__content-top">
@@ -70,9 +74,11 @@ const ServiceItem = observer(({ item }: any) => {
                 {getTime(item.time)}
               </div>
               <div className="service-item__content-title">{item.title}</div>
-              <div className="service-item__content-text" ref={ref}>
-                {item.text}
-              </div>
+              <div
+                className="service-item__content-text"
+                ref={ref}
+                dangerouslySetInnerHTML={{ __html: item.text }}
+              ></div>
             </div>
             <Button
               classStr="beige button-search"
@@ -87,9 +93,9 @@ const ServiceItem = observer(({ item }: any) => {
           </div>
         </a>
       ) : (
-        <a className="service-item2">
+        <a className="service-item2" href={`${item.link}`}>
           <div className="service-item2__img">
-            <ImageComponent src={item.img} />
+            <ImageComponent src={item.img} alt={item.alt} />
             <div className="service-item2__time">
               <IconComponent name={'news/duration'} />
 
@@ -113,7 +119,7 @@ const ServiceItem = observer(({ item }: any) => {
           </div>
         </a>
       )}
-    </Link>
+    </>
   )
 })
 

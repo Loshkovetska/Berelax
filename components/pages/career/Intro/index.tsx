@@ -21,7 +21,7 @@ const Intro = observer(() => {
             <InViewComponent delay={0.1 * i} key={i}>
               <div className="career-intro__item">
                 <div className="career-intro__item-img">
-                  <ImageComponent src={bl.img} />
+                  <ImageComponent src={bl.img} alt={bl.alt} />
                 </div>
                 <Title40 text={bl.title} classStr="career-intro__item-title" />
                 <div
@@ -44,7 +44,7 @@ const Intro = observer(() => {
               <InViewComponent delay={0} key={i}>
                 <div className="career-intro__item">
                   <div className="career-intro__item-img">
-                    <ImageComponent src={bl.img} />
+                    <ImageComponent src={bl.img} alt={bl.alt} />
                   </div>
                   <Title40
                     text={bl.title}

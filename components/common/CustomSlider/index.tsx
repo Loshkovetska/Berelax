@@ -1,9 +1,10 @@
 import classNames from 'classnames'
 import { runInAction } from 'mobx'
 import { observer } from 'mobx-react'
-import { Fragment, useEffect, useRef, useState } from 'react'
+import { Fragment, ReactElement, useEffect, useRef, useState } from 'react'
 import Slider from 'react-slick'
 import { useWindowDimensions } from '../../../hooks/getWindowDimensions'
+import GlobalState from '../../../stores/GlobalState'
 import { SliderState } from '../../pages/story/RoadMap'
 import Button from '../Button'
 import { IconComponent } from '../IconComponent'
@@ -20,12 +21,12 @@ const CustomSlider = observer(
     infinite = true,
     classSrtr = '',
   }: {
-    children: any
+    children: Array<ReactElement>
     slidesToShow: number
     slidesToScroll: number
     variableWidth?: boolean
     autoPlay?: boolean
-    setCurrent?: (value?: any) => void
+    setCurrent?: (value: number) => void
     showArrows?: boolean
     infinite?: boolean
     classSrtr?: string
@@ -59,7 +60,11 @@ const CustomSlider = observer(
           {showArrows && (
             <Button
               isLink={false}
-              classStr={classNames('beige button-search', !slide && 'hidden')}
+              classStr={classNames(
+                'beige button-search',
+
+                // !slide && 'hidden'
+              )}
               action={() => {
                 ref.current && ref.current.slickPrev()
               }}
@@ -70,17 +75,35 @@ const CustomSlider = observer(
               }
             />
           )}
-          <div className="slider__list">
+          <div
+            className="slider__list"
+            onTouchStart={() => {
+              const html: HTMLHtmlElement | null = document.querySelector(
+                'html',
+              )
+              if (html && GlobalState.isTouch) {
+                html.style.overflow = 'hidden'
+              }
+            }}
+            onTouchEnd={() => {
+              const html: HTMLHtmlElement | null = document.querySelector(
+                'html',
+              )
+              if (html && GlobalState.isTouch) {
+                html.style.overflow = 'initial'
+              }
+            }}
+          >
             <Slider
               {...settings}
               ref={ref}
-              beforeChange={(index: any, newIndex: any) => {
+              beforeChange={(index: number, newIndex: number) => {
                 setCurrent && setCurrent(newIndex)
                 runInAction(() => {
                   SliderState.id = newIndex
                 })
               }}
-              afterChange={(index: any) => {
+              afterChange={(index: number) => {
                 setSlide(index)
               }}
             >
@@ -95,7 +118,7 @@ const CustomSlider = observer(
               }}
               classStr={classNames(
                 'beige button-search',
-                slide * slidesToShow + 1 == children.length && 'hidden',
+                // slide * slidesToShow + 1 == children.length && 'hidden',
               )}
               inner={
                 <>

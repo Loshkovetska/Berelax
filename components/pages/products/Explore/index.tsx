@@ -6,6 +6,7 @@ import ProductItem from '../../../common/ProductItem'
 
 const Explore = observer(() => {
   const { content } = useContentState()
+  if (!content?.explore?.list.length) return <></>
   return (
     <section className="explore-block">
       <div className="explore-block__container">

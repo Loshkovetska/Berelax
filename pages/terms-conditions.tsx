@@ -1,18 +1,13 @@
-import Head from 'next/head'
 import { observer } from 'mobx-react'
 import { useEffect, useState } from 'react'
 import useLocoScroll from '../hooks/useLoco'
-import GlobalState from '../stores/GlobalState'
 import Layout from '../components/common/Layout'
-import PostContent from '../components/pages/newsPost/PostContent'
-import Banner from '../components/pages/location/Banner'
-import Similiar from '../components/pages/newsPost/Similiar'
 import { getTerms } from './api/getTerms'
 import TermsContent from '../components/pages/terms/TermsContent'
+import SeoBlock from '../components/common/SeoBlock'
 
 const TermsPage = observer(({ hydrationData: props }: any) => {
-  const [loading, setLoading] = useState(false)
-
+  const [loading, setLoading] = useState(true)
   useLocoScroll(!loading)
   useEffect(() => {
     if (!loading) {
@@ -22,11 +17,15 @@ const TermsPage = observer(({ hydrationData: props }: any) => {
     }
   }, [loading])
 
+  useEffect(() => {
+    if (props.content) {
+      setLoading(false)
+    }
+  }, [props])
+
   return (
     <>
-      <Head>
-        <title>Be relax</title>
-      </Head>
+      <SeoBlock seo={props.seo} />
       <Layout delay={1}>
         <TermsContent />
       </Layout>
@@ -43,5 +42,6 @@ export async function getStaticProps() {
     props: {
       hydrationData: { ...response },
     },
+    revalidate: 10,
   }
 }

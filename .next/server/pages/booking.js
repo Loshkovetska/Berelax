@@ -20,11 +20,14 @@ __webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __we
 /* harmony import */ var mobx__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(mobx__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var mobx_react__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(2062);
 /* harmony import */ var mobx_react__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(mobx_react__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _hooks_RootStoreProvider__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(5975);
-/* harmony import */ var _stores_GlobalState__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(4812);
-/* harmony import */ var _Steps__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(4355);
-var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_Steps__WEBPACK_IMPORTED_MODULE_6__]);
-_Steps__WEBPACK_IMPORTED_MODULE_6__ = (__webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__)[0];
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(6689);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _hooks_RootStoreProvider__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(5975);
+/* harmony import */ var _stores_GlobalState__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(4812);
+/* harmony import */ var _Steps__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(4355);
+var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_Steps__WEBPACK_IMPORTED_MODULE_7__]);
+_Steps__WEBPACK_IMPORTED_MODULE_7__ = (__webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__)[0];
+
 
 
 
@@ -33,25 +36,53 @@ _Steps__WEBPACK_IMPORTED_MODULE_6__ = (__webpack_async_dependencies__.then ? (aw
 
 
 const TimePop = (0,mobx_react__WEBPACK_IMPORTED_MODULE_3__.observer)(()=>{
-    const { content  } = (0,_hooks_RootStoreProvider__WEBPACK_IMPORTED_MODULE_4__/* .useContentState */ .b3)();
-    const card = _stores_GlobalState__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .ZP?.cardTime;
+    const { content  } = (0,_hooks_RootStoreProvider__WEBPACK_IMPORTED_MODULE_5__/* .useContentState */ .b3)();
+    const card = _stores_GlobalState__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .ZP?.cardTime;
+    let prices = [];
+    if (_Steps__WEBPACK_IMPORTED_MODULE_7__/* .UserData.location */ .mt.location) {
+        prices = card?.prices.map((f)=>{
+            let amount = f.amount.find((a)=>a.country.includes(_Steps__WEBPACK_IMPORTED_MODULE_7__/* .UserData.location.country */ .mt.location.country));
+            return {
+                time: f.time,
+                amount: amount?.value + " " + amount?.currency
+            };
+        });
+    } else {
+        prices = card?.prices.map((f)=>{
+            let amount = f.amount.find((a)=>a.country.includes("United State of America"));
+            if (!amount) {
+            // amount = f.amount[0]
+            }
+            return {
+                time: f.time,
+                amount: amount?.currency + " " + amount?.value
+            };
+        });
+    }
     return /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("section", {
-        className: classnames__WEBPACK_IMPORTED_MODULE_1___default()("time-pop", _stores_GlobalState__WEBPACK_IMPORTED_MODULE_5__/* ["default"].isTimePop */ .ZP.isTimePop && "open"),
-        onClick: ()=>(0,_stores_GlobalState__WEBPACK_IMPORTED_MODULE_5__/* .changeTimeState */ .cu)(card),
+        className: classnames__WEBPACK_IMPORTED_MODULE_1___default()("time-pop", _stores_GlobalState__WEBPACK_IMPORTED_MODULE_6__/* ["default"].isTimePop */ .ZP.isTimePop && "open"),
+        onClick: ()=>(0,_stores_GlobalState__WEBPACK_IMPORTED_MODULE_6__/* .changeTimeState */ .cu)(card),
         children: /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
             className: "time-pop__container",
             onClick: (e)=>e.stopPropagation(),
             children: [
                 /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
                     className: "time-pop__title",
-                    children: content?.popDurationTitle
+                    children: ![
+                        "nail-care",
+                        "beauty"
+                    ].includes(card?.category || "") ? content?.popDurationTitle : "Choose"
                 }),
                 /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
                     className: "time-pop__list",
-                    children: card?.price?.map((p, i)=>/*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+                    children: prices?.map((p, i)=>{
+                        if (p.amount.includes("undefined")) {
+                            return /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(react__WEBPACK_IMPORTED_MODULE_4__.Fragment, {}, i);
+                        }
+                        return /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
                             className: "time-pop__item",
                             onClick: ()=>{
-                                let treats = JSON.parse(JSON.stringify(_Steps__WEBPACK_IMPORTED_MODULE_6__/* .UserData.treatments */ .mt.treatments));
+                                let treats = JSON.parse(JSON.stringify(_Steps__WEBPACK_IMPORTED_MODULE_7__/* .UserData.treatments */ .mt.treatments));
                                 treats = treats.map((tr, i)=>{
                                     if (tr.id == card.id) {
                                         tr.time = p.time;
@@ -60,16 +91,23 @@ const TimePop = (0,mobx_react__WEBPACK_IMPORTED_MODULE_3__.observer)(()=>{
                                     return tr;
                                 });
                                 (0,mobx__WEBPACK_IMPORTED_MODULE_2__.runInAction)(()=>{
-                                    _Steps__WEBPACK_IMPORTED_MODULE_6__/* .UserData.treatments */ .mt.treatments = treats;
+                                    _Steps__WEBPACK_IMPORTED_MODULE_7__/* .UserData.treatments */ .mt.treatments = treats;
                                 });
-                                (0,_stores_GlobalState__WEBPACK_IMPORTED_MODULE_5__/* .changeTimeState */ .cu)(card);
+                                (0,_stores_GlobalState__WEBPACK_IMPORTED_MODULE_6__/* .changeTimeState */ .cu)(card);
                             },
                             children: [
                                 p.time,
-                                " mins - $",
+                                " ",
+                                ![
+                                    "nail-care",
+                                    "beauty"
+                                ].includes(card?.category || "") && "mins",
+                                " ",
+                                "- ",
                                 p.amount
                             ]
-                        }, i))
+                        }, i);
+                    })
                 })
             ]
         })
@@ -88,16 +126,17 @@ __webpack_async_result__();
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "l": () => (/* binding */ getBooking)
 /* harmony export */ });
-/* harmony import */ var _stores_ContentState__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(9787);
+/* harmony import */ var _stores_ContentState__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(9815);
 
 const getBooking = async ()=>{
-    const header = await (0,_stores_ContentState__WEBPACK_IMPORTED_MODULE_0__/* .getHeader */ .Pg)(), footer = await (0,_stores_ContentState__WEBPACK_IMPORTED_MODULE_0__/* .getFooter */ .PX)(), content = await (0,_stores_ContentState__WEBPACK_IMPORTED_MODULE_0__/* .getBookingPage */ .E7)(), airports = await (0,_stores_ContentState__WEBPACK_IMPORTED_MODULE_0__/* .getLocations */ .JC)(), countrypop = await (0,_stores_ContentState__WEBPACK_IMPORTED_MODULE_0__/* .getCountryPop */ .Pc)();
+    const { header , countrypop , footer  } = await (0,_stores_ContentState__WEBPACK_IMPORTED_MODULE_0__/* .getHeader */ .Pg)(), { content , seo  } = await (0,_stores_ContentState__WEBPACK_IMPORTED_MODULE_0__/* .getBookingPage */ .E7)(), airports = await (0,_stores_ContentState__WEBPACK_IMPORTED_MODULE_0__/* .getSortLocations */ .eq)();
     return {
         header,
         footer,
         content,
         airports,
-        countrypop
+        countrypop,
+        seo
     };
 };
 
@@ -115,20 +154,19 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(997);
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var next_head__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(968);
-/* harmony import */ var next_head__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(next_head__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var mobx_react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(2062);
-/* harmony import */ var mobx_react__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(mobx_react__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(6689);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _hooks_useLoco__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(3355);
-/* harmony import */ var _components_common_Layout__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(4367);
-/* harmony import */ var _api_getBooking__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(5236);
-/* harmony import */ var _components_pages_booking_Steps__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(4355);
-/* harmony import */ var _components_pages_booking_TimePop__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(4682);
-/* harmony import */ var _components_common_Calendar__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(6386);
-var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_components_common_Layout__WEBPACK_IMPORTED_MODULE_5__, _components_pages_booking_Steps__WEBPACK_IMPORTED_MODULE_7__, _components_pages_booking_TimePop__WEBPACK_IMPORTED_MODULE_8__, _components_common_Calendar__WEBPACK_IMPORTED_MODULE_9__]);
-([_components_common_Layout__WEBPACK_IMPORTED_MODULE_5__, _components_pages_booking_Steps__WEBPACK_IMPORTED_MODULE_7__, _components_pages_booking_TimePop__WEBPACK_IMPORTED_MODULE_8__, _components_common_Calendar__WEBPACK_IMPORTED_MODULE_9__] = __webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__);
+/* harmony import */ var mobx_react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(2062);
+/* harmony import */ var mobx_react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(mobx_react__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(6689);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _hooks_useLoco__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(3355);
+/* harmony import */ var _components_common_Layout__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(4367);
+/* harmony import */ var _api_getBooking__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(5236);
+/* harmony import */ var _components_pages_booking_Steps__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(4355);
+/* harmony import */ var _components_pages_booking_TimePop__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(4682);
+/* harmony import */ var _components_common_Calendar__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(6386);
+/* harmony import */ var _components_common_SeoBlock__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(3534);
+var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_components_common_Layout__WEBPACK_IMPORTED_MODULE_4__, _components_pages_booking_Steps__WEBPACK_IMPORTED_MODULE_6__, _components_pages_booking_TimePop__WEBPACK_IMPORTED_MODULE_7__, _components_common_Calendar__WEBPACK_IMPORTED_MODULE_8__]);
+([_components_common_Layout__WEBPACK_IMPORTED_MODULE_4__, _components_pages_booking_Steps__WEBPACK_IMPORTED_MODULE_6__, _components_pages_booking_TimePop__WEBPACK_IMPORTED_MODULE_7__, _components_common_Calendar__WEBPACK_IMPORTED_MODULE_8__] = __webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__);
 
 
 
@@ -139,11 +177,10 @@ var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_com
 
 
 
-const Booking = (0,mobx_react__WEBPACK_IMPORTED_MODULE_2__.observer)(({ hydrationData: props  })=>{
-    const { 0: loading , 1: setLoading  } = (0,react__WEBPACK_IMPORTED_MODULE_3__.useState)(false);
-    const ref = (0,react__WEBPACK_IMPORTED_MODULE_3__.useRef)(null);
-    (0,_hooks_useLoco__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .Z)(!loading);
-    (0,react__WEBPACK_IMPORTED_MODULE_3__.useEffect)(()=>{
+const Booking = (0,mobx_react__WEBPACK_IMPORTED_MODULE_1__.observer)(({ hydrationData: props  })=>{
+    const { 0: loading , 1: setLoading  } = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)(true);
+    (0,_hooks_useLoco__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .Z)(!loading);
+    (0,react__WEBPACK_IMPORTED_MODULE_2__.useEffect)(()=>{
         if (!loading) {
             if (true) {
                 return;
@@ -152,19 +189,24 @@ const Booking = (0,mobx_react__WEBPACK_IMPORTED_MODULE_2__.observer)(({ hydratio
     }, [
         loading
     ]);
+    (0,react__WEBPACK_IMPORTED_MODULE_2__.useEffect)(()=>{
+        if (props.content) {
+            setLoading(false);
+        }
+    }, [
+        props
+    ]);
     return /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
         children: [
-            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx((next_head__WEBPACK_IMPORTED_MODULE_1___default()), {
-                children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("title", {
-                    children: "Be relax"
-                })
+            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_components_common_SeoBlock__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .Z, {
+                seo: props.seo
             }),
-            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_components_common_Layout__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .Z, {
+            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_components_common_Layout__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .Z, {
                 delay: 1,
-                children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_components_pages_booking_Steps__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .ZP, {})
+                children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_components_pages_booking_Steps__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .ZP, {})
             }),
-            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_components_pages_booking_TimePop__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .Z, {}),
-            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_components_common_Calendar__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .Z, {
+            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_components_pages_booking_TimePop__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .Z, {}),
+            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_components_common_Calendar__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .Z, {
                 beforeDate: true
             })
         ]
@@ -172,13 +214,14 @@ const Booking = (0,mobx_react__WEBPACK_IMPORTED_MODULE_2__.observer)(({ hydratio
 });
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Booking);
 async function getStaticProps() {
-    const response = await (0,_api_getBooking__WEBPACK_IMPORTED_MODULE_6__/* .getBooking */ .l)();
+    const response = await (0,_api_getBooking__WEBPACK_IMPORTED_MODULE_5__/* .getBooking */ .l)();
     return {
         props: {
             hydrationData: {
                 ...response
             }
-        }
+        },
+        revalidate: 10
     };
 }
 
@@ -397,13 +440,6 @@ module.exports = require("next/dist/shared/lib/utils.js");
 
 /***/ }),
 
-/***/ 968:
-/***/ ((module) => {
-
-module.exports = require("next/head");
-
-/***/ }),
-
 /***/ 1853:
 /***/ ((module) => {
 
@@ -446,6 +482,13 @@ module.exports = require("react/jsx-runtime");
 
 /***/ }),
 
+/***/ 4956:
+/***/ ((module) => {
+
+module.exports = require("reading-time");
+
+/***/ }),
+
 /***/ 9915:
 /***/ ((module) => {
 
@@ -467,7 +510,7 @@ module.exports = import("react-intersection-observer");;
 var __webpack_require__ = require("../webpack-runtime.js");
 __webpack_require__.C(exports);
 var __webpack_exec__ = (moduleId) => (__webpack_require__(__webpack_require__.s = moduleId))
-var __webpack_exports__ = __webpack_require__.X(0, [676,1664,5975,7077,6386], () => (__webpack_exec__(6518)));
+var __webpack_exports__ = __webpack_require__.X(0, [676,1664,7378,991,6386], () => (__webpack_exec__(6518)));
 module.exports = __webpack_exports__;
 
 })();

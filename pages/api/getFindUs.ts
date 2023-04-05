@@ -3,15 +3,13 @@ import {
   getFindUsPage,
   getFooter,
   getHeader,
-  getLocations,
+  getSortLocations,
 } from '../../stores/ContentState'
 
 export const getFindUs = async () => {
-  const header = await getHeader(),
-    footer = await getFooter(),
-    content = await getFindUsPage(),
-    airports = await getLocations(),
-    countrypop = await getCountryPop()
+  const { header, footer, countrypop } = await getHeader(),
+    { content, seo } = await getFindUsPage(),
+    airports = await getSortLocations()
 
   return {
     header,
@@ -19,5 +17,6 @@ export const getFindUs = async () => {
     content,
     airports,
     countrypop,
+    seo,
   }
 }

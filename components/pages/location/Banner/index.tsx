@@ -16,11 +16,17 @@ const Banner = observer(({ theme = 'beige' }: { theme?: string }) => {
             <div className="banner__top">
               <h3
                 className="banner__title"
+                style={{
+                  color: content?.banner?.title_color,
+                }}
                 dangerouslySetInnerHTML={{ __html: content?.banner?.title }}
               ></h3>
               {content?.banner?.text && (
                 <div
                   className="banner__text"
+                  style={{
+                    color: content?.banner?.text_color,
+                  }}
                   dangerouslySetInnerHTML={{ __html: content?.banner?.text }}
                 ></div>
               )}
@@ -38,7 +44,10 @@ const Banner = observer(({ theme = 'beige' }: { theme?: string }) => {
             />
           </div>
           <div className="banner__img">
-            <ImageComponent src={content?.banner?.img} />
+            <ImageComponent
+              src={content?.banner?.img}
+              alt={content?.banner?.alt}
+            />
           </div>
         </div>
       </InViewComponent>
