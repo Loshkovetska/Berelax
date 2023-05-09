@@ -23,12 +23,16 @@ const Layout = observer(
     isTreatCat = false,
     delay = 2,
     isTreats = true,
+    withFooter = true,
+    isTransparentHeader = false,
   }: {
     children: Array<ReactNode> | ReactNode
     isMain?: boolean
     isTreatCat?: boolean
     delay?: number
     isTreats?: boolean
+    withFooter?: boolean
+    isTransparentHeader?: boolean
   }) => {
     const ref = useRef<HTMLDivElement | null>(null)
     const router = useRouter()
@@ -76,15 +80,21 @@ const Layout = observer(
     return (
       <>
         <ScrollTop />
+
         <Header delay={delay} />
         <Menu />
+
         {isMain && <MusicBox />}
         {isTreatCat && <Categories isFixed isTreats={isTreats} />}
 
         <div className="smooth" ref={ref} data-scroll-container>
-          <Header isAbsolute delay={delay} />
+          <Header
+            isAbsolute
+            delay={delay}
+            isTransparentHeader={isTransparentHeader}
+          />
           {children}
-          <Footer />
+          {withFooter && <Footer />}
         </div>
         {!GlobalState.isCountryOpen &&
           !GlobalState.isMenuOpen &&

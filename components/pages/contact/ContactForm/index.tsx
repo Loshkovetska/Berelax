@@ -37,7 +37,7 @@ const ContactForm = observer(() => {
 
   const submit = () => {
     if (!ref.current || !isVerify || !state.subject.length) return
-    if (state.subject.includes('Defective') && !state.file && !state.file2)
+    if (state.subject.includes('Product-related matters') && !state.file && !state.file2)
       return
 
     contactForm(state).then(() => {
@@ -53,6 +53,9 @@ const ContactForm = observer(() => {
 
     var reader = new FileReader()
     var url = reader.readAsDataURL(e.target.files[0])
+    if (e.target.files[0].size / (1024 * 1024) == 15) {
+      return
+    }
     setState({
       ...state,
       file: e.target.files[0],
@@ -66,6 +69,9 @@ const ContactForm = observer(() => {
 
     var reader = new FileReader()
     var url = reader.readAsDataURL(e.target.files[0])
+    if (e.target.files[0].size / (1024 * 1024) == 15) {
+      return
+    }
     setState({
       ...state,
       file2: e.target.files[0],
@@ -198,7 +204,7 @@ const ContactForm = observer(() => {
                   onChange={(e) => setState({ ...state, msg: e.target.value })}
                 ></textarea>
               </div>
-              {state?.subject.includes('Defective') && (
+              {state?.subject.includes('Product-related matters') && (
                 <div className="contact__form-row">
                   <div
                     className={classNames(
@@ -233,7 +239,7 @@ const ContactForm = observer(() => {
                   </div>
                 </div>
               )}
-              {state?.subject.includes('Defective') && (
+              {state?.subject.includes('Product-related matters') && (
                 <div className="contact__form-row">
                   <div
                     className={classNames(

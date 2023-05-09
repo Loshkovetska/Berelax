@@ -7,10 +7,12 @@ import classNames from 'classnames'
 import ImageComponent from '../ImageComponent'
 import useScrollPos from '../../../hooks/useScrollPos'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 
 const NewsPost = observer(({ post }: { post: any }) => {
   const [colors, setColors] = useState('rgba(255, 255, 255, 0.3)')
   const [end, setEnd] = useState(false)
+  const { asPath } = useRouter();
   const { ref, inView, entry } = useInView({
     threshold: 0,
   })
@@ -25,6 +27,7 @@ const NewsPost = observer(({ post }: { post: any }) => {
 
   const setPos = (x: number, y: number) => {
     sessionStorage.setItem('position', JSON.stringify({ x, y }))
+    sessionStorage.setItem('position_page', asPath)
   }
 
   return (

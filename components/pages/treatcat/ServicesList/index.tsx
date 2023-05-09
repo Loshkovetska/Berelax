@@ -25,6 +25,8 @@ const ServicesList = observer(() => {
       return res
     }
     if (filters.p1) {
+      let newArr: any = []
+
       if (params[0] == 'time') {
         filters.p1.forEach((c: any) => {
           const vals = c
@@ -35,28 +37,43 @@ const ServicesList = observer(() => {
           if (c.includes('-')) {
             const sub = Array.from(res).filter((c: any) => {
               const r = c.time.filter((t: any) => t >= vals[0] && t <= vals[1])
-              // +c.time[0] >= +vals[0] && +c.time[c.time.length - 1] <= +vals[1]
               if (r.length) {
-                //.length
                 return c
               }
             })
-            res = sub
+            if (sub?.length) {
+              newArr.push(...sub)
+            }
           } else {
             const sub = Array.from(res).filter((c: any) => {
-              const r = c.time.filter((t: any) => t > vals[0]) //+c.time[c.time.length - 1] > +vals[0]
+              const r = c.time.filter((t: any) => t > vals[0])
 
               if (r.length) {
                 return c
               }
             })
-            res = sub
+            if (sub?.length) {
+              newArr.push(...sub)
+            }
+          }
+        })
+
+        newArr = newArr.map((c: any) => c.id)
+        newArr = Array.from(new Set(newArr))
+      }
+
+      if (filters.p1.length) {
+        res = res.filter((c: any) => {
+          if (newArr.includes(c.id)) {
+            return c
           }
         })
       }
     }
 
     if (filters.p2) {
+      let newArr: any = []
+
       if (params[1] == 'locations') {
         filters.p2.forEach((c: any) => {
           let sub = Array.from(res).filter((ci: any) => {
@@ -64,12 +81,25 @@ const ServicesList = observer(() => {
               return ci
             }
           })
-          res = sub
+          if (sub?.length) {
+            newArr.push(...sub)
+          }
+        })
+      }
+      newArr = newArr.map((c: any) => c.id)
+      newArr = Array.from(new Set(newArr))
+
+      if (filters.p2.length) {
+        res = res.filter((c: any) => {
+          if (newArr.includes(c.id)) {
+            return c
+          }
         })
       }
     }
 
     if (filters.p3) {
+      let newArr: any = []
       res = Array.from(res)
       if (params[2] == 'bodyPart') {
         filters.p3.forEach((c: any) => {
@@ -78,16 +108,31 @@ const ServicesList = observer(() => {
               return ci
             }
           })
-          res = sub
+          if (sub?.length) {
+            newArr.push(...sub)
+          }
         })
       }
       if (params[2] == 'serviceType') {
         filters.p3.forEach((c: any) => {
-          res = Array.from(res).filter((ci: any) => {
+          let sub = Array.from(res).filter((ci: any) => {
             if (ci.serviceType.includes(c)) {
               return ci
             }
           })
+          if (sub?.length) {
+            newArr.push(...sub)
+          }
+        })
+      }
+      newArr = newArr.map((c: any) => c.id)
+      newArr = Array.from(new Set(newArr))
+
+      if (filters.p3.length) {
+        res = res.filter((c: any) => {
+          if (newArr.includes(c.id)) {
+            return c
+          }
         })
       }
     }

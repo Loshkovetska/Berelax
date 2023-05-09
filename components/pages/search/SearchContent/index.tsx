@@ -14,6 +14,7 @@ import InViewComponent from '../../../common/InViewComponent'
 import Title from '../../../common/Title'
 import { searchByParams } from '../../../../stores/ContentState'
 import { StateArrays } from '../../../../pages/search'
+import PlaceCard from '../../find/PlaceCard'
 
 const SearchContent = observer(() => {
   const [searchTitle, setSearchTitle] = useState('')
@@ -39,7 +40,8 @@ const SearchContent = observer(() => {
       const resultProducts: Array<any> = Array()
       const resultServices: Array<any> = Array()
       const resultNews: Array<any> = Array()
-
+      const resultLocations: Array<any> = Array()
+      sessionStorage.setItem('search-value', value)
       res.forEach((r: any) => {
         if (r.post_type == 'products') {
           const product = StateArrays.products?.find((p: any) => p.id == r.ID)
@@ -62,6 +64,13 @@ const SearchContent = observer(() => {
             resultNews.push(product)
           }
         }
+        if (r.post_type == 'locations') {
+          const product = StateArrays.locations?.find((p: any) => p.id == r.ID)
+
+          if (product) {
+            resultLocations.push(product)
+          }
+        }
       })
 
       result.push({
@@ -76,25 +85,40 @@ const SearchContent = observer(() => {
         section: 'news',
         list: resultNews,
       })
+      result.push({
+        section: 'locations',
+        list: resultLocations,
+      })
 
       setAll(result)
       setSearchTitle(value)
     })
   }
 
-  const results: {
-    section: string
-    list: Array<any>
-  } | null = useMemo(() => {
+  const results: Array<any> | null = useMemo(() => {
     if (!all.length) {
       return null
     }
-    const res = all?.find((a: any) => a.section == section)?.list
-    return {
-      section: section,
-      list: res || [],
+
+    if (section == 'all') {
+      return all || []
     }
+    const res = all?.find((a: any) => a.section == section)?.list
+    return [
+      {
+        section: section,
+        list: res || [],
+      },
+    ]
   }, [all, section])
+
+  let genCount = 0
+
+  if (results?.length) {
+    results?.forEach((c: any) => {
+      genCount += c.list.length
+    })
+  }
 
   return (
     <section className="search-content">
@@ -102,16 +126,19 @@ const SearchContent = observer(() => {
         <InViewComponent>
           <Title classStr="search-content__title" text={searchTitle} />
           <div className="search-content__count">
-            {results?.list?.length ? results?.list?.length : 0}{' '}
-            {!results?.list?.length || results?.list?.length > 1
-              ? 'results'
-              : 'result'}
+            {genCount} {!genCount || genCount > 1 ? 'results' : 'result'}
           </div>
         </InViewComponent>
         <InViewComponent delay={0.1}>
           <div className="search-content__search">
             <section className={'loc-select'}>
-              <div className="loc-select__top">
+              <form
+                className="loc-select__top"
+                onSubmit={(e) => {
+                  e.preventDefault()
+                  search(value)
+                }}
+              >
                 <Input
                   classStr=""
                   value={value}
@@ -129,7 +156,7 @@ const SearchContent = observer(() => {
                   isLink={false}
                   action={() => search(value)}
                 />
-              </div>
+              </form>
             </section>
             <Select
               defaultValue={section}
@@ -146,42 +173,57 @@ const SearchContent = observer(() => {
           </div>
         </InViewComponent>
         <div className="search-content__result">
-          <InViewComponent delay={0.2}>
-            <h2 className="search-content__result-title">
-              {results?.list?.length || 0} “{searchTitle}” {results?.section}
-            </h2>
-          </InViewComponent>
-          <div
-            className={classNames(
-              'search-content__result-list',
-              results?.section == 'news' && 'single',
-              results?.section == 'products' && 'three',
-              results?.section == 'treatments' && 'two',
-            )}
-          >
-            {results?.list?.map((re: any, i: number) => (
-              <Fragment key={i}>
-                {results?.section == 'news' && (
-                  <InViewComponent delay={i * 0.1 + 0.2}>
-                    <NewsPost post={re} />
-                  </InViewComponent>
-                )}
-                {results?.section == 'products' && (
-                  <InViewComponent delay={i * 0.1 + 0.2}>
-                    <ProductItem
-                      item={re}
-                      buttonText={content?.productButton}
-                    />
-                  </InViewComponent>
-                )}
-                {results?.section == 'treatments' && (
-                  <InViewComponent delay={i * 0.1 + 0.2}>
-                    <ServiceItem item={re} />
-                  </InViewComponent>
-                )}
-              </Fragment>
-            ))}
-          </div>
+          {results?.map((c: any, i: number) => {
+            if (!c?.list?.length) return <Fragment key={i}></Fragment>
+            return (
+              <div className="search-content__result-row" key={i}>
+                <InViewComponent delay={0.2}>
+                  <h2 className="search-content__result-title">
+                    {c?.list?.length || 0} “{searchTitle}” {c?.section}
+                  </h2>
+                </InViewComponent>
+                <div
+                  className={classNames(
+                    'search-content__result-list',
+                    c?.section == 'news' && 'single',
+                    ['products', 'locations'].find((ci) =>
+                      c?.section.includes(ci),
+                    ) && 'three',
+                    c?.section == 'locations' && 'three-locs',
+                    c?.section == 'treatments' && 'two',
+                  )}
+                >
+                  {c?.list?.map((re: any, i: number) => (
+                    <Fragment key={i}>
+                      {c?.section == 'news' && (
+                        <InViewComponent delay={i * 0.1 + 0.2}>
+                          <NewsPost post={re} />
+                        </InViewComponent>
+                      )}
+                      {c?.section == 'products' && (
+                        <InViewComponent delay={i * 0.1 + 0.2}>
+                          <ProductItem
+                            item={re}
+                            buttonText={content?.productButton}
+                          />
+                        </InViewComponent>
+                      )}
+                      {c?.section == 'treatments' && (
+                        <InViewComponent delay={i * 0.1 + 0.2}>
+                          <ServiceItem item={re} />
+                        </InViewComponent>
+                      )}
+                      {c?.section == 'locations' && (
+                        <InViewComponent delay={i * 0.1 + 0.2}>
+                          <PlaceCard card={re} />
+                        </InViewComponent>
+                      )}
+                    </Fragment>
+                  ))}
+                </div>
+              </div>
+            )
+          })}
         </div>
       </div>
     </section>

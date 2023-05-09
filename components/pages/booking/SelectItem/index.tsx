@@ -14,10 +14,15 @@ const SelectItem = observer(
     multiple,
     withTime = false,
     time,
+    isDisable = false,
   }: any) => {
     return (
       <div
-        className={classNames('book-item', isSelected && 'active')}
+        className={classNames(
+          'book-item',
+          isSelected && 'active',
+          isDisable && 'disabled',
+        )}
         onClick={() => setSelected()}
       >
         <div className="book-item__top">

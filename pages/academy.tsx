@@ -8,6 +8,7 @@ import Courses from '../components/pages/academy/Courses'
 import Stories from '../components/pages/academy/Stories'
 import Banner from '../components/pages/location/Banner'
 import SeoBlock from '../components/common/SeoBlock'
+import Script from 'next/script'
 
 const AcademyPage = observer(({ hydrationData: props }: any) => {
   const [loading, setLoading] = useState(true)
@@ -29,6 +30,7 @@ const AcademyPage = observer(({ hydrationData: props }: any) => {
   return (
     <>
       <SeoBlock seo={props.seo} />
+
       <Layout delay={1}>
         <Intro />
         <Courses />
@@ -43,7 +45,11 @@ export default AcademyPage
 
 export async function getStaticProps() {
   const response = await getAcademy()
-
+  if (!response) {
+    return {
+      notFound: true,
+    }
+  }
   return {
     props: {
       hydrationData: { ...response },

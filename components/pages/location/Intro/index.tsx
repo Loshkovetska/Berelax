@@ -5,6 +5,7 @@ import { IconComponent } from '../../../common/IconComponent'
 import ImageComponent from '../../../common/ImageComponent'
 import InViewComponent from '../../../common/InViewComponent'
 import Title from '../../../common/Title'
+import classNames from 'classnames'
 
 const Intro = observer(() => {
   const { content } = useContentState()
@@ -22,6 +23,7 @@ const Intro = observer(() => {
     )
     window.location.href = '/booking'
   }
+
   return (
     <section className="place-intro">
       <InViewComponent>
@@ -29,12 +31,17 @@ const Intro = observer(() => {
           <Title classStr="place-intro__title" text={content?.title} />
           <div className="place-intro__text">{content?.text.toLowerCase()}</div>
           <Button
-            classStr="beige button-arrow button-svg p16p28 f16"
+            classStr={classNames(
+              'beige button-arrow button-svg p16p28 f16',
+              content?.isDisable && 'disabled',
+            )}
             isLink={false}
             action={book}
             inner={
               <>
-                {content?.buttonTitle}
+                {content?.isDisable
+                  ? 'Booking unavailable'
+                  : content?.buttonTitle}
                 <IconComponent name={'arrow'} />
               </>
             }

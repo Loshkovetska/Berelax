@@ -1,40 +1,22 @@
 import { observer } from 'mobx-react'
-import Link from 'next/link'
 import { useEffect, useRef } from 'react'
 import useScrollPos from '../../../hooks/useScrollPos'
 import Button from '../Button'
 import { IconComponent } from '../IconComponent'
 import ImageComponent from '../ImageComponent'
+import { useRouter } from 'next/router'
 
 const ProductItem = observer(
   ({ item, buttonText }: { item: any; buttonText: string }) => {
+    const { asPath } = useRouter();
     const titleRef = useRef<any>(null),
       ref = useRef<any>(null),
       textRef = useRef<any>(null),
-      contentRef = useRef<any>(null),
+      contentRef = useRef<HTMLDivElement | null>(null),
       imgRef = useRef<any>(null)
 
     const changeValues = () => {
-      let titleHeight = 0,
-        textHeight = 0
-      if (titleRef.current) {
-        const countLines = parseInt(
-          getComputedStyle(titleRef.current).webkitLineClamp,
-        )
-        const lineHeight = parseInt(
-          getComputedStyle(titleRef.current).lineHeight,
-        )
-        if (lineHeight * countLines >= titleRef.current.scrollHeight) {
-          ;(titleRef.current as HTMLElement).style.minHeight = `${titleRef.current.scrollHeight}px`
-          titleHeight = titleRef.current.scrollHeight
-        } else {
-          ;(titleRef.current as HTMLElement).style.minHeight = `${
-            lineHeight * countLines
-          }px`
-          titleHeight = lineHeight * countLines
-        }
-        ref.current.style.setProperty('--title-height', titleHeight + 'px')
-      }
+      let textHeight = 0
 
       if (textRef.current) {
         const countLines = parseInt(
@@ -43,29 +25,37 @@ const ProductItem = observer(
         const lineHeight = parseInt(
           getComputedStyle(textRef.current).lineHeight,
         )
-        ;(textRef.current as HTMLElement).style.minHeight = `${
-          lineHeight * countLines
-        }px`
         textHeight = lineHeight * countLines
-
-        ref.current.style.setProperty('--text-height', textHeight + 'px')
       }
+
+      ref.current?.style.setProperty(
+        '--content-height',
+        titleRef.current.scrollHeight + textHeight + 'px',
+      )
     }
 
     useEffect(() => {
       if (window.innerWidth > 900) {
         changeValues()
+
         window.addEventListener('resize', () => {
           changeValues()
         })
       }
-    }, [])
+    }, [item])
 
     const { x, y } = useScrollPos()
 
     const setPos = (x: number, y: number) => {
       sessionStorage.setItem('position', JSON.stringify({ x, y }))
+      sessionStorage.setItem('position_page', asPath)
     }
+
+    const img = {
+      img: item.img,
+      alt: item.alt,
+    }
+
     return (
       <a
         className="product-item"
@@ -74,7 +64,7 @@ const ProductItem = observer(
         href={item.link}
       >
         <div className="product-item__img" ref={imgRef}>
-          <ImageComponent src={item.img} alt={item.alt} />
+          <ImageComponent src={img.img} alt={img.alt} />
         </div>
         <div className="product-item__content" ref={contentRef}>
           <div

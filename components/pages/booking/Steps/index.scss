@@ -6,6 +6,10 @@
   &.show {
     opacity: 1;
   }
+
+  div[render='explicit'] {
+    justify-content: flex-start;
+  }
   &__content {
     flex-grow: 1;
   }

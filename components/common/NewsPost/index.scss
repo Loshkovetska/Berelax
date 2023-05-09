@@ -74,7 +74,7 @@
     min-width: 34vw;
     border-radius: 48px;
     // max-height: 25vw;
-   // height: 100%;
+    // height: 100%;
     img {
       width: 100%;
       height: 100%;
@@ -214,8 +214,8 @@
       min-width: auto;
       height: auto;
       border-radius: 40px;
-      max-height: 48vw;
-      height: 100%;
+      height: 48vw;
+      max-height: none;
     }
     &__content {
       padding: 24px 16px 16px;

@@ -15,8 +15,8 @@ module.exports = {
   images: {
     remotePatterns: [
       {
-        protocol: 'http',
-        hostname: '153.92.209.247',
+        protocol: 'https',
+        hostname: 'berelax.com',
         port: '',
       },
     ],

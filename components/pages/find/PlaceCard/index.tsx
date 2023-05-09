@@ -4,10 +4,14 @@ import { PlaceCard } from '../../../../types'
 import Button from '../../../common/Button'
 import { IconComponent } from '../../../common/IconComponent'
 import ImageComponent from '../../../common/ImageComponent'
+import classNames from 'classnames'
+import useScrollPos from '../../../../hooks/useScrollPos'
 
 const PlaceCard = ({ card }: { card: PlaceCard }) => {
   const { content } = useContentState()
   const navigate = useRouter()
+  const { x, y } = useScrollPos()
+
   if (!content) return <></>
   const { cardBookBtn, cardDetails } = content
 
@@ -15,9 +19,17 @@ const PlaceCard = ({ card }: { card: PlaceCard }) => {
     localStorage.setItem('location', JSON.stringify(card))
     window.location.href = '/booking'
   }
+  const setPos = (x: number, y: number) => {
+    if (navigate.asPath != '/find-us/') {
+      sessionStorage.setItem('position', JSON.stringify({ x, y }))
+      sessionStorage.setItem('position_page', navigate.asPath)
+    }
+
+    sessionStorage.setItem('airport', JSON.stringify(card?.skyCat?.slug))
+  }
 
   return (
-    <div className="place-card">
+    <div className="place-card" onClick={() => setPos(0, y)}>
       <a className="place-card__img" href={`${card.link}`}>
         <ImageComponent src={card.img ? card.img : ''} />
       </a>
@@ -29,17 +41,24 @@ const PlaceCard = ({ card }: { card: PlaceCard }) => {
         </div>
         <div className="place-card__content-bottom">
           <Button
-            classStr="beige button-arrow button-svg p20p40"
+            classStr={classNames(
+              'beige button-arrow button-svg p20p40',
+              card.isDisable && 'disabled',
+            )}
             isLink={false}
             action={book}
             inner={
               <>
-                {cardBookBtn}
+                {card?.isDisable ? 'Booking unavailable' : cardBookBtn}
                 <IconComponent name={'arrow'} />
               </>
             }
           />
-          <a className="place-card__content-link" href={`${card.link}`}>
+          <a
+            className="place-card__content-link"
+            href={`${card.link}`}
+            onClick={() => setPos(0, y)}
+          >
             {cardDetails}
           </a>
         </div>

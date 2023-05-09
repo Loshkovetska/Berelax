@@ -259,6 +259,7 @@ const Select = observer(
       }
     }, [findUsValue, isFindUs, selected])
 
+
     return (
       <section className={classNames('loc-select', open && 'open')} ref={ref}>
         <div

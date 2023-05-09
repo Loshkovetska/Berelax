@@ -1,13 +1,12 @@
 import classNames from 'classnames'
 import { observer } from 'mobx-react'
 import { runInAction } from 'mobx'
-import GlobalState from '../../../stores/GlobalState'
+import GlobalState, { resetScrollPos } from '../../../stores/GlobalState'
 import { IconComponent } from '../IconComponent'
 import { Fragment, useEffect, useState } from 'react'
 import Button from '../Button'
 import SocialLink from '../SocialLink'
 import { useContentState } from '../../../hooks/RootStoreProvider'
-import Link from 'next/link'
 
 const Menu = observer(() => {
   const [tab, setTab] = useState(0)
@@ -15,20 +14,36 @@ const Menu = observer(() => {
 
   useEffect(() => {
     const s = document.querySelector('.menu')
-    const header = document.querySelector('.header')
+    const headerEl = document.querySelector('.header')
 
-    if (!s || !header) return
+    if (!s || !headerEl) return
     ;(s as any).style.setProperty(
       '--header-height',
-      `${header.getBoundingClientRect().height}px`,
+      `${headerEl.getBoundingClientRect().height}px`,
     )
-  }, [])
+
+    const ro = new ResizeObserver((entries) => {
+      for (let entry of entries) {
+        ;(s as any).style.setProperty(
+          '--header-height',
+          `${entry.borderBoxSize[0]?.blockSize}px`,
+        )
+      }
+    })
+    ro.observe(headerEl)
+  }, [header])
 
   useEffect(() => {
     if (GlobalState.locoScroll) {
-      GlobalState.isMenuOpen
-        ? (GlobalState.locoScroll as any).stop()
-        : (GlobalState.locoScroll as any).start()
+      if (GlobalState.isMenuOpen) {
+        ;(GlobalState.locoScroll as any).stop()
+        document.querySelector('.header.transparent')?.classList.add('hover-bg')
+      } else {
+        ;(GlobalState.locoScroll as any).start()
+        document
+          .querySelector('.header.transparent')
+          ?.classList.remove('hover-bg')
+      }
     }
   }, [GlobalState.isMenuOpen, GlobalState.locoScroll])
 
@@ -58,7 +73,7 @@ const Menu = observer(() => {
                 {hi.submenu.length ? (
                   <div className="menu__link"> {hi.title}</div>
                 ) : (
-                  <a className="menu__link" href={hi.link}>
+                  <a className="menu__link" href={hi.link} onClick={resetScrollPos}>
                     {hi.title}
                   </a>
                 )}
@@ -112,7 +127,7 @@ const Menu = observer(() => {
                     {hi?.submenu?.map((sub: any, i: number) => (
                       <div className="menu__subitem" key={i}>
                         {hi.isProducts ? (
-                          <a className="menu__subitem-title" href={sub.link}>
+                          <a className="menu__subitem-title" href={sub.link} onClick={resetScrollPos}>
                             {sub.title}
                           </a>
                         ) : (
@@ -127,6 +142,7 @@ const Menu = observer(() => {
                                 key={idx}
                                 href={li.link}
                                 dangerouslySetInnerHTML={{ __html: li.title }}
+                                onClick={resetScrollPos}
                               ></a>
                             ))
                           ) : (

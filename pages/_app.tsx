@@ -1,10 +1,14 @@
 import '../styles/index.scss'
 import 'locomotive-scroll/src/locomotive-scroll.scss'
 import { RootStoreProvider } from '../hooks/RootStoreProvider'
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
 import { changeLocale } from '../stores/GlobalState'
+import Script from 'next/script'
+import TagManager from 'react-gtm-module';
+import Smartlook from 'smartlook-client'
 
 function MyApp({ Component, pageProps }: any) {
+  const ref = useRef<boolean>(false);
   useEffect(() => {
     function get_browser() {
       var ua = navigator.userAgent,
@@ -41,6 +45,16 @@ function MyApp({ Component, pageProps }: any) {
       document.querySelector('body')?.classList.add('old-device')
     }
   }, [])
+
+  useEffect(() => {
+    if (ref.current) return;
+      TagManager.initialize({ gtmId: 'G-CEP85Y6LPT' });
+      Smartlook.init('c6979b19e937847ec821f16f18ccb70377e1355e', {
+        region:'eu'
+      });
+
+    ref.current = true
+  },[])
 
   useEffect(() => {
     let vh = window.innerHeight * 0.01

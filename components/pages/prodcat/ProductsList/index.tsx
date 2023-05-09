@@ -3,11 +3,15 @@ import { observer } from 'mobx-react'
 import { useEffect, useMemo, useState } from 'react'
 import { useWindowDimensions } from '../../../../hooks/getWindowDimensions'
 import { useContentState } from '../../../../hooks/RootStoreProvider'
-import GlobalState from '../../../../stores/GlobalState'
 import InViewComponent from '../../../common/InViewComponent'
 import Select from '../../../common/MainSelect'
 import ProductItem from '../../../common/ProductItem'
 import ProductBanner from '../ProductBanner'
+import { observable, runInAction } from 'mobx'
+
+export const ProductColor = observable({
+  color: null,
+})
 
 const ProductsList = observer(() => {
   const { width, height } = useWindowDimensions()
@@ -36,6 +40,8 @@ const ProductsList = observer(() => {
     }
 
     if (filters.p2) {
+      let newArr: any = []
+
       if (params[1] == 'color') {
         filters.p2.forEach((c: any) => {
           let sub = Array.from(res).filter((ci: any) => {
@@ -43,7 +49,16 @@ const ProductsList = observer(() => {
               return ci
             }
           })
-          res = sub
+          if (sub?.length) {
+            newArr.push(...sub)
+          }
+        })
+
+        newArr = newArr.map((c: any) => c.id)
+        newArr = Array.from(new Set(newArr))
+
+        runInAction(() => {
+          ProductColor.color = filters.p2
         })
       }
       if (params[1] == 'bodyPart') {
@@ -53,8 +68,13 @@ const ProductsList = observer(() => {
               return ci
             }
           })
-          res = sub
+          if (sub?.length) {
+            newArr.push(...sub)
+          }
         })
+
+        newArr = newArr.map((c: any) => c.id)
+        newArr = Array.from(new Set(newArr))
       }
       if (params[1] == 'concern') {
         filters.p2.forEach((c: any) => {
@@ -63,20 +83,49 @@ const ProductsList = observer(() => {
               return ci
             }
           })
-          res = sub
+          if (sub?.length) {
+            newArr.push(...sub)
+          }
+        })
+
+        newArr = newArr.map((c: any) => c.id)
+        newArr = Array.from(new Set(newArr))
+      }
+
+      if (filters.p2.length) {
+        res = res.filter((c: any) => {
+          if (newArr.includes(c.id)) {
+            return c
+          }
         })
       }
     }
 
     if (filters.p3) {
       if (params[2] == 'type') {
+        let newArr: any = []
         filters.p3?.forEach((p: any) => {
-          res = Array.from(res).filter((ci: any) => {
+          let sub = Array.from(res).filter((ci: any) => {
             if (ci.type.includes(p)) {
               return ci
             }
           })
+
+          if (sub?.length) {
+            newArr.push(...sub)
+          }
         })
+
+        newArr = newArr.map((c: any) => c.id)
+        newArr = Array.from(new Set(newArr))
+
+        if (filters.p3.length) {
+          res = res.filter((c: any) => {
+            if (newArr.includes(c.id)) {
+              return c
+            }
+          })
+        }
       }
     }
 
@@ -98,7 +147,7 @@ const ProductsList = observer(() => {
               dt={JSON.parse(
                 JSON.stringify(content?.select1),
               ).sort((a: any, b: any) => a.localeCompare(b))}
-              multiple //content?.paramsForFilter[0] == 'isNew' ? false :
+              multiple
               getValue={(value) => {
                 setFilters({
                   ...filters,
@@ -122,7 +171,6 @@ const ProductsList = observer(() => {
             {content.select3?.length > 0 && (
               <Select
                 multiple
-                //={content?.paramsForFilter[2] == 'type' ? false : true}
                 placeholder={content?.select3Title}
                 dt={JSON.parse(
                   JSON.stringify(content?.select3),

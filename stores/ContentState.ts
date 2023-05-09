@@ -228,6 +228,18 @@ export const getPostCategories = async () => {
 }
 
 export const getMediaById = async (id: number) => {
+  if (!+id) {
+    return {
+      media_details: {
+        sizes: {
+          full: {
+            source_url: '',
+          },
+        },
+      },
+      alt_text: '',
+    }
+  }
   const req = await fetch(`${DOMAIN}wp-json/wp/v2/media/${id}`)
   const res = await req.json()
   return res
@@ -235,6 +247,14 @@ export const getMediaById = async (id: number) => {
 
 export const getNews = async () => {
   const request = await fetch(`${DOMAIN}wp-json/wp/v2/posts?per_page=100`)
+  const res = await request.json()
+  return formatorGetNews(res)
+}
+
+export const getNewsByIds = async (ids: string) => {
+  const request = await fetch(
+    `${DOMAIN}wp-json/wp/v2/posts?per_page=100&include=${ids}`,
+  )
   const res = await request.json()
   return formatorGetNews(res)
 }
@@ -257,20 +277,25 @@ export const getNewsPage = async () => {
   }
 }
 
-export const getNewsPostPage = async (post: any) => {
-  const newsPost = await getContentByPage('posts', post.id)
+export const getNewsPostPage = async (post: string) => {
+  const newsPost = await fetch(`${DOMAIN}wp-json/wp/v2/posts?slug=${post}`).then((c)=>c.json())
   return {
     content: await formatorSingleNewsPost({
-      post: post,
-      cont: newsPost,
+      cont: newsPost[0],
     }),
-    seo: newsPost.yoast_head,
+    seo: newsPost[0]?.yoast_head,
   }
 }
 
 //CAREERS
 export const getCareersTypes = async () => {
   const req = await fetch(`${DOMAIN}wp-json/wp/v2/type-careers`)
+  const res = await req.json()
+  return res
+}
+
+export const getCategoryBySlug = async (id:string) => {
+  const req = await fetch(`${DOMAIN}wp-json/wp/v2/type-careers/${id}`)
   const res = await req.json()
   return res
 }
@@ -289,15 +314,14 @@ export const getVacancies = async () => {
   return formatorVacancies(res)
 }
 
-export const getCareerPostPage = async (post: any) => {
-  const req = await fetch(`${DOMAIN}wp-json/wp/v2/careers/${post.id}`)
+export const getCareerPostPage = async (slug: any) => {
+  const req = await fetch(`${DOMAIN}wp-json/wp/v2/careers?slug=${slug}`)
   const res = await req.json()
   return {
     content: await formatorVacancyPost({
-      post,
-      content: res,
+      content: res[0],
     }),
-    seo: res.yoast_head,
+    seo: res[0].yoast_head,
   }
 }
 
@@ -324,10 +348,27 @@ export const getFindUsPage = async () => {
   }
 }
 
+export const getAirportsData = async () => {
+  const airports = await fetch(
+    `${DOMAIN}wp-json/wp/v2/locations?per_page=100&cat-location=32`,
+  ).then((r) => r.json())
+  return formatorLocations(airports)
+}
+
 export const getLocations = async () => {
-  const req = await fetch(`${DOMAIN}wp-json/wp/v2/locations?per_page=100`)
-  const res = await req.json()
-  return formatorLocations(res)
+  // const req = await fetch(`${DOMAIN}wp-json/wp/v2/locations?per_page=100`)
+  // const res = await req.json()
+
+  const airports = await fetch(
+    `${DOMAIN}wp-json/wp/v2/locations?per_page=100&cat-location=32`,
+  )
+  const airportsres = await airports.json()
+  const stores = await fetch(
+    `${DOMAIN}wp-json/wp/v2/locations?per_page=100&cat-location=33`,
+  )
+  const storesREs = await stores.json()
+
+  return formatorLocations([...airportsres, ...storesREs])
 }
 
 export const getSortLocations = async () => {
@@ -336,10 +377,12 @@ export const getSortLocations = async () => {
 }
 
 export const getLocationPage = async (current: any) => {
-  const res = await getContentByPage('locations', current.id)
+    const res = await fetch(
+    `${DOMAIN}wp-json/wp/v2/locations?slug=${current}`,
+  ).then((t) => t.json())
   return {
-    content: await formatorLocation(res),
-    seo: res.yoast_head,
+    content: await formatorLocation(res[0]),
+    seo: res[0].yoast_head,
   }
 }
 
@@ -356,8 +399,10 @@ export const getSearchContent = async () => {
   const content = await getContentByPage('pages', 685)
   return {
     content: {
-      sections: ['products', 'news', 'treatments'],
+      sections: ['all', 'products', 'news', 'treatments', 'locations'],
       productButton: acf.product_button_title,
+      cardBookBtn: 'Book now',
+      cardDetails: 'See Details',
     },
     seo: content.yoast_head,
   }
@@ -373,10 +418,10 @@ export const getRetailerPage = async () => {
 }
 
 export const getProductPage = async (service: string) => {
-  const content = await getContentByPage('products', service)
+  const content = await fetch(`${DOMAIN}wp-json/wp/v2/products/?slug=${service}`).then((c)=>c.json());
   return {
-    content: await formatProductPage(content),
-    seo: content.yoast_head,
+    content: await formatProductPage(content[0]),
+    seo: content[0]?.yoast_head,
   }
 }
 
@@ -389,10 +434,10 @@ export const getProductsContent = async (page: number) => {
 }
 
 export const getProductCatPage = async (cat: string) => {
-  const content = await getContentByPage('cat-products', cat)
+  const content = await fetch(`${DOMAIN}wp-json/wp/v2/cat-products/?slug=${cat}`).then((c)=>c.json());
   return {
-    content: await formatProductCatPage(content),
-    seo: content.yoast_head,
+    content: await formatProductCatPage(content[0]),
+    seo: content[0].yoast_head,
   }
 }
 export const getProductsCat = async () => {
@@ -468,14 +513,13 @@ export const getProductRegister = async () => {
 }
 
 //TREATMENTS
-export const getServiceItem = async (id: number) => {
-  const request = await fetch(`${DOMAIN}wp-json/wp/v2/treatments/${id}`)
-
+export const getServiceItem = async (id: string) => {
+  const request = await fetch(`${DOMAIN}wp-json/wp/v2/treatments/?slug=${id}`)
   const it = await request.json()
 
   return {
-    content: await formatSingleService(it),
-    seo: it.yoast_head,
+    content: await formatSingleService(it[0]),
+    seo: it[0].yoast_head,
   }
 }
 
@@ -531,16 +575,16 @@ export const getTreatmentsPage = async (page: number) => {
   }
 }
 
-export const getTreatCatPage = async (page: string) => {
-  const content = await getContentByPage('cat-treatments', page)
-  const result = await formatTreatCat(content)
+export const getTreatCatPage = async (slug: string) => {
+  const content = await fetch(`${DOMAIN}wp-json/wp/v2/cat-treatments?slug=${slug}`).then((c)=>c.json())
+  const result = await formatTreatCat(content[0])
   return {
     content: result,
-    seo: content?.yoast_head,
+    seo: content[0]?.yoast_head,
   }
 }
 
-export const getServicePage = async (ser: number) => {
+export const getServicePage = async (ser: string) => {
   const treatment = await getServiceItem(ser)
   return treatment
 }
@@ -583,7 +627,6 @@ export const setSubscribe = async (email: string) => {
 export const bookService = async (dt: any) => {
   const fd = new FormData()
 
-  console.log(dt?.location)
   fd.append('fname', dt.fname)
   fd.append('lname', dt.lname)
   fd.append('email', dt.email)
@@ -727,4 +770,13 @@ export const retailerSearch = async (val: string) => {
   const res = await req.json()
 
   return res
+}
+
+//ERROR
+export const getError = async () => {
+  const content = await getContentByPage('pages', 2341)
+  return {
+    content: content,
+    seo: content?.yoast_head,
+  }
 }

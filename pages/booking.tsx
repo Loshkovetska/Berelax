@@ -7,6 +7,7 @@ import BookingSteps from '../components/pages/booking/Steps'
 import TimePop from '../components/pages/booking/TimePop'
 import CustomCalendar from '../components/common/Calendar'
 import SeoBlock from '../components/common/SeoBlock'
+import Script from 'next/script'
 
 const Booking = observer(({ hydrationData: props }: any) => {
   const [loading, setLoading] = useState(true)
@@ -27,6 +28,7 @@ const Booking = observer(({ hydrationData: props }: any) => {
   return (
     <>
       <SeoBlock seo={props.seo} />
+
       <Layout delay={1}>
         <BookingSteps />
       </Layout>
@@ -40,7 +42,11 @@ export default Booking
 
 export async function getStaticProps() {
   const response = await getBooking()
-
+  if (!response) {
+    return {
+      notFound: true,
+    }
+  }
   return {
     props: {
       hydrationData: { ...response },

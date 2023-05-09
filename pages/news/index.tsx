@@ -7,6 +7,7 @@ import Intro from '../../components/pages/news/Intro'
 import TopArticles from '../../components/pages/news/TopArticles'
 import NewsList from '../../components/pages/news/NewsList'
 import SeoBlock from '../../components/common/SeoBlock'
+import Script from 'next/script'
 const NewsPage = observer(({ hydrationData: props }: any) => {
   const [loading, setLoading] = useState(true)
   useLocoScroll(!loading)
@@ -26,6 +27,7 @@ const NewsPage = observer(({ hydrationData: props }: any) => {
   return (
     <>
       <SeoBlock seo={props.seo} />
+
       <Layout delay={1}>
         <Intro />
         <TopArticles />
@@ -39,7 +41,11 @@ export default NewsPage
 
 export async function getStaticProps() {
   const response = await getNewsC()
-
+  if (!response) {
+    return {
+      notFound: true,
+    }
+  }
   return {
     props: {
       hydrationData: { ...response },

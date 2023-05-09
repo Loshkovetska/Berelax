@@ -66,15 +66,16 @@
     &__list {
       display: none;
     }
-   
 
     &__slider {
       display: flex;
 
       .products__item {
-        min-width: auto;
-        max-width: none;
+        width: 100%;
+        max-width: 288px;
+        min-width: 288px;
       }
+
       .slider__list {
         width: 100%;
       }
@@ -92,7 +93,8 @@
       }
 
       .slick-slide {
-        width: calc(100vw - 32px - 24px);
+        // width: calc(100vw - 32px - 24px);
+        width: fit-content;
       }
 
       position: relative;

@@ -34,7 +34,7 @@ const FirstStep = observer(() => {
         })
       })
       setTabLoc(tab)
-      return;
+      return
     }
   }, [airports, UserData.location])
 
@@ -68,7 +68,8 @@ const FirstStep = observer(() => {
         <div className="first-step__list">
           {airports
             .find((a: any) => a.continent == tabLoc)
-            ?.list?.map((a: any, i: number) => (
+            ?.list?.sort((a: any, b: any) => a.title.localeCompare(b.title))
+            .map((a: any, i: number) => (
               <SelectItem
                 multiple={false}
                 item={a}
@@ -78,6 +79,7 @@ const FirstStep = observer(() => {
                     UserData.location = a
                   })
                 }}
+                isDisable={a.isDisable}
                 isSelected={
                   UserData.location &&
                   (UserData.location as any)?.link == a.link

@@ -1,7 +1,5 @@
 import {
-  getCountryPop,
   getFindUsPage,
-  getFooter,
   getHeader,
   getSortLocations,
 } from '../../stores/ContentState'

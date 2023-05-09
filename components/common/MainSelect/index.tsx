@@ -47,19 +47,22 @@ const Select = observer(
         setTimeout(() => {
           setVisible(false)
         }, 400)
-        if (multiple) {
-          if (valueMultiple.length) {
-            getValue(valueMultiple)
-          } else getValue([])
-        } else {
-          if (value.length) {
-            getValue(value)
-          } else getValue('')
-        }
       } else {
         setVisible(true)
       }
-    }, [open, valueMultiple, value])
+    }, [open])
+
+    useEffect(() => {
+      if (multiple) {
+        if (valueMultiple.length) {
+          getValue(valueMultiple)
+        } else getValue([])
+      } else {
+        if (value.length) {
+          getValue(value)
+        } else getValue('')
+      }
+    }, [valueMultiple, value, multiple])
 
     return (
       <div

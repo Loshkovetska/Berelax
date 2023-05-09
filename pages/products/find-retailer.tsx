@@ -5,6 +5,7 @@ import Layout from '../../components/common/Layout'
 import RetailerContent from '../../components/pages/retailer/RetailerContent'
 import { getRetailer } from '../api/getRetailer'
 import SeoBlock from '../../components/common/SeoBlock'
+import Script from 'next/script'
 
 const ProductsRegister = observer(({ hydrationData: props }: any) => {
   const [loading, setLoading] = useState(true)
@@ -26,6 +27,7 @@ const ProductsRegister = observer(({ hydrationData: props }: any) => {
   return (
     <>
       <SeoBlock seo={props.seo} />
+
       <Layout delay={1}>
         <RetailerContent />
       </Layout>

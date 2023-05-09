@@ -8,6 +8,7 @@ import CompanyValues from '../components/pages/story/CompanyValues'
 import RepresentForm from '../components/pages/represent/RepresentForm'
 import SmallPop from '../components/common/SmallPop'
 import SeoBlock from '../components/common/SeoBlock'
+import Script from 'next/script'
 
 const RepresentativePage = observer(({ hydrationData: props }: any) => {
   const [loading, setLoading] = useState(true)
@@ -19,7 +20,7 @@ const RepresentativePage = observer(({ hydrationData: props }: any) => {
       }
     }
   }, [loading])
-  
+
   useEffect(() => {
     if (props.content) {
       setLoading(false)
@@ -44,7 +45,11 @@ export default RepresentativePage
 
 export async function getStaticProps() {
   const response = await getAirRepresent()
-
+  if (!response) {
+    return {
+      notFound: true,
+    }
+  }
   return {
     props: {
       hydrationData: { ...response },

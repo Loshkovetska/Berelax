@@ -30,8 +30,8 @@ const TreatmentsCategoryPage = observer(({ hydrationData: props }: any) => {
   return (
     <>
       <SeoBlock seo={props.seo} />
-      <Layout isTreatCat >
-        <Categories/>
+      <Layout isTreatCat>
+        <Categories />
         <Intro />
         <ServicesList />
         <Banner />
@@ -64,6 +64,11 @@ export async function getStaticPaths() {
 
 export async function getStaticProps({ params }: any) {
   const response = await getTreatCat(params.category)
+  if (!response) {
+    return {
+      notFound: true,
+    }
+  }
 
   return {
     props: {

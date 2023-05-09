@@ -6,14 +6,16 @@ import { getDate } from '../../../funcs/dates'
 import useScrollPos from '../../../hooks/useScrollPos'
 import { IconComponent } from '../IconComponent'
 import ImageComponent from '../ImageComponent'
+import { useRouter } from 'next/router'
 
 const SmallPost = ({ item }: { item: any }) => {
   const [colors, setColors] = useState('rgba(255, 255, 255, 0.3)')
-
+  const { asPath } = useRouter()
   const { x, y } = useScrollPos()
 
   const setPos = (x: number, y: number) => {
     sessionStorage.setItem('position', JSON.stringify({ x, y }))
+    sessionStorage.setItem('position_page', asPath)
   }
   return (
     <a

@@ -12,6 +12,7 @@ import Reviews from '../../../components/pages/location/Reviews'
 import Near from '../../../components/pages/location/Near'
 import Layout from '../../../components/common/Layout'
 import SeoBlock from '../../../components/common/SeoBlock'
+import Script from 'next/script'
 
 const LocationPage = observer(({ hydrationData: props }: any) => {
   const [loading, setLoading] = useState(true)
@@ -50,7 +51,9 @@ export default LocationPage
 export async function getStaticPaths() {
   const airports = await getLocations()
   const paths: any = []
-  airports?.map((pi: any) => {
+  airports?.forEach((pi: any) => {
+    if (pi.cat != 32) return
+
     paths.push({
       params: {
         airport: pi.skyCat.slug,
@@ -68,7 +71,11 @@ export async function getStaticPaths() {
 
 export async function getStaticProps({ params }: any) {
   const response = (await getLocation(params.slug)) || null
-
+  if (!response) {
+    return {
+      notFound: true,
+    }
+  }
   return {
     props: {
       hydrationData: { ...response },

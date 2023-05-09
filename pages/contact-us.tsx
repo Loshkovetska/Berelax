@@ -6,6 +6,7 @@ import { getContact } from './api/getContact'
 import ContactForm from '../components/pages/contact/ContactForm'
 import SmallPop from '../components/common/SmallPop'
 import SeoBlock from '../components/common/SeoBlock'
+import Script from 'next/script'
 
 const ContactPage = observer(({ hydrationData: props }: any) => {
   const [loading, setLoading] = useState(true)
@@ -26,6 +27,7 @@ const ContactPage = observer(({ hydrationData: props }: any) => {
   return (
     <>
       <SeoBlock seo={props.seo} />
+
       <Layout delay={1}>
         <ContactForm />
       </Layout>
@@ -38,7 +40,11 @@ export default ContactPage
 
 export async function getStaticProps() {
   const response = (await getContact()) || null
-
+  if (!response) {
+    return {
+      notFound: true,
+    }
+  }
   return {
     props: {
       hydrationData: { ...response },

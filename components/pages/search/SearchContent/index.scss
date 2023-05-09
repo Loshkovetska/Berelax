@@ -65,9 +65,19 @@
   &__result {
     margin-top: 40px;
 
-    & > .in-view {
-      width: fit-content;
+    &-row {
+      & > .in-view {
+        width: fit-content;
+      }
+      &:not(:last-child) {
+        margin-bottom: 64px;
+
+        @media (max-width: 900px) {
+          margin-bottom: 32px;
+        }
+      }
     }
+
     &-title {
       font-family: 'Antic Didone';
       font-style: normal;
@@ -99,7 +109,8 @@
         display: flex;
         .service-item,
         .news-post,
-        .product-item {
+        .product-item,
+        .place-card {
           width: 100%;
         }
       }
@@ -112,6 +123,17 @@
     &__result {
       &-title {
         font-size: 34px;
+      }
+      &-list {
+        &.three-locs {
+          grid-template-columns: repeat(2, 1fr);
+
+          .place-card {
+            min-width: auto;
+            max-width: none;
+            width: 100%;
+          }
+        }
       }
     }
   }
@@ -131,7 +153,8 @@
       &-list {
         &.three {
           grid-template-columns: repeat(2, 1fr);
-          .product-item {
+          .product-item,
+          .place-card {
             min-width: auto;
             max-width: none;
             width: 100%;
@@ -212,6 +235,9 @@
           grid-template-columns: repeat(2, 1fr);
           row-gap: 16px;
           column-gap: 16px;
+          &.three-locs {
+            grid-template-columns: repeat(1, 1fr);
+          }
         }
       }
     }

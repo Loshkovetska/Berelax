@@ -23,6 +23,11 @@ const GlobalState: any = observable({
 
 export default GlobalState
 
+export const resetScrollPos = () => {
+  sessionStorage.removeItem('position')
+  sessionStorage.removeItem('position_page')
+}
+
 export const changeLocale = () => {
   const locale = sessionStorage.getItem('locale')
   if (locale && JSON.parse(locale)) {

@@ -7,6 +7,7 @@ import ProdRegister from '../../components/pages/products/ProdRegister'
 import CustomCalendar from '../../components/common/Calendar'
 import SmallPop from '../../components/common/SmallPop'
 import SeoBlock from '../../components/common/SeoBlock'
+import Script from 'next/script'
 
 const ProductsRegister = observer(({ hydrationData: props }: any) => {
   const [loading, setLoading] = useState(true)
@@ -24,10 +25,11 @@ const ProductsRegister = observer(({ hydrationData: props }: any) => {
       setLoading(false)
     }
   }, [props])
-  
+
   return (
     <>
       <SeoBlock seo={props.seo} />
+
       <Layout delay={1}>
         <ProdRegister />
       </Layout>

@@ -8,6 +8,7 @@ import { useContentState } from '../../../hooks/RootStoreProvider'
 import Button from '../Button'
 import { IconComponent } from '../IconComponent'
 import ImageComponent from '../ImageComponent'
+import { resetScrollPos } from '../../../stores/GlobalState'
 
 const Navigation = observer(({ classStr }: { classStr: string }) => {
   const { header } = useContentState()
@@ -31,6 +32,9 @@ const Navigation = observer(({ classStr }: { classStr: string }) => {
                 )
                 if (items && items.length) {
                   items[id].classList.add('hover-state')
+                  document
+                    .querySelector('.header.transparent')
+                    ?.classList.add('hover-bg')
                 }
               }
             }}
@@ -41,6 +45,9 @@ const Navigation = observer(({ classStr }: { classStr: string }) => {
                 )
                 if (items && items.length) {
                   items[id].classList.remove('hover-state')
+                  document
+                    .querySelector('.header.transparent')
+                    ?.classList.remove('hover-bg')
                 }
               }
             }}
@@ -50,7 +57,11 @@ const Navigation = observer(({ classStr }: { classStr: string }) => {
               {!hi.link || hi.link.includes('#') ? (
                 <div className="navigation__link"> {hi.title}</div>
               ) : (
-                <a className={classNames('navigation__link')} href={hi.link}>
+                <a
+                  className={classNames('navigation__link')}
+                  href={hi.link}
+                  onClick={resetScrollPos}
+                >
                   {hi.title}
                 </a>
               )}
@@ -72,11 +83,19 @@ const Navigation = observer(({ classStr }: { classStr: string }) => {
                       key={i}
                     >
                       {hi.isProducts ? (
-                        <a className="navigation__subitem-img" href={sub.link}>
+                        <a
+                          className="navigation__subitem-img"
+                          href={sub.link}
+                          onClick={resetScrollPos}
+                        >
                           <ImageComponent src={sub.img} alt={sub.alt} />
                         </a>
                       ) : (
-                        <a className="navigation__subitem-img" href={sub.link}>
+                        <a
+                          className="navigation__subitem-img"
+                          href={sub.link}
+                          onClick={resetScrollPos}
+                        >
                           <ImageComponent src={sub.img} alt={sub.alt} />
                         </a>
                       )}
@@ -84,6 +103,7 @@ const Navigation = observer(({ classStr }: { classStr: string }) => {
                         <a
                           className="navigation__subitem-title"
                           href={sub.link}
+                          onClick={resetScrollPos}
                         >
                           {sub.title}
                         </a>
@@ -97,7 +117,8 @@ const Navigation = observer(({ classStr }: { classStr: string }) => {
                               className="navigation__subitem-text"
                               href={li.link}
                               key={idx}
-                              dangerouslySetInnerHTML={{__html:li.title}}
+                              dangerouslySetInnerHTML={{ __html: li.title }}
+                              onClick={resetScrollPos}
                             >
                               {/* {li.title} */}
                             </a>

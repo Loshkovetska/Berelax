@@ -4,6 +4,7 @@ import { observer } from 'mobx-react'
 import Link from 'next/link'
 import { MouseEventHandler, ReactElement } from 'react'
 import { ScrollPos } from '../../../hooks/useScrollPos'
+import { useRouter } from 'next/router'
 
 const Button = observer(
   ({
@@ -21,8 +22,10 @@ const Button = observer(
     link?: string
     target?: boolean
   }) => {
+    const { asPath } = useRouter()
     const setPos = (x: number, y: number) => {
       sessionStorage.setItem('position', JSON.stringify({ x, y }))
+      sessionStorage.setItem('position_page', asPath)
     }
 
     if (target) {

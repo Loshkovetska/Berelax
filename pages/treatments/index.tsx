@@ -43,7 +43,11 @@ export default TreatmentsPage
 
 export async function getStaticProps() {
   const response = await getTreatPage()
-
+  if (!response) {
+    return {
+      notFound: true,
+    }
+  }
   return {
     props: {
       hydrationData: { ...response },

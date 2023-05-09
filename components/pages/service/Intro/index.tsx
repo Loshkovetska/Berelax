@@ -10,16 +10,33 @@ import { Fragment } from 'react'
 import classNames from 'classnames'
 const Intro = observer(() => {
   const { content } = useContentState()
+
   const book = () => {
-    let amount = content?.price[0].amount.find((a: any) =>
-      a.country.includes(GlobalState.currentLocale.country),
-    )
+    let amount: any = null
+
+    content?.price.forEach((c: any) => {
+      c.amount.find((ci: any) => {
+        const finder = ci.country.includes(GlobalState.currentLocale.country)
+        if (finder) {
+          amount = ci
+          return
+        }
+      })
+    })
 
     if (!amount) {
-      amount = content?.price[0].amount.find((a: any) =>
-        a.country.includes('United States of America'),
-      )
+      content?.price.forEach((c: any) => {
+        c.amount.find((ci: any) => {
+          const finder = ci.country.includes('United States of America')
+          if (finder) {
+            amount = ci
+            return
+          }
+        })
+      })
     }
+
+    if (!amount) return
 
     localStorage.setItem(
       'treatment',
@@ -29,7 +46,7 @@ const Intro = observer(() => {
         category: content?.section,
         img: content?.img,
         name: content?.title,
-        price: amount.value,
+        price: amount?.value,
       }),
     )
     window.location.href = '/booking'

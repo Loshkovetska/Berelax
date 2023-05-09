@@ -40,6 +40,8 @@ export type PlaceCard = {
     lat: number | string
     lng: number | string
   }
+  skyCat: any
+  isDisable: boolean
 }
 
 export type serviceType = {

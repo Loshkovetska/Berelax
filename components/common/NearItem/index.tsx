@@ -1,17 +1,19 @@
-import Link from 'next/link'
 import useScrollPos, { ScrollPos } from '../../../hooks/useScrollPos'
 import Button from '../Button'
 import { IconComponent } from '../IconComponent'
 import ImageComponent from '../ImageComponent'
+import { useRouter } from 'next/router'
 const NearItem = ({ item }: any) => {
   const { x, y } = useScrollPos()
+  const { asPath } = useRouter();
 
-  const setPos = (x: number, y: number) => {
-    sessionStorage.setItem('position', JSON.stringify({ x, y }))
-  }
+  // const setPos = (x: number, y: number) => {
+  //   sessionStorage.setItem('position', JSON.stringify({ x, y }))
+  //   sessionStorage.setItem('position_page', asPath)
+  // }setPos(0, y)
 
   return (
-    <a className="near-item" onClick={() => setPos(0, y)} href={item.link}>
+    <a className="near-item"  href={item.link}>
       <div className="near-item__img">
         <ImageComponent src={item.img} />
       </div>

@@ -7,6 +7,7 @@ import PlacesList from '../../components/pages/find/PlacesList'
 import Layout from '../../components/common/Layout'
 import PlaceListMob from '../../components/pages/find/PlacesListMob'
 import SeoBlock from '../../components/common/SeoBlock'
+import Script from 'next/script'
 
 const FindUs = observer(({ hydrationData: props }: any) => {
   const [loading, setLoading] = useState(true)
@@ -27,6 +28,7 @@ const FindUs = observer(({ hydrationData: props }: any) => {
   return (
     <>
       <SeoBlock seo={props.seo} />
+
       <Layout>
         <Intro />
         <PlacesList />
@@ -40,7 +42,11 @@ export default FindUs
 
 export async function getStaticProps() {
   const response = await getFindUs()
-
+  if (!response) {
+    return {
+      notFound: true,
+    }
+  }
   return {
     props: {
       hydrationData: { ...response },

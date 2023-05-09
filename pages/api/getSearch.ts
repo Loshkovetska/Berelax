@@ -1,6 +1,4 @@
 import {
-  getCountryPop,
-  getFooter,
   getHeader,
   getSearchContent,
 } from '../../stores/ContentState'

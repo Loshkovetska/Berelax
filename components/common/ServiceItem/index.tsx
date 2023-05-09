@@ -6,10 +6,12 @@ import useScrollPos from '../../../hooks/useScrollPos'
 import Button from '../Button'
 import { IconComponent } from '../IconComponent'
 import ImageComponent from '../ImageComponent'
+import { useRouter } from 'next/router'
 
 const ServiceItem = observer(({ item }: any) => {
   const ref = useRef<any>(null)
   const { width } = useWindowDimensions()
+  const { asPath } = useRouter()
   const getTime = (time: any) => {
     if (time.length == 1) {
       return `${time[0]} minutes`
@@ -32,6 +34,7 @@ const ServiceItem = observer(({ item }: any) => {
 
   const setPos = (x: number, y: number) => {
     sessionStorage.setItem('position', JSON.stringify({ x, y }))
+    sessionStorage.setItem('position_page', asPath)
   }
 
   return (

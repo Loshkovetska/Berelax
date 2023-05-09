@@ -37,31 +37,31 @@ const ProductCat = observer(
 
     const setPos = (x: number, y: number) => {
       sessionStorage.setItem('position', JSON.stringify({ x, y }))
+      sessionStorage.setItem('position_page', navigate.asPath)
     }
 
     return (
-      <Link href={`${pr.link}`}>
-        <a
-          ref={ref}
-          className={classNames('products__item', end && 'animated')}
-          onClick={() => setPos(0, y)}
-        >
-          <ImageComponent src={pr.img} alt={pr.alt} />
-          <h3 className={classNames('products__item-title', isDark && 'dark')}>
-            {pr.title}
-          </h3>
-          <Button
-            isLink
-            link={`${pr.link}`}
-            classStr="button-arrow button-svg white p24"
-            inner={
-              <>
-                {buttonTitle} <IconComponent name={'arrow'} />
-              </>
-            }
-          />
-        </a>
-      </Link>
+      <a
+        href={`${pr.link}`}
+        ref={ref}
+        className={classNames('products__item', end && 'animated')}
+        onClick={() => setPos(0, y)}
+      >
+        <ImageComponent src={pr.img} alt={pr.alt} />
+        <h3 className={classNames('products__item-title', isDark && 'dark')}>
+          {pr.title}
+        </h3>
+        <Button
+          isLink
+          link={`${pr.link}`}
+          classStr="button-arrow button-svg white p24"
+          inner={
+            <>
+              {buttonTitle} <IconComponent name={'arrow'} />
+            </>
+          }
+        />
+      </a>
     )
   },
 )

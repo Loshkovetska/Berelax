@@ -28,6 +28,7 @@ const CareerPostPage = observer(({ hydrationData: props }: any) => {
   return (
     <>
       <SeoBlock seo={props.seo} />
+
       <Layout delay={1}>
         <Intro />
         <ResumeForm isCareerPage={false} />
@@ -59,7 +60,11 @@ export async function getStaticPaths() {
 
 export async function getStaticProps({ params }: any) {
   const response = await getCareerPost(params.slug)
-
+  if (!response) {
+    return {
+      notFound: true,
+    }
+  }
   return {
     props: {
       hydrationData: { ...response },

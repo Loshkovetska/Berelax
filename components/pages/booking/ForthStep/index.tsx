@@ -1,7 +1,7 @@
 import classNames from 'classnames'
 import { runInAction } from 'mobx'
 import { observer } from 'mobx-react'
-import { useRef } from 'react'
+import { useRef, useState } from 'react'
 import { useContentState } from '../../../../hooks/RootStoreProvider'
 import { bookService } from '../../../../stores/ContentState'
 import Button from '../../../common/Button'
@@ -9,12 +9,17 @@ import CheckBox from '../../../common/CheckBox'
 import { IconComponent } from '../../../common/IconComponent'
 import PhoneSelect from '../../../common/PhoneSelect'
 import { BookingStep, UserData } from '../Steps'
+import ReCAPTCHA from 'react-google-recaptcha'
 
 const ForthStep = observer(() => {
-  const ref = useRef<any>(null)
+  const ref = useRef<any>(null),
+    recaptchaRef = useRef<any>(null)
+  const [isVerify, setVerify] = useState(false)
+
   const { content } = useContentState()
   const submit = () => {
-    // UserData.check2 && fd.append('subscribe', UserData.check2.toString())
+    if (!isVerify) return
+
     if (UserData.check1) {
       bookService(UserData).then(() => {
         runInAction(() => {
@@ -22,6 +27,14 @@ const ForthStep = observer(() => {
         })
       })
     }
+  }
+
+  const onReCAPTCHAChange = (captchaCode: any) => {
+    if (!captchaCode) {
+      setVerify(false)
+      return
+    }
+    setVerify(true)
   }
 
   return (
@@ -129,11 +142,18 @@ const ForthStep = observer(() => {
                 })
               }}
             />
+            <ReCAPTCHA
+              ref={recaptchaRef}
+              sitekey="6Legy0ojAAAAAOWqwkihlGuTyRkgTOVGR9HhBFIe"
+              render="explicit"
+              onChange={onReCAPTCHAChange}
+            />
             <button
               type="submit"
               className={classNames(
                 'button beige button-arrow button-svg p20p40',
                 (!UserData.fname.length ||
+                  !isVerify ||
                   !UserData.lname.length ||
                   !UserData.email.length ||
                   !UserData.phone.length) &&

@@ -342,18 +342,6 @@ const phonecodes = [
     phone_code: 689,
   },
   {
-    country_code: 'GF',
-    country_en: 'French Guiana',
-    country_cn: '法属圭亚那',
-    phone_code: 594,
-  },
-  {
-    country_code: 'PM',
-    country_en: 'Saint Pierre and Miquelon',
-    country_cn: '法属圣皮埃尔和密克隆岛',
-    phone_code: 508,
-  },
-  {
     country_code: 'VA',
     country_en: 'Vatican City',
     country_cn: '梵蒂冈城',
@@ -450,12 +438,6 @@ const phonecodes = [
     phone_code: 53,
   },
   {
-    country_code: 'GP',
-    country_en: 'Guadeloupe',
-    country_cn: '瓜德罗普岛',
-    phone_code: 590,
-  },
-  {
     country_code: 'GU',
     country_en: 'Guam',
     country_cn: '关岛',
@@ -491,12 +473,7 @@ const phonecodes = [
     country_cn: '荷兰',
     phone_code: 31,
   },
-  {
-    country_code: 'BQ',
-    country_en: 'Bonaire, Sint Eustatius and Saba',
-    country_cn: '荷兰加勒比区',
-    phone_code: 599,
-  },
+
   {
     country_code: 'ME',
     country_en: 'Montenegro',
@@ -598,12 +575,6 @@ const phonecodes = [
     country_en: 'Comoros',
     country_cn: '科摩罗',
     phone_code: 269,
-  },
-  {
-    country_code: 'XK',
-    country_en: 'Kosovo',
-    country_cn: '科索沃',
-    phone_code: 381,
   },
   {
     country_code: 'CI',
@@ -1014,12 +985,6 @@ const phonecodes = [
     phone_code: 966,
   },
   {
-    country_code: 'BL',
-    country_en: 'Saint Barthélemy',
-    country_cn: '圣巴泰勒米',
-    phone_code: 590,
-  },
-  {
     country_code: 'ST',
     country_en: 'Sao Tome and Principe',
     country_cn: '圣多美和普林西比民主共和国',
@@ -1048,12 +1013,6 @@ const phonecodes = [
     country_en: 'Saint Martin',
     country_cn: '法属圣马丁',
     phone_code: 590,
-  },
-  {
-    country_code: 'SX',
-    country_en: 'Sint Maarten',
-    country_cn: '荷属圣马丁',
-    phone_code: 599,
   },
   {
     country_code: 'SM',
@@ -1360,12 +1319,6 @@ const phonecodes = [
     country_en: 'British Virgin Islands',
     country_cn: '英属维京群岛',
     phone_code: 1284,
-  },
-  {
-    country_code: 'IO',
-    country_en: 'British Indian Ocean Territory',
-    country_cn: '英属印度洋领地',
-    phone_code: 246,
   },
   {
     country_code: 'JO',

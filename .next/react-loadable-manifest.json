@@ -1,8 +1,8 @@
 {
   "../hooks/useLoco.tsx -> locomotive-scroll": {
-    "id": 6267,
+    "id": "../hooks/useLoco.tsx -> locomotive-scroll",
     "files": [
-      "static/chunks/6267.eb5b301b0c8bd129.js"
+      "static/chunks/node_modules_locomotive-scroll_dist_locomotive-scroll_esm_js.js"
     ]
   }
 }

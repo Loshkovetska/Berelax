@@ -7,6 +7,7 @@ import ProductsIntro from '../../components/pages/products/ProductsIntro'
 import Banner from '../../components/pages/location/Banner'
 import Explore from '../../components/pages/products/Explore'
 import SeoBlock from '../../components/common/SeoBlock'
+import Script from 'next/script'
 
 const TreatmentsCategoryPage = observer(({ hydrationData: props }: any) => {
   const [loading, setLoading] = useState(true)
@@ -24,7 +25,7 @@ const TreatmentsCategoryPage = observer(({ hydrationData: props }: any) => {
       setLoading(false)
     }
   }, [props])
-  
+
   return (
     <>
       <SeoBlock seo={props.seo} />

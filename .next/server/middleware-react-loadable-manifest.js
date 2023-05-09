@@ -1,1 +1,1 @@
-self.__REACT_LOADABLE_MANIFEST={"../hooks/useLoco.tsx -> locomotive-scroll":{id:6267,files:["static/chunks/6267.eb5b301b0c8bd129.js"]}};
+self.__REACT_LOADABLE_MANIFEST={"../hooks/useLoco.tsx -> locomotive-scroll":{"id":"../hooks/useLoco.tsx -> locomotive-scroll","files":["static/chunks/node_modules_locomotive-scroll_dist_locomotive-scroll_esm_js.js"]}}

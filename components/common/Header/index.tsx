@@ -14,9 +14,11 @@ const Header = observer(
   ({
     isAbsolute = false,
     delay = 2,
+    isTransparentHeader = false,
   }: {
     isAbsolute?: boolean
     delay?: number
+    isTransparentHeader?: boolean
   }) => {
     const { header } = useContentState()
     const headerRef = useRef<any>(null)
@@ -79,6 +81,7 @@ const Header = observer(
             'header',
             isAbsolute && 'absolute',
             !isAbsolute && 'fixed',
+            isTransparentHeader && 'transparent',
           )}
           ref={headerRef}
         >

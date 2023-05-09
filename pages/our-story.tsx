@@ -9,6 +9,7 @@ import RoadMap from '../components/pages/story/RoadMap'
 import FollowUs from '../components/pages/home/FollowUs'
 import StoryBlocks from '../components/pages/story/StoryBlocks'
 import SeoBlock from '../components/common/SeoBlock'
+import Script from 'next/script'
 
 const Story = observer(({ hydrationData: props }: any) => {
   const [loading, setLoading] = useState(true)
@@ -20,7 +21,7 @@ const Story = observer(({ hydrationData: props }: any) => {
       }
     }
   }, [loading])
-  
+
   useEffect(() => {
     if (props.content) {
       setLoading(false)
@@ -30,6 +31,7 @@ const Story = observer(({ hydrationData: props }: any) => {
   return (
     <>
       <SeoBlock seo={props.seo} />
+
       <Layout delay={1}>
         <Intro />
         <CompanyValues />
@@ -45,7 +47,11 @@ export default Story
 
 export async function getStaticProps() {
   const response = await getStory()
-
+  if (!response) {
+    return {
+      notFound: true,
+    }
+  }
   return {
     props: {
       hydrationData: { ...response },

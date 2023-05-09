@@ -11,6 +11,23 @@ import { BookingStep, UserData } from '../Steps'
 const ThirdScreen = observer(() => {
   const { content } = useContentState()
 
+  const getDay = (date: string | null, location: typeof UserData.location) => {
+    if (!date || !location) return []
+
+    const day = new Date(date).toLocaleString('en', {
+      weekday: 'short',
+    })
+
+    const timeData = JSON.parse(JSON.stringify(location.time))
+
+    const times = timeData.find((c: any) => c.day == day)
+
+    if (times) {
+      return times?.time
+    }
+    return []
+  }
+
   return (
     <div className={classNames('first-step')}>
       <div className="book-steps__container pt32">
@@ -67,7 +84,7 @@ const ThirdScreen = observer(() => {
             withSearch={false}
             placeholder={content?.block3?.timePlaceholder}
             value={UserData.time || ''}
-            dt={Array.from(UserData.location?.time)||[]}
+            dt={getDay(UserData.date, UserData.location)}
           />
         </div>
         <Button

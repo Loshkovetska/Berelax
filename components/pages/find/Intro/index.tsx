@@ -21,17 +21,34 @@ const Intro = observer(() => {
   const [zoom, setZoom] = useState(1)
   const [localeCat, setCat] = useState<any>(null)
 
+  const searchLocs = (airport: any, list: Array<any>) => {
+    if (typeof airport != 'string') return
+    list?.forEach((p: any) => {
+      const loc = p.list?.find((di: any) => di.skyCat?.slug == airport)
+      if (loc) {
+        setCat(loc)
+        return
+      }
+    })
+  }
+
   useEffect(() => {
     if (router.query?.airport && ctx.airports) {
-      ctx.airports?.forEach((p: any) => {
-        const loc = p.list?.find(
-          (di: any) => di.skyCat?.slug == router.query?.airport,
-        )
-        if (loc) {
-          setCat(loc)
-          return
+      searchLocs(router.query.airport, ctx.airports)
+    }
+
+    if (!router.query?.airport && ctx.airports) {
+      let airport = sessionStorage.getItem('airport')
+      if (airport) {
+        airport = JSON.parse(airport)
+
+        if (airport) {
+          setTimeout(() => {
+            searchLocs(airport, ctx.airports)
+            sessionStorage.removeItem('airport')
+          }, 200)
         }
-      })
+      }
     }
   }, [router.query, ctx.airports])
 

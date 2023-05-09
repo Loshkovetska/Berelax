@@ -23,6 +23,7 @@ const ServiceCat = observer(
   }) => {
     const { width } = useWindowDimensions()
     const [end, setEnd] = useState(false)
+    const { asPath } = useRouter()
     const { ref, inView, entry } = useInView({
       threshold: 0,
     })
@@ -36,12 +37,14 @@ const ServiceCat = observer(
 
     const setPos = (x: number, y: number) => {
       sessionStorage.setItem('position', JSON.stringify({ x, y }))
+      sessionStorage.setItem('position_page', asPath)
     }
 
     return (
-      <Link href={`${se.link}`}>
+      <>
         {width > 480 ? (
           <a
+            href={`${se.link}`}
             onClick={() => setPos(0, y)}
             className={classNames(
               'services__block',
@@ -66,12 +69,13 @@ const ServiceCat = observer(
           </a>
         ) : (
           <a
+            href={`${se.link}`}
             onClick={() => setPos(0, y)}
             className={classNames('service-cat', end && 'animated')}
             ref={ref}
           >
             <div className="service-cat__img">
-              <ImageComponent src={se.img} alt={se.alt}/>
+              <ImageComponent src={se.img} alt={se.alt} />
             </div>
             <div className="service-cat__content">
               <h2 className="service-cat__title">{se.title}</h2>
@@ -89,7 +93,7 @@ const ServiceCat = observer(
             </div>
           </a>
         )}
-      </Link>
+      </>
     )
   },
 )

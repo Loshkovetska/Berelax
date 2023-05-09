@@ -1,11 +1,13 @@
 import {
   getCareersTypes,
+  getCategoryBySlug,
   getContentByPage,
   getCountries,
   getLocations,
   getLocationsCategories,
   getMediaById,
   getNews,
+  getNewsByIds,
   getPostCategories,
   getProducts,
   getProductsBodyPart,
@@ -20,11 +22,10 @@ import {
   themeOptions,
 } from '../stores/ContentState'
 import readingTime from 'reading-time'
-import { arrayMinDistance, distance } from './distance'
 
-const getPrices = async (dt: any) => {
+const getPrices = async (dt: any, countries: Array<any>) => {
   const prices: any = []
-  const countries = await getCountries()
+
   for (let i = 0; i < dt.acf?.price?.length; i++) {
     const item = dt.acf.price[i],
       amount: any = []
@@ -36,7 +37,7 @@ const getPrices = async (dt: any) => {
       const am = item.amount[j]
       value = am.value
       country = am.country[0].post_title
-      currency = countries.find((c: any) => c.id == am.country[0].ID)?.acf
+      currency = countries?.find((c: any) => c.id == am.country[0].ID)?.acf
         ?.currency
 
       amount.push({
@@ -54,10 +55,9 @@ const getPrices = async (dt: any) => {
   return prices
 }
 
-export const getPricesServices = async (dt: any) => {
+export const getPricesServices = async (dt: any, countries: Array<any>) => {
   const prices: any = []
 
-  const countries = await getCountries()
   for (let i = 0; i < dt.acf?.nails_price?.length; i++) {
     const item = dt.acf.nails_price[i],
       amount: any = []
@@ -69,7 +69,7 @@ export const getPricesServices = async (dt: any) => {
       const am = item.amount[j]
       value = am.value
       country = am.country[0].post_title
-      currency = countries.find((c: any) => c.id == am.country[0].ID)?.acf
+      currency = countries?.find((c: any) => c.id == am.country[0].ID)?.acf
         ?.currency
 
       amount.push({
@@ -104,7 +104,7 @@ export const getValues = (acf: any) => {
       return {
         title: li.title,
         text: li.text,
-        icon: li.icon ? li.icon.url : '',
+        icon: li.icon ? li.icon?.sizes?.large : '',
         alt: li.icon ? li.icon.alt : '',
       }
     }),
@@ -132,45 +132,45 @@ export const getFollowLinkedin = (acf: any) => {
     },
   }
 }
-export const getInstagramPhotos = async () => {
-  const INSTAGRAM_ID = '4678704042',
-    THUMBNAIL_WIDTH = 640,
-    PHOTO_COUNT = 6
-  const response = await fetch(
-    `https://www.instagram.com/graphql/query?query_id=17841405971605469&variables={"id":"${INSTAGRAM_ID}","first":${PHOTO_COUNT},"after":null}`,
-  ).then((r) => r.json())
+// export const getInstagramPhotos = async () => {
+//   const INSTAGRAM_ID = '4678704042',
+//     THUMBNAIL_WIDTH = 640,
+//     PHOTO_COUNT = 6
+//   const response = await fetch(
+//     `https://www.instagram.com/graphql/query?query_id=17841405971605469&variables={"id":"${INSTAGRAM_ID}","first":${PHOTO_COUNT},"after":null}`,
+//   ).then((r) => r.json())
 
-  if (response) {
-    const { data } = response
+//   if (response) {
+//     const { data } = response
 
-    if (!data || data?.message) return []
+//     if (!data || data?.message) return []
 
-    const photos = data.user.edge_owner_to_timeline_media.edges.map(
-      ({ node }: any) => {
-        const { id } = node
-        const caption = node.edge_media_to_caption.edges[0].node.text
-        const thumbnail = node.thumbnail_resources.find(
-          (thumbnail: any) => thumbnail.config_width === THUMBNAIL_WIDTH,
-        )
-        const { src } = thumbnail
-        return {
-          id,
-          alt: caption,
-          img: src,
-        }
-      },
-    )
+//     const photos = data.user.edge_owner_to_timeline_media.edges.map(
+//       ({ node }: any) => {
+//         const { id } = node
+//         const caption = node.edge_media_to_caption.edges[0].node.text
+//         const thumbnail = node.thumbnail_resources.find(
+//           (thumbnail: any) => thumbnail.config_width === THUMBNAIL_WIDTH,
+//         )
+//         const { src } = thumbnail
+//         return {
+//           id,
+//           alt: caption,
+//           img: src,
+//         }
+//       },
+//     )
 
-    return photos || []
-  }
-}
+//     return photos || []
+//   }
+// }
 export const getFollowInstagram = (acf: any) => {
   let imagesFollow: Array<{
     img: string
     alt: string
   }> | null = acf.follow_insta.images.map((im: any) => {
     return {
-      img: im.image ? im.image.url : '',
+      img: im.image ? im.image?.sizes?.large : '',
       alt: im.image ? im.image.alt : '',
       link: im.link,
     }
@@ -209,7 +209,7 @@ export const formatHomePage = async (dt: any) => {
         video: r.intro.mainVideo_video.url,
         poster: r.intro.mainVideo_poster.url,
       },
-      mainImg: r.intro.mainImg ? r.intro.mainImg.url : '',
+      mainImg: r.intro.mainImg ? r.intro.mainImg?.sizes?.large : '',
       mainImgAlt: r.intro.mainImg ? r.intro.mainImg.alt : '',
     },
     block2: r.block2,
@@ -298,13 +298,13 @@ export const formatHeaderMenu = async (json: any) => {
         let b = a.submenu[j]
         if (b.object == 'cat-treatments' || b.object == 'cat-products') {
           const res = await getContentByPage(b.object, b.object_id)
-          b.img = res.acf.menu_image.url || ''
+          b.img = res.acf.menu_image?.sizes?.large || ''
           b.alt = res.acf.menu_image.alt || ''
           a.isProducts = true
         } else {
           const res = await getContentByPage('pages', b.object_id)
           const media = await getMediaById(res.featured_media)
-          b.img = media.source_url || ''
+          b.img = media?.media_details?.sizes?.full?.source_url || ''
           b.alt = media.alt_text || ''
           b.list = null
         }
@@ -336,7 +336,7 @@ export const formatGeneralTretments = async (dt: any) => {
       buttonText: dt.acf.banner.button.title,
       title_color: dt.acf.banner.title_color,
       text_color: dt.acf.banner.text_color,
-      img: dt.acf.banner?.img.url || '',
+      img: dt.acf.banner?.img?.sizes?.large || '',
       link: dt.acf.banner?.button.url,
       alt: dt.acf.banner?.img.alt || '',
     },
@@ -392,7 +392,7 @@ export const formatTreatCat = async (dt: any) => {
       title: acf.treatments_banner.title,
       buttonText: acf.treatments_banner.Button.title,
       link: acf.treatments_banner.Button.url,
-      img: acf.treatments_banner.image.url,
+      img: acf.treatments_banner.image?.sizes?.large || '',
       alt: acf.treatments_banner.image.alt,
       title_color: acf.treatments_banner.title_color,
     },
@@ -404,6 +404,8 @@ export const servicesFormat = async (dt: any) => {
   const categories = await getServiceCat()
   const allTypes = await getServiceType()
   const allBody = await getServiceBodyType()
+  const countries = await getCountries()
+
   for (let i = 0; i < dt.length; i++) {
     const item = dt[i]
     const category = categories.find(
@@ -418,8 +420,8 @@ export const servicesFormat = async (dt: any) => {
 
     let prices: any = []
     if (!['nail-care', 'beauty'].includes(category.slug)) {
-      prices = await getPrices(item)
-    } else prices = await getPricesServices(item)
+      prices = await getPrices(item, countries)
+    } else prices = await getPricesServices(item, countries)
 
     const types: any = []
 
@@ -447,7 +449,7 @@ export const servicesFormat = async (dt: any) => {
       time: times,
       locations: locations,
       text: item.content.rendered,
-      img: item.acf.img.url,
+      img: item.acf.img?.sizes?.large || '',
       alt: item.acf.img.alt,
       bodyPart: body || [],
       serviceType: types || [],
@@ -463,11 +465,12 @@ export const formatSingleService = async (dt: any) => {
   const services = await getServices()
   const { acf } = await themeOptions()
   const category = categories.find((c: any) => c.id == dt['cat-treatments'][0])
+  const countries = await getCountries()
 
   let prices: any = []
   if (category.slug != 'nail-care' && category.slug != 'beauty') {
-    prices = await getPrices(dt)
-  } else prices = await getPricesServices(dt)
+    prices = await getPrices(dt, countries)
+  } else prices = await getPricesServices(dt, countries)
 
   const cards: any = []
 
@@ -484,9 +487,8 @@ export const formatSingleService = async (dt: any) => {
   return {
     id: dt.id,
     section: category.slug,
-    img: dt.acf.single?.mainImg.url || '',
+    img: dt.acf.single?.mainImg?.sizes?.large || '',
     alt: dt.acf.single?.mainImg.alt || '',
-
     title: dt.title.rendered,
     text: dt.acf.single?.text || '',
     bookText: acf.single_treatments.booktext,
@@ -496,7 +498,7 @@ export const formatSingleService = async (dt: any) => {
       title: acf.treatments_banner.title,
       buttonText: acf.treatments_banner.Button.title,
       link: acf.treatments_banner.Button.url,
-      img: acf.treatments_banner.image.url,
+      img: acf.treatments_banner.image?.sizes?.large || '',
       alt: acf.treatments_banner.image.alt,
       title_color: acf.treatments_banner.title_color,
     },
@@ -509,7 +511,7 @@ export const formatSingleService = async (dt: any) => {
               return {
                 title: l.title,
                 text: l.text,
-                src: l.img.url,
+                src: l.img?.sizes?.large || '',
                 alt: l.img.alt,
               }
             }) || [],
@@ -532,7 +534,7 @@ export const formatProductCat = async (dt: any) => {
       id: d.id,
       link: `/products/${d.slug}`,
       title: d.name,
-      img: d.acf.img ? d.acf.img.url : '',
+      img: d.acf.img ? d.acf.img?.sizes?.large : '',
       slug: d.slug,
       text: d.description,
       alt: d.acf.img ? d.acf.img.alt : '',
@@ -585,7 +587,7 @@ export const formatProductItem = async (dt: any) => {
       title: item.title.rendered,
       text: item.content.rendered,
       link: `/products/${cat}/${item.slug}`,
-      img: item.acf.img?.url || '',
+      img: item.acf.img?.sizes?.large || '',
       alt: item.acf.img?.alt || '',
       date: item.date,
       color: cls,
@@ -671,7 +673,7 @@ export const formatProductCatPage = async (dt: any) => {
       text: dt.acf.banner.text,
       link: dt.acf.banner.button.url,
       buttonText: dt.acf.banner.button.title,
-      img: dt.acf.banner.image.url,
+      img: dt.acf.banner.image?.sizes?.large || '',
       alt: dt.acf.banner.image.alt,
       title_color: dt.acf.banner.title_color,
       text_color: dt.acf.banner.text_color,
@@ -704,7 +706,7 @@ export const formatProductsPage = async (dt: any) => {
       title: acf.products_banner.title,
       text: acf.products_banner.text,
       buttonText: acf.products_banner.button.title,
-      img: acf.products_banner.image.url,
+      img: acf.products_banner.image?.sizes?.large || '',
       alt: acf.products_banner.image.alt,
       link: acf.products_banner.button.url,
       title_color: acf.products_banner.title_color,
@@ -740,7 +742,7 @@ export const formatProductPage = async (dt: any) => {
     const imgList = f['img-list'].filter((l: any) => l.image)
     const sub = imgList?.map((l: any) => {
       return {
-        src: l.image.url,
+        src: l.image?.sizes?.large || '',
         alt: l.image.alt || '',
       }
     })
@@ -794,7 +796,7 @@ export const formatProductPage = async (dt: any) => {
       title: acf.products_banner.title,
       text: acf.products_banner.text,
       buttonText: acf.products_banner.button.title,
-      img: acf.products_banner.image.url,
+      img: acf.products_banner.image?.sizes?.large || '',
       link: acf.products_banner.button.url,
       alt: acf.products_banner.image.alt,
       title_color: acf.products_banner.title_color,
@@ -823,7 +825,7 @@ export const formatorStoryPage = async (dt: any) => {
   return {
     title: dt.title.rendered,
     text: dt.acf.text,
-    img: dt.acf.image.url,
+    img: dt.acf.image?.sizes?.large || '',
     alt: dt.acf.image.alt,
     values: getValues(acf),
     roadmap: {
@@ -833,7 +835,7 @@ export const formatorStoryPage = async (dt: any) => {
           year: li.year,
           title: li.title,
           text: li.text,
-          img: li.img.url,
+          img: li.img?.sizes?.large || '',
           alt: li.img.alt,
         }
       }),
@@ -845,7 +847,7 @@ export const formatorStoryPage = async (dt: any) => {
         buttonTitle: st.button.title,
         link: st.button.url,
         alt: st.image.alt,
-        img: st.image.url,
+        img: st.image?.sizes?.large || '',
         color: st.text_color,
       }
     }),
@@ -857,14 +859,14 @@ export const formatorAcademyPage = async (dt: any) => {
   return {
     title: dt.title.rendered,
     text: dt.acf.text,
-    img: dt.acf.img?.url || '',
+    img: dt.acf.img?.sizes?.large || '',
     alt: dt.acf.img?.alt || '',
     coursesTitle: dt.acf.coursestitle,
     courses: dt.acf.courses.map((c: any) => {
       return {
         title: c.title,
         text: c.text,
-        img: c.img.url,
+        img: c.img?.sizes?.large || '',
         alt: c.img.alt,
         list: [],
       }
@@ -873,7 +875,7 @@ export const formatorAcademyPage = async (dt: any) => {
       title: dt.acf.banner.title,
       text: dt.acf.banner.text,
       buttonText: dt.acf.banner.button.title,
-      img: dt.acf.banner.img.url,
+      img: dt.acf.banner.img?.sizes?.large || '',
       alt: dt.acf.banner.img.alt,
       link: dt.acf.banner.button.url,
       title_color: dt.acf.banner.title_color,
@@ -935,7 +937,7 @@ export const formatorPageAirRepresenter = async (dt: any) => {
   return {
     title: dt.title.rendered,
     text: dt.acf.text,
-    img: dt.acf.img.url,
+    img: dt.acf.img?.sizes?.large || '',
     alt: dt.acf.img.alt,
     values: {
       title: dt.acf?.company_values.title,
@@ -943,7 +945,7 @@ export const formatorPageAirRepresenter = async (dt: any) => {
         return {
           title: li.title,
           text: li.text,
-          icon: li.icon ? li.icon.url : '',
+          icon: li.icon ? li.icon?.sizes?.large : '',
           alt: li.icon ? li.icon.alt : '',
         }
       }),
@@ -1040,11 +1042,12 @@ export const formatorGetNews = async (dt: any) => {
 }
 
 export const formatorNewsPage = async (dt: any) => {
-  const news = await getNews()
   const cats = await getPostCategories()
   let timeReads: any = []
+  const ids = dt.acf.top_articles?.map((c: any) => c.ID).join(',')
+  const news = await getNewsByIds(ids)
 
-  news.forEach((n: any) => {
+  news?.forEach((n: any) => {
     timeReads.push(n.readTime)
   })
 
@@ -1052,7 +1055,7 @@ export const formatorNewsPage = async (dt: any) => {
   timeReads = timeReads.map((t: any) => t + ' mins')
 
   let res: any = []
-  res = news.sort((a: any, b: any) => b.views - a.views)
+  res = news?.sort((a: any, b: any) => b.views - a.views)
 
   return {
     title: dt.title?.rendered,
@@ -1074,20 +1077,39 @@ export const getRelatedPosts = async (dt: any) => {
 }
 
 export const formatorSingleNewsPost = async (dt: any) => {
-  const { post, cont } = dt
   const { acf } = await themeOptions()
+  const { cont } = dt
+  const categories = await getPostCategories()
   const news = await getNews()
   const cards = await getRelatedPosts(cont.acf.related_posts)
+  let text = `${cont?.title?.rendered} ${cont?.text} ${cont?.content?.rendered}`
+  const stats = readingTime(text)
+  let time = Math.round(stats.minutes)
+
+  const cat = categories.find((c: any) => c.id == cont?.categories[0])
+
+
   return {
-    ...post,
-    img: cont?.acf?.main_image ? cont?.acf?.main_image?.url : '',
+      id: cont?.id,
+      title: cont?.title?.rendered,
+      content: cont?.content?.rendered,
+      datetime: cont?.date,
+      link: `/news/${cont?.slug}`,
+      slug: cont?.slug,
+      text: cont?.acf.text,
+      author: cont?.acf.author,
+      views: cont?.acf.views,
+      cat: cat?.name || '',
+      isNew: false,
+    readTime: time,
+    img: cont?.acf?.main_image ? cont?.acf?.main_image?.sizes?.large : '',
     alt: cont?.acf?.main_image ? cont?.acf?.main_image?.alt : '',
     share: acf.post.share,
     written: acf.post.written,
     publish: acf.post.publish,
     socials: acf.post.socials.map((s: any) => {
       return {
-        icon: s.icon.url,
+        icon: s.icon?.sizes?.large,
         alt: s.icon.alt,
         link: s.link,
       }
@@ -1096,7 +1118,7 @@ export const formatorSingleNewsPost = async (dt: any) => {
       title: acf.post.banner.title,
       text: acf.post.banner.text,
       buttonText: acf.post.banner.button.title,
-      img: acf.post.banner.img.url,
+      img: acf.post.banner.img?.sizes?.large || '',
       alt: acf.post.banner.img.alt,
       link: acf.post.banner.button.url,
       title_color: acf.post.banner.title_color,
@@ -1123,7 +1145,7 @@ export const formatorCareersPage = async (dt: any) => {
       return {
         title: bl.title,
         text: bl.text,
-        img: bl.img.url,
+        img: bl.img?.sizes?.large || '',
         alt: bl.img.alt,
       }
     }),
@@ -1172,7 +1194,7 @@ export const formatorVacancies = async (dt: any) => {
     const media = await getMediaById(d['featured_media'])
     res.push({
       id: d.id,
-      img: media.guid.rendered,
+      img: media.media_details?.sizes?.full?.source_url || '',
       alt: media.alt_text,
       title: d.title.rendered,
       text: d.acf.text,
@@ -1189,27 +1211,39 @@ export const formatorVacancies = async (dt: any) => {
 
 export const formatorVacancyPost = async (dt: any) => {
   const { acf } = await themeOptions()
-  const { post, content } = dt
+  const { content } = dt
+  const media = await getMediaById(content['featured_media'])
+  const cat = await getCategoryBySlug(content['type-careers'][0])
   return {
-    ...post,
-    dateTimeText: content.acf.datetimetext,
-    buttonTitle: content.acf.buttontitle,
+     id: content.id,
+      img: media.media_details?.sizes?.full?.source_url || '',
+      alt: media.alt_text,
+      title: content?.title.rendered,
+      text: content?.acf.text,
+      type: cat?.name,
+      slug: content?.slug,
+      link: `/careers/${content?.slug}`,
+      datetime: content?.date,
+      location: content?.acf.location || [],
+      typeContract: content?.acf.typecontract,
+    dateTimeText: content?.acf.datetimetext,
+    buttonTitle: content?.acf.buttontitle,
     form: {
-      title: content.acf.form.title,
-      text: content.acf.form.text,
-      fnamePlaceholder: content.acf.form.fnamePlaceholder,
-      lnamePlaceholder: content.acf.form.lnamePlaceholder,
-      emailPlaceholder: content.acf.form.emailplaceholder,
-      phoneNumberPlaceholder: content.acf.form.phonenumberplaceholder,
-      cityPlaceHolder: content.acf.form.cityplaceholder,
-      countryPlaceHolder: content.acf.form.countryplaceholder,
-      msgPlaceholder: content.acf.form.msgplaceholder,
-      buttonTitle: content.acf.form.buttonTitle,
-      uploadResume: content.acf.form.uploadresume,
-      coverLetter: content.acf.form.coverletter,
+      title: content?.acf.form.title,
+      text: content?.acf.form.text,
+      fnamePlaceholder: content?.acf.form.fnamePlaceholder,
+      lnamePlaceholder: content?.acf.form.lnamePlaceholder,
+      emailPlaceholder: content?.acf.form.emailplaceholder,
+      phoneNumberPlaceholder: content?.acf.form.phonenumberplaceholder,
+      cityPlaceHolder: content?.acf.form.cityplaceholder,
+      countryPlaceHolder: content?.acf.form.countryplaceholder,
+      msgPlaceholder: content?.acf.form.msgplaceholder,
+      buttonTitle: content?.acf.form.buttonTitle,
+      uploadResume: content?.acf.form.uploadresume,
+      coverLetter: content?.acf.form.coverletter,
       phoneCodes: getPhoneCodes(acf),
     },
-    content: content.acf.list,
+    content: content?.acf.list,
     ...getThanksPop(acf),
   }
 }
@@ -1223,7 +1257,7 @@ export const formatorCountryPOP = async (acf: any) => {
     buttonTitle: countryPop.buttontitle,
     subTitle: countryPop.subtitle,
     subText: countryPop.subtext,
-    img: countryPop.img.url,
+    img: countryPop.img?.sizes?.large || '',
     alt: countryPop.img.alt,
     list: countries
       ?.map((c: any) => {
@@ -1273,7 +1307,7 @@ export const formatorFooter = async (res: any, acf: any) => {
     copyText: footer.copytext,
     socials: footer.socials.map((s: any) => {
       return {
-        icon: s.icon.url,
+        icon: s.icon?.sizes?.large,
         alt: s.icon.alt,
         link: s.link,
       }
@@ -1424,7 +1458,7 @@ export const formatorLocation = async (dt: any) => {
 
   if (dt.acf.contacts.phone) {
     contacts.push({
-      icon: acf.location.find.phone_icon.url,
+      icon: acf.location.find.phone_icon?.sizes?.large,
       alt: acf.location.find.phone_icon.alt,
       isLink: true,
       isPhone: true,
@@ -1434,7 +1468,7 @@ export const formatorLocation = async (dt: any) => {
   }
   if (dt.acf.contacts.email) {
     contacts.push({
-      icon: acf.location.find.email_icon.url,
+      icon: acf.location.find.email_icon?.sizes?.large,
       alt: acf.location.find.email_icon.alt,
       isLink: true,
       isPhone: false,
@@ -1444,7 +1478,7 @@ export const formatorLocation = async (dt: any) => {
   }
   if (dt.acf.contacts.schedule) {
     contacts.push({
-      icon: acf.location.find.schedule_icon.url,
+      icon: acf.location.find.schedule_icon?.sizes?.large,
       alt: acf.location.find.schedule_icon.alt,
       isLink: false,
       isPhone: false,
@@ -1454,7 +1488,7 @@ export const formatorLocation = async (dt: any) => {
   }
   if (dt.acf.contacts.location) {
     contacts.push({
-      icon: acf.location.find.location_icon.url,
+      icon: acf.location.find.location_icon?.sizes?.large,
       alt: acf.location.find.location_icon.alt,
       isLink: false,
       isPhone: false,
@@ -1462,7 +1496,6 @@ export const formatorLocation = async (dt: any) => {
       text: dt.acf.contacts.location,
     })
   }
-
   cats.forEach((ci: any) => {
     let arr: any = []
     dt.acf.treatments.forEach((c: any) => {
@@ -1512,8 +1545,9 @@ export const formatorLocation = async (dt: any) => {
     id: dt.id,
     title: dt.acf.title,
     text: dt.acf.text,
+    isDisable: dt.acf?.isDisable ? dt.acf?.isDisable : false,
     buttonTitle: acf.location.buttonTitle,
-    img: dt.acf.image.url,
+    img: dt.acf.image?.sizes?.large || '',
     alt: dt.acf.image.alt,
     link: `/find-us/${dt.slug}`,
     slug: dt.slug,
@@ -1540,7 +1574,7 @@ export const formatorLocation = async (dt: any) => {
     banner: {
       title: acf.location.banner.title,
       buttonText: acf.location.banner.button.title,
-      img: acf.location.banner.img.url,
+      img: acf.location.banner.img?.sizes?.large || '',
       alt: acf.location.banner.img.alt,
       link: acf.location.banner.button.url,
       title_color: acf.location.banner.title_color,
@@ -1560,33 +1594,38 @@ export const formatorLocations = async (dt: any) => {
 
   for (let k = 0; k < dt.length; k++) {
     let l = dt[k]
-    const country = countries.find((c: any) => c.id == l.acf.country[0]?.ID)
+    const country = countries?.find((c: any) => c.id == l.acf.country[0]?.ID)
     let time: any = []
-    if (
-      l.acf.contacts.schedule?.includes('24/7') ||
-      l.acf.contacts.schedule?.includes('24/24')
-    ) {
-      for (let i = 0; i <= 24; i++) {
-        time.push(`${i >= 10 ? i : '0' + i}:00`)
-      }
-    } else {
-      const vals = l.acf.contacts.schedule
-        .replaceAll('7/7', '')
-        .replaceAll('24/7', '')
-        .replaceAll('24/24', '')
-        .replace(/[^0-9]/g, ' ')
-        .trim()
-        .split(' ')
-        .filter((ci: any) => ci.length && ci != '00')
-      if (vals.length) {
-        for (let i = +vals[0]; i < 12; i++) {
-          time.push(`${i >= 10 ? i : '0' + i}:00`)
-          time.push(`${i >= 10 ? i : '0' + i}:30`)
-        }
-        for (let i = 12; i <= +vals[1] + 12; i++) {
-          time.push(`${i >= 10 ? i : '0' + i}:00`)
-          if (i != +vals[1] + 12) {
-            time.push(`${i >= 10 ? i : '0' + i}:30`)
+
+    if (l.acf.contacts?.book_schedule) {
+      const splitTimes = l.acf.contacts?.book_schedule?.split('; ')
+
+      if (splitTimes.length) {
+        for (let i = 0; i < splitTimes?.length; i++) {
+          let item = splitTimes[i]
+          const day = item
+            .replace(/[^A-Za-z]/g, '')
+            .replace('am', '')
+            .replace('pm', '')
+          item = item.replace(/[^0-9]/g, ' ')
+          const vals = item.split(' ').filter((mi: any) => mi)
+          if (vals.length) {
+            const arr = []
+            for (let d = +vals[0]; d < 12; d++) {
+              arr.push(`${d >= 10 ? d : '0' + d}:00`)
+              arr.push(`${d >= 10 ? d : '0' + d}:30`)
+            }
+            for (let n = 12; n <= +vals[1] + 12; n++) {
+              arr.push(`${n >= 10 ? n : '0' + n}:00`)
+              if (n != +vals[1] + 12) {
+                arr.push(`${n >= 10 ? n : '0' + n}:30`)
+              }
+            }
+
+            time.push({
+              day,
+              time: arr,
+            })
           }
         }
       }
@@ -1597,24 +1636,26 @@ export const formatorLocations = async (dt: any) => {
       alt: '',
       img: '',
     }
-    img.img = media.source_url || ''
+    img.img = media.media_details?.sizes?.full?.source_url || ''
     img.alt = media.alt_text || ''
 
     const catSky = airports.find((a: any) => a.id == l['cat-sky'][0])
+
     sub.push({
       id: l.id,
+      isDisable: l.acf?.isDisable ? l.acf?.isDisable : false,
       fullName: l.title.rendered,
-      continent: country?.acf?.continent,
+      continent: country?.acf?.continent || '',
       title: l.acf.title,
       shortTitle: l.acf.short_title,
-      text: l.acf.text,
+      text: l.acf.text || '',
       link: `/find-us/${catSky?.slug || ''}/${l.slug}`,
       slug: l.slug,
       country: country?.title?.rendered || '',
       locations: l.acf.location,
       ...img,
       cat: l['cat-location']?.length ? l['cat-location'][0] : 32,
-      skyCat: catSky,
+      skyCat: catSky || null,
       time: time,
     })
   }
@@ -1650,6 +1691,7 @@ export const retailerLocations = async (dt: any) => {
       phone: d.acf.contacts?.phone,
       coords: d.acf.location,
       schedule: d.acf.contacts.schedule,
+      location: d.acf.contacts.location,
     })
   })
 

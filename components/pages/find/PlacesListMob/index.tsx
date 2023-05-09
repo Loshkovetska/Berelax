@@ -223,7 +223,10 @@ const PlaceMob = observer(({ item }: { item: any }) => {
       <div className="find-block__place-text">{item.text}</div>
       <div className="find-block__place-bottom">
         <Button
-          classStr="button-arrow button-svg beige p8p16"
+          classStr={classNames(
+            'button-arrow button-svg beige p8p16',
+            item?.isDisable && 'disabled',
+          )}
           inner={
             <>
               {cardBookBtn}
@@ -233,9 +236,9 @@ const PlaceMob = observer(({ item }: { item: any }) => {
           isLink={false}
           action={book}
         />
-        <Link href={`${item.link}`}>
-          <a className="place-card__content-link">{cardDetails}</a>
-        </Link>
+        <a href={`${item.link}`} className="place-card__content-link">
+          {cardDetails}{' '}
+        </a>
       </div>
     </div>
   )

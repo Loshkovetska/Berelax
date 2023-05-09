@@ -6,7 +6,6 @@ import PlacesList from '../../../components/pages/find/PlacesList'
 import PlaceListMob from '../../../components/pages/find/PlacesListMob'
 import useLocoScroll from '../../../hooks/useLoco'
 import { getLocations } from '../../../stores/ContentState'
-import { getFindUs } from '../../api/getFindUs'
 import { getFindUsAirports } from '../../api/getFindUsAirports'
 
 const AirportPage = ({ hydrationData: props }: any) => {
@@ -28,6 +27,7 @@ const AirportPage = ({ hydrationData: props }: any) => {
   return (
     <>
       <SeoBlock seo={props.seo} />
+
       <Layout>
         <Intro />
         <PlacesList />
@@ -42,7 +42,8 @@ export default AirportPage
 export async function getStaticPaths() {
   const airports = await getLocations()
   const paths: any = []
-  airports?.map((pi: any) => {
+  airports?.forEach((pi: any) => {
+    if (pi.cat != 32) return
     paths.push({
       params: {
         airport: pi.skyCat?.slug,
@@ -59,7 +60,11 @@ export async function getStaticPaths() {
 
 export async function getStaticProps({ params }: any) {
   const response = await getFindUsAirports(params.airport)
-
+  if (!response) {
+    return {
+      notFound: true,
+    }
+  }
   return {
     props: {
       hydrationData: { ...response },

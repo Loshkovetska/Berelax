@@ -64,7 +64,11 @@ export async function getStaticPaths() {
 
 export async function getStaticProps({ params }: any) {
   const response = (await getService(params.service)) || null
-
+  if (!response) {
+    return {
+      notFound: true,
+    }
+  }
   return {
     props: {
       hydrationData: { ...response },

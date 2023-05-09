@@ -6,7 +6,6 @@ import { useEffect, useState } from 'react'
 import classNames from 'classnames'
 import { useContentState } from '../../../../hooks/RootStoreProvider'
 import ImageComponent from '../../../common/ImageComponent'
-import { getInstagramPhotos } from '../../../../funcs/formators'
 
 const FollowUs = observer(() => {
   const {

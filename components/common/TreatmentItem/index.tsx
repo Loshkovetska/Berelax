@@ -10,9 +10,9 @@ const TreatmentItem = observer(({ item }: any) => {
       <div className="treat-item__subtitle">{item.title}</div>
       <div className="treat-item__sublist">
         {item?.list?.map((i: any, id: number) => (
-          <Link href={i.link} key={id}>
-            <a className="treat-item__link">{i.title}</a>
-          </Link>
+          <a href={i.link} key={id} className="treat-item__link">
+            {i.title}{' '}
+          </a>
         ))}
       </div>
     </div>

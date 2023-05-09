@@ -67,7 +67,11 @@ export async function getStaticPaths() {
 
 export async function getStaticProps({ params }: any) {
   const response = (await getNewsPost(params.slug)) || null
-
+  if (!response) {
+    return {
+      notFound: true,
+    }
+  }
   return {
     props: {
       hydrationData: { ...response },

@@ -5,6 +5,11 @@
   padding: 16px 16px 11px;
   transition: 0.5s ease-in-out all;
   cursor: pointer;
+
+  &.disabled {
+    pointer-events: none;
+    opacity: 0.5;
+  }
   &__img {
     min-width: 40px;
     max-width: 40px;

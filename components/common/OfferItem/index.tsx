@@ -6,13 +6,16 @@ import Button from '../Button'
 import { IconComponent } from '../IconComponent'
 import Text from '../Text'
 import Title40 from '../Title40'
+import { useRouter } from 'next/router'
 
 const OfferItem = observer(
   ({ item, buttonTitle }: { item: any; buttonTitle: string }) => {
     const { x, y } = useScrollPos()
+    const { asPath } = useRouter();
 
     const setPos = (x: number, y: number) => {
       sessionStorage.setItem('position', JSON.stringify({ x, y }))
+      sessionStorage.setItem('position_page', asPath)
     }
     return (
       <a className="offer" onClick={() => setPos(0, y)} href={item.link}>

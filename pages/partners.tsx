@@ -9,6 +9,7 @@ import PartnersList from '../components/pages/partners/PartnersList'
 import PartnerForm from '../components/pages/partners/PartnerForm'
 import SmallPop from '../components/common/SmallPop'
 import SeoBlock from '../components/common/SeoBlock'
+import Script from 'next/script'
 
 const PartnersPage = observer(({ hydrationData: props }: any) => {
   const [loading, setLoading] = useState(true)
@@ -26,10 +27,11 @@ const PartnersPage = observer(({ hydrationData: props }: any) => {
       setLoading(false)
     }
   }, [props])
-  
+
   return (
     <>
       <SeoBlock seo={props.seo} />
+
       <Layout delay={1}>
         <Intro />
         <PartnersList />
@@ -45,7 +47,11 @@ export default PartnersPage
 
 export async function getStaticProps() {
   const response = await getPartners()
-
+  if (!response) {
+    return {
+      notFound: true,
+    }
+  }
   return {
     props: {
       hydrationData: { ...response },

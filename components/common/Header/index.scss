@@ -13,6 +13,14 @@
     position: relative;
   }
 
+  &.transparent {
+    background: transparent;
+    transition: 0.5s ease-in-out all;
+    &.hover-bg {
+      background: #ffffff;
+    }
+  }
+
   &.header-bg {
     .navigation__item {
       &-content {

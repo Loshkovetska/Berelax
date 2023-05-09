@@ -197,6 +197,7 @@ export const LocationCard = observer(
           )
       }
     }, [show])
+
     return (
       <section
         className={classNames('location-card')}
@@ -212,11 +213,11 @@ export const LocationCard = observer(
         <div className="location-card__top">
           <IconComponent
             name={'retail/plane'}
-            className={classNames('', dt.isAirport && 'visible')}
+            className={classNames('', !dt.isAirport && 'visible')}
           />
           <IconComponent
             name={'retail/location'}
-            className={classNames('shop', !dt.isAirport && 'visible')}
+            className={classNames('shop', dt.isAirport && 'visible')}
           />
           <div className="location-card__title">{dt?.title}</div>
         </div>
@@ -232,6 +233,7 @@ export const LocationCard = observer(
             {!show ? 'See' : 'Hide'} Details <IconComponent name={'ic'} />
           </div>
           <div className="location-card__addInfo" ref={ref}>
+            {!dt.isAirport && <div className="location-card__text">{dt?.location}</div>}
             <div className="location-card__text">{dt?.schedule}</div>
             <div className="location-card__text">{dt?.phone}</div>
           </div>

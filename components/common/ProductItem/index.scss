@@ -2,30 +2,12 @@
   background: #f5f3f0;
   border-radius: 48px;
   padding: 45px 32px 32px;
-  display: flex;
-  flex-direction: column;
+  // display: flex;
+  // flex-direction: column;
   height: 550px;
   overflow: hidden;
-    width: 100%;
+  width: 100%;
   transition: 0.5s ease-in-out all;
-
-  &__img {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: 0.5s ease-in-out all;
-    margin-bottom: 44px;
-    height: calc(
-      100% - (var(--title-height) + var(--text-height) + 44px + 42px)
-    );
-    img {
-      width: 100%;
-      height: 100%;
-      transition: 0.5s ease-in-out all;
-
-      object-fit: contain;
-    }
-  }
 
   &__title {
     font-family: 'Antic Didone';
@@ -50,10 +32,6 @@
     font-weight: 400;
     font-size: 14px;
     line-height: 145%;
-    /* or 20px */
-
-    /* Text/Main */
-
     color: #3a4458;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
@@ -65,13 +43,10 @@
   }
 
   &__content {
-    display: flex;
-    flex-direction: column;
-    flex-grow: 1;
+    display: block;
     position: relative;
     transition: 0.5s ease-in-out all;
     overflow: hidden;
-
     padding-top: 24px;
     border-top: 1px solid rgba(46, 99, 135, 0.07);
   }
@@ -83,13 +58,39 @@
     transform: translateY(100%);
   }
 
+  --height-block: 550px;
+  --button-height: calc(55px + 24px);
+  --marginImg: 44px;
+  --genPadding: calc(77px);
+  --contentHeight: calc(var(--content-height) + var(--button-height) + 40px);
+
+  &__img {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: 0.5s ease-in-out all;
+    margin-bottom: 44px;
+
+    img {
+      width: 100%;
+      height: 100%;
+      transition: 0.5s ease-in-out all;
+      object-fit: contain;
+    }
+    height: calc(
+      var(--height-block) - var(--marginImg) - var(--genPadding) -
+        var(--contentHeight) + var(--button-height)
+    );
+  }
+
   &:hover {
     .product-item__img {
       height: calc(
-        100% -
-          (var(--title-height) + var(--text-height) + 44px + 42px + 24px + 55px)
+        var(--height-block) - var(--marginImg) - var(--genPadding) -
+          var(--contentHeight)
       );
     }
+
     .button {
       transform: translateY(0px);
     }
@@ -97,32 +98,21 @@
 
   @media (max-width: 1366px) {
     height: 530px;
+
+    --height-block: 530px;
   }
 
   @media (max-width: 1024px) {
+    --marginImg: 24px;
+    --button-height: calc(52px + 24px);
+    --height-block: 448px;
     &__title {
       font-size: 24px;
     }
-
     &__img {
       margin-bottom: 24px;
-      height: calc(
-        100% - (var(--title-height) + var(--text-height) + 24px + 42px)
-      );
     }
     height: 448px;
-
-    &:hover {
-      .product-item__img {
-        height: calc(
-          100% -
-            (
-              var(--title-height) + var(--text-height) + 24px + 42px + 24px +
-                55px
-            )
-        );
-      }
-    }
   }
   @media (max-width: 900px) {
     min-width: 392px;
@@ -157,8 +147,6 @@
   }
 
   @media (max-width: 480px) {
-
-
     padding: 0;
     background: #fff;
     border-radius: 0;

@@ -3,15 +3,23 @@ import { useEffect, useRef, useState } from 'react'
 import useLocoScroll from '../hooks/useLoco'
 import Layout from '../components/common/Layout'
 import { getSearch } from './api/getSearch'
-import SearchContent from '../components/pages/search/SearchContent'
 import SeoBlock from '../components/common/SeoBlock'
-import { getNews, getProducts, getServices } from '../stores/ContentState'
+import {
+  getAirportsData,
+  getNews,
+  getProducts,
+  getServices,
+} from '../stores/ContentState'
 import { observable, runInAction } from 'mobx'
-
+import Script from 'next/script'
+import Lottie from 'lottie-react'
+import plane from '../mocks/plane.json'
+import SearchContent from '../components/pages/search/SearchContent'
 export const StateArrays: any = observable({
   products: null,
   services: null,
   news: null,
+  locations: null,
 })
 
 const Search = observer(({ hydrationData: props }: any) => {
@@ -43,27 +51,45 @@ const Search = observer(({ hydrationData: props }: any) => {
         StateArrays.services = res
       })
     })
+    getAirportsData().then((res) => {
+      runInAction(() => {
+        StateArrays.locations = res
+      })
+    })
     ref.current = true
   }, [])
 
   useEffect(() => {
-    if (StateArrays.news && StateArrays.products && StateArrays.services) {
+    if (
+      StateArrays.news &&
+      StateArrays.products &&
+      StateArrays.services &&
+      StateArrays.locations
+    ) {
       setTimeout(() => {
         setLoading(false)
       }, 200)
     }
-  }, [StateArrays.news, StateArrays.products, StateArrays.services])
+  }, [
+    StateArrays.news,
+    StateArrays.products,
+    StateArrays.services,
+    StateArrays.locations,
+  ])
 
   return (
     <>
       <SeoBlock seo={props.seo} />
-      {!loading ? (
-        <Layout>
+
+      <Layout>
+        {!loading ? (
           <SearchContent />
-        </Layout>
-      ) : (
-        <div style={{ width: '100%', height: 500 }}></div>
-      )}
+        ) : (
+          <div className="loader-search">
+            <Lottie animationData={plane} loop={true} />
+          </div>
+        )}
+      </Layout>
     </>
   )
 })
@@ -72,7 +98,11 @@ export default Search
 
 export async function getStaticProps() {
   const response = await getSearch()
-
+  if (!response) {
+    return {
+      notFound: true,
+    }
+  }
   return {
     props: {
       hydrationData: { ...response },

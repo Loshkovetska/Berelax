@@ -12,6 +12,7 @@ import { getHome } from './api/getHome'
 import Layout from '../components/common/Layout'
 import SeoBlock from '../components/common/SeoBlock'
 import { changeCountryState, changeLocale } from '../stores/GlobalState'
+import Script from 'next/script'
 
 const Home = observer(({ hydrationData: props }: any) => {
   const [loading, setLoading] = useState(true)
@@ -65,6 +66,7 @@ const Home = observer(({ hydrationData: props }: any) => {
   return (
     <>
       <SeoBlock seo={props.seo} />
+
       <Layout isMain>
         <Intro />
         <TextBlock />
@@ -82,7 +84,11 @@ export default Home
 
 export async function getStaticProps() {
   const response = await getHome()
-
+  if (!response) {
+    return {
+      notFound: true,
+    }
+  }
   return {
     props: {
       hydrationData: { ...response },

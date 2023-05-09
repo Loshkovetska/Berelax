@@ -3,7 +3,7 @@ import { observer } from 'mobx-react'
 import { useRouter } from 'next/router'
 import { Fragment, useEffect, useRef } from 'react'
 import { useContentState } from '../../../../hooks/RootStoreProvider'
-import GlobalState from '../../../../stores/GlobalState'
+import GlobalState, { resetScrollPos } from '../../../../stores/GlobalState'
 import CustomSlider from '../../../common/CustomSlider'
 import ImageComponent from '../../../common/ImageComponent'
 import InViewComponent from '../../../common/InViewComponent'
@@ -59,6 +59,7 @@ const Categories = ({
                   'treat-cats__item',
                   asPath.includes(ci.link) && 'active',
                 )}
+                onClick={resetScrollPos}
                 href={ci.link}
               >
                 <span> {ci.title}</span>
@@ -71,6 +72,7 @@ const Categories = ({
                     'treat-cats__item',
                     asPath.includes(ci.link) && 'active',
                   )}
+                  onClick={resetScrollPos}
                   href={ci.link}
                 >
                   <span> {ci.title}</span>

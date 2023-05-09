@@ -18,14 +18,26 @@ const MusicBox = observer(() => {
   const { width } = useWindowDimensions()
   const { audio } = content
 
+  const setState = (flag: boolean) => {
+    sessionStorage.setItem('musicOn', JSON.stringify(flag))
+  }
+
+  useEffect(() => {
+    const musicBoxState = sessionStorage.getItem('musicOn')
+    if (musicBoxState) {
+      const flag = JSON.parse(musicBoxState)
+      setPlay(flag)
+    }
+  }, [])
+
   useEffect(() => {
     if (!audio) return
     document
       .querySelector('.smooth')
       ?.addEventListener('mousemove', function () {
-        ref.current && ref.current.play()
+        play && ref.current && ref.current.play()
       })
-  }, [audio])
+  }, [audio, play])
 
   useEffect(() => {
     if (!ref.current) return
@@ -38,7 +50,13 @@ const MusicBox = observer(() => {
   return (
     <div className="musicbox">
       <div className="musicbox__bg"></div>
-      <div className="musicbox__btn" onClick={() => setPlay(!play)}>
+      <div
+        className="musicbox__btn"
+        onClick={() => {
+          setState(!play)
+          setPlay(!play)
+        }}
+      >
         {play ? (
           <ImageComponent src={gif.src} />
         ) : (

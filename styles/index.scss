@@ -99,3 +99,25 @@ input::-webkit-search-cancel-button {
 @import '../components/pages/terms/TermsContent/index.scss';
 @import '../components/pages/product/Intro/index.scss';
 @import '../components/pages/retailer/RetailerContent/index.scss';
+
+.loader-search {
+  padding: 200px 0 0;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  & > div {
+    width: 200px;
+    height: 200px;
+    transform: rotate(-45deg);
+  }
+
+  @media (max-width: 900px) {
+    padding: 100px 0 0;
+    & > div {
+      width: 100px;
+      height: 100px;
+    }
+  }
+}
