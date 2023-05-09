@@ -75,6 +75,7 @@ function MyApp({ Component, pageProps }: any) {
         changeLocale()
       }
     }
+    
   }, [])
 
   return (
